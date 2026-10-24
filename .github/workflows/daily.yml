@@ -38,6 +38,10 @@ jobs:
         continue-on-error: true
         timeout-minutes: 3
         run: python scripts/probe_rosters_2027.py
+      - name: Test Basketball-Reference 2026-27 roster (non-blocking)
+        continue-on-error: true
+        timeout-minutes: 2
+        run: python scripts/probe_bref_2027.py
       - name: Commit updated statistics
         run: |
           git config user.name "github-actions[bot]"
