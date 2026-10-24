@@ -54,6 +54,17 @@ def main():
             "identity_verified": False,
             "candidate_status": "unverified_candidate" if candidate else "candidate_report_unavailable",
         })
+    priority_path = Path("reports/game_log_identity_priority_2027.csv")
+    priority_path.parent.mkdir(parents=True, exist_ok=True)
+    with priority_path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=[
+            "nba_player_id", "player_game_rows", "candidate_name",
+            "candidate_bref_id", "candidate_position", "candidate_status",
+            "identity_verified"
+        ])
+        writer.writeheader()
+        writer.writerows(top)
+    print(f"IDENTITY_PRIORITY_REPORT {priority_path} ({len(top)} candidates)")
     report = {
         "season": "2026-27",
         "player_game_rows": len(rows),
