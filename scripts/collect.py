@@ -61,7 +61,7 @@ def summarize(raw_rows, season):
     if not rows:
         return {"games": 0, "teams": []}
 
-    totals = defaultdict(lambda: {"team": "", "gp": 0, "pts": 0.0, "allowed": 0.0})
+    totals = defaultdict(lambda: {"team": "", "gp": 0, "pts": 0.0, "allowed": 0.0, "fgm": 0, "fga": 0, "tpm": 0, "tpa": 0})
     for row in rows:
         team = pick(row, "team", "team_abbreviation", "team_abbr")
         pts = pick(row, "points", "pts", "team_points")
@@ -73,15 +73,44 @@ def summarize(raw_rows, season):
         item["gp"] += 1
         item["pts"] += number(pts)
         item["allowed"] += number(allowed)
+        for target, source in (("fgm","field_goals_made"),("fga","field_goal_attempts"),("tpm","three_point_makes"),("tpa","three_point_attempts")):
+            value = pick(row, source)
+            if value is None:
+                raise ValueError(f"{season}: missing {source}")
+            item[target] += number(value)
 
+    # Join reciprocal team-game records to derive actual opponent shooting.
+    by_matchup = defaultdict(list)
+    for row in rows:
+        by_matchup[(pick(row,"team"),pick(row,"opponent"),pick(row,"game_date"))].append(row)
+    defense = defaultdict(lambda: {"gp":0,"fgm":0,"fga":0,"tpm":0,"tpa":0})
+    for row in rows:
+        team, opponent, date = (pick(row,k) for k in ("team","opponent","game_date"))
+        other = by_matchup.get((opponent,team,date),[])
+        if len(other) != 1 or number(pick(row,"points")) != number(pick(other[0],"opponent_points")):
+            continue
+        d = defense[team]
+        d["gp"] += 1
+        for target, source in (("fgm","field_goals_made"),("fga","field_goal_attempts"),("tpm","three_point_makes"),("tpa","three_point_attempts")):
+            d[target] += number(pick(other[0],source))
     teams = []
     for item in totals.values():
         gp = item["gp"]
+        d = defense[item["team"]]
         teams.append({
             "team": item["team"],
             "gp": gp,
             "ppg": round(item["pts"] / gp, 2),
             "opp_ppg": round(item["allowed"] / gp, 2),
+            "fg_pct": round(100*item["fgm"]/item["fga"],1) if item["fga"] else None,
+            "three_pm": round(item["tpm"]/gp,2),
+            "three_pa": round(item["tpa"]/gp,2),
+            "three_pct": round(100*item["tpm"]/item["tpa"],1) if item["tpa"] else None,
+            "opp_three_pm": round(d["tpm"]/d["gp"],2) if d["gp"] else None,
+            "opp_three_pa": round(d["tpa"]/d["gp"],2) if d["gp"] else None,
+            "opp_three_pct": round(100*d["tpm"]/d["tpa"],1) if d["tpa"] else None,
+            "opp_fg_pct": round(100*d["fgm"]/d["fga"],1) if d["fga"] else None,
+            "defensive_shooting_games": d["gp"],
             "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
         })
     for field, metric, reverse in (
