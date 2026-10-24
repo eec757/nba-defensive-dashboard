@@ -53,7 +53,7 @@ def main():
     unresolved=[r for r in results if r["crosswalk_status"]=="missing_or_ambiguous_external_crosswalk"]
     fields=["team","roster_name","position","bref_id","nba_player_id","nba_name","regular_season_games","crosswalk_status","basketball_reference_player_url","nba_player_profile_url","review_status","review_notes"]
     with (OUT/"unresolved_player_ids_2027.csv").open("w",encoding="utf-8",newline="") as f:
-        writer=csv.DictWriter(f,fieldnames=fields)
+        writer=csv.DictWriter(f,fieldnames=fields,extrasaction="ignore")
         writer.writeheader()
         for r in unresolved:
             pid=r["nba_player_id"]
