@@ -50,6 +50,19 @@ def main():
         writer=csv.DictWriter(f,fieldnames=list(results[0]))
         writer.writeheader()
         writer.writerows(results)
+    unresolved=[r for r in results if r["crosswalk_status"]=="missing_or_ambiguous_external_crosswalk"]
+    fields=["team","roster_name","position","bref_id","nba_player_id","nba_name","regular_season_games","crosswalk_status","basketball_reference_player_url","nba_player_profile_url","review_status","review_notes"]
+    with (OUT/"unresolved_player_ids_2027.csv").open("w",encoding="utf-8",newline="") as f:
+        writer=csv.DictWriter(f,fieldnames=fields)
+        writer.writeheader()
+        for r in unresolved:
+            pid=r["nba_player_id"]
+            bref=r["bref_id"]
+            writer.writerow({**r,
+                "basketball_reference_player_url":("https://www.basketball-reference.com/players/"+bref[0]+"/"+bref+".html") if bref else "",
+                "nba_player_profile_url":("https://www.nba.com/player/"+pid) if pid else "",
+                "review_status":"needs_independent_id_evidence","review_notes":""})
+    print("UNRESOLVED ID REVIEW",json.dumps({"count":len(unresolved),"players":[{"team":r["team"],"name":r["roster_name"],"bref_id":r["bref_id"],"nba_id":r["nba_player_id"]} for r in unresolved]}),flush=True)
     counts=collections.Counter(row["crosswalk_status"] for row in results)
     summary={"roster_entries":len(results),"status_counts":dict(counts),
       "note":"Crosswalk source includes name-derived mappings. Matching numeric IDs is corroboration, not necessarily independent verification. No positions published.",
