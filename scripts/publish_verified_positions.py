@@ -73,6 +73,9 @@ def main():
     # NBA team ID -> abbreviation; keyed by opponent team, not player team.
     team_ids=TEAM_IDS
     names={v:k for k,v in team_ids.items()}
+    unknown_opponents={str(row[1]) for row in rows if str(row[1]) not in names}
+    if unknown_opponents:
+        raise ValueError(f"Unknown opponent team IDs in game logs: {sorted(unknown_opponents)}")
     totals=defaultdict(lambda: [0.0]*8)
     games=defaultdict(set)
     all_team_games=defaultdict(set)
