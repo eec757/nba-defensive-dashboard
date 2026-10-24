@@ -16,6 +16,8 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install "duckdb>=1.3,<2"
+      - name: Test publication safety without external data
+        run: python -m unittest discover -s tests -p "test_position_publication.py" -v
       - name: Remove stale position output before validation
         run: rm -f data/position_defense_2027.json
       - name: Publish only with verified ID evidence and 95 percent coverage
