@@ -1,6 +1,7 @@
 """Independently check candidate NBA numeric IDs against nba_api's NBA player directory.
 This validates NBA-side ID/name only, NOT the Basketball-Reference-to-NBA identity link.
 Never changes verified flags or publishes dashboard statistics.
+Name mismatches are exported for manual review, not automatically resolved.
 """
 import csv
 import json
