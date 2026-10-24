@@ -12,6 +12,16 @@ publisher = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(publisher)
 
 class PublicationSafetyTests(unittest.TestCase):
+    def test_self_referential_identity_source_is_rejected(self):
+        for url in (
+            "https://github.com/eec757/nba-defensive-dashboard/blob/main/docs/identity-evidence-2027.md",
+            "https://raw.githubusercontent.com/example/repo/main/evidence.csv",
+            "https://www.nba.com/player/1631096/chet-holmgren",
+        ):
+            with self.subTest(url=url):
+                with self.assertRaisesRegex(ValueError, "independently link"):
+                    publisher.validate_crosswalk_source(url)
+
     def test_two_primary_urls_still_require_human_review(self):
         row = {
             "nba_player_id": "1631096", "bref_id": "holmgch01",
