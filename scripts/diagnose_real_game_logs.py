@@ -65,6 +65,23 @@ def main():
         writer.writeheader()
         writer.writerows(top)
     print(f"IDENTITY_PRIORITY_REPORT {priority_path} ({len(top)} candidates)")
+    crosswalk_path = Path("data/verified_player_ids_2027.csv")
+    crosswalk = list(csv.DictReader(crosswalk_path.open(encoding="utf-8", newline=""))) if crosswalk_path.exists() else []
+    staged_ids = {r["nba_player_id"].strip() for r in crosswalk if r.get("nba_player_id")}
+    approved_ids = {r["nba_player_id"].strip() for r in crosswalk if r.get("verified", "").strip().lower() == "true"}
+    staged_rows = sum(frequency.get(pid, 0) for pid in staged_ids)
+    approved_rows = sum(frequency.get(pid, 0) for pid in approved_ids)
+    print("IDENTITY_COVERAGE", json.dumps({
+        "game_log_rows": len(rows),
+        "staged_player_ids": len(staged_ids),
+        "staged_game_rows": staged_rows,
+        "staged_game_row_coverage_pct": round(100 * staged_rows / len(rows), 2),
+        "approved_player_ids": len(approved_ids),
+        "approved_game_rows": approved_rows,
+        "approved_game_row_coverage_pct": round(100 * approved_rows / len(rows), 2),
+        "publication_threshold_pct": 95,
+        "staged_is_not_verified": True
+    }, sort_keys=True))
     report = {
         "season": "2026-27",
         "player_game_rows": len(rows),
