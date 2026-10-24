@@ -29,7 +29,7 @@ class Roster(html.parser.HTMLParser):
             if self.field in ("player", "player_name"):
                 self.row["bref_id"] = a.get("data-append-csv", "")
         elif self.table and self.row is not None and tag == "a" and self.field in ("player", "player_name"):
-            m = re.search(r"/players/[a-z]/([a-z0-9]+)\\.html", a.get("href", ""))
+            m = re.search(r"/players/[a-z]/([a-z0-9]+)\.html", a.get("href", ""))
             if m:
                 self.row["bref_id"] = m.group(1)
     def handle_data(self, data):
