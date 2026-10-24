@@ -12,6 +12,29 @@ publisher = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(publisher)
 
 class PublicationSafetyTests(unittest.TestCase):
+    def test_canonical_team_id_mapping(self):
+        self.assertEqual(len(publisher.TEAM_IDS), 30)
+        self.assertEqual(len(set(publisher.TEAM_IDS.values())), 30)
+        expected = {
+            "ATL": "1610612737", "BOS": "1610612738",
+            "BKN": "1610612751", "CHI": "1610612741",
+            "CHA": "1610612766", "CLE": "1610612739",
+            "DAL": "1610612742", "DEN": "1610612743",
+            "DET": "1610612765", "GSW": "1610612744",
+            "HOU": "1610612745", "IND": "1610612754",
+            "LAC": "1610612746", "LAL": "1610612747",
+            "MEM": "1610612763", "MIA": "1610612748",
+            "MIL": "1610612749", "MIN": "1610612750",
+            "NOP": "1610612740", "NYK": "1610612752",
+            "OKC": "1610612760", "ORL": "1610612753",
+            "PHI": "1610612755", "PHX": "1610612756",
+            "POR": "1610612757", "SAC": "1610612758",
+            "SAS": "1610612759", "TOR": "1610612761",
+            "UTA": "1610612762", "WAS": "1610612764",
+        }
+        for abbreviation, team_id in expected.items():
+            self.assertEqual(publisher.TEAM_IDS.get(abbreviation), team_id)
+
     def test_unverified_rows_cannot_publish(self):
         with tempfile.TemporaryDirectory() as directory:
             previous = Path.cwd()
