@@ -25,3 +25,11 @@ Combined audit run [40085243426](https://github.com/eec757/nba-defensive-dashboa
 ## Season-position source check (2026-10-24)
 
 Basketball-Reference's [2026–27 OKC roster and stats](https://www.basketball-reference.com/teams/OKC/2027.html) lists Holmgren **C**, Jalen Williams **SG**, Wallace **SG**, and Mitchell **SG**. [Jalen Williams's player season table](https://www.basketball-reference.com/players/w/willija06.html) independently shows **2026–27: SG** while the player header gives historical positions SG/PF. This resolves the season-specific position question, **not** the human cross-provider identity approval, independent linkage-source requirement, or 95% coverage gates.
+
+## Position methodology and cross-provider disagreement (2026-10-24)
+
+**Chosen classification for the current staged crosswalk:** Basketball-Reference's [2026–27 Oklahoma City roster](https://www.basketball-reference.com/teams/OKC/2027.html), not an on-court matchup or possession-based position. Its positions are Chet Holmgren **C**, Jalen Williams **SG**, Cason Wallace **SG**, Ajay Mitchell **SG**.
+
+**Important limitation:** [RealGM's 2026–27 Thunder depth chart](https://basketball.realgm.com/nba/teams/depth-charts/Rosters) classifies Jalen Williams **SF**, Chet Holmgren **PF**, Cason Wallace **SG**, and Ajay Mitchell **PG**. These are different provider definitions, not necessarily errors. The dashboard must not describe a BRef season-position bucket as the player's actual defensive assignment or on-court matchup. Player-level opponent statistics grouped by season roster position are *proxy aggregates*, not verified matchup tracking.
+
+**Approval policy:** Keep `verified=false` until identity evidence, reviewer sign-off, and cross-source linkage requirements are satisfied. Record the chosen position provider and season alongside every approved mapping; never silently switch between roster and depth-chart definitions. All leaguewide and per-defending-team coverage safeguards still apply.
