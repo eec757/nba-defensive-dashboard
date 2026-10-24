@@ -29,6 +29,24 @@ class PublicationSafetyTests(unittest.TestCase):
             finally:
                 os.chdir(previous)
 
+    def test_single_provider_profile_is_not_independent_evidence(self):
+        with tempfile.TemporaryDirectory() as directory:
+            previous = Path.cwd()
+            try:
+                os.chdir(directory)
+                Path("data").mkdir()
+                Path("data/verified_player_ids_2027.csv").write_text(
+                    "bref_id,nba_player_id,position,verification_source,verified\\n"
+                    "wilsoca01,1643410,PF,https://www.nba.com/player/1643410,true\\n",
+                    encoding="utf-8")
+                publisher.CROSSWALK = Path("data/verified_player_ids_2027.csv")
+                publisher.OUTPUT = Path("data/position_defense_2027.json")
+                with self.assertRaisesRegex(ValueError, "Single-provider"):
+                    publisher.main()
+                self.assertFalse(publisher.OUTPUT.exists())
+            finally:
+                os.chdir(previous)
+
     def test_invalid_verified_identity_rejected_before_database_access(self):
         with tempfile.TemporaryDirectory() as directory:
             previous = Path.cwd()
