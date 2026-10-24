@@ -1,0 +1,28 @@
+name: Publish Verified Position Defense
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install "duckdb>=1.3,<2"
+      - name: Publish only with verified ID evidence and 95 percent coverage
+        run: python scripts/publish_verified_positions.py
+      - name: Commit verified output if created
+        run: |
+          if [ -f data/position_defense_2027.json ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/position_defense_2027.json
+            git diff --cached --quiet || (git commit -m "Publish verified opponent-position defensive stats" && git push)
+          fi
