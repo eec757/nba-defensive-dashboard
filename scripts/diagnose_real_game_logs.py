@@ -3,6 +3,9 @@
 This script never marks identities verified and never publishes dashboard data.
 """
 import json
+import csv
+from collections import Counter
+from pathlib import Path
 import duckdb
 from publish_verified_positions import CATALOG, TEAM_IDS, summarize_position_rows
 
@@ -27,12 +30,33 @@ def main():
         raise ValueError(f"Expected game logs for 30 teams; found {len(active)}")
     if any(all_rows[team] <= 0 for team in TEAM_IDS):
         raise ValueError("Missing opponent player-game rows for one or more teams")
+    frequency = Counter(str(row[0]) for row in rows)
+    candidate_file = Path("reports/player_matching_2027.csv")
+    candidates = {}
+    if candidate_file.exists():
+        with candidate_file.open(encoding="utf-8", newline="") as handle:
+            for candidate in csv.DictReader(handle):
+                pid = candidate.get("nba_player_id", "")
+                if pid and candidate.get("status") == "single_name_candidate":
+                    candidates[pid] = candidate
+    top = []
+    for player_id, game_rows in frequency.most_common(25):
+        candidate = candidates.get(player_id, {})
+        top.append({
+            "nba_player_id": player_id,
+            "player_game_rows": game_rows,
+            "candidate_bref_id": candidate.get("bref_id", ""),
+            "candidate_name": candidate.get("roster_name", ""),
+            "candidate_position": candidate.get("position", ""),
+            "identity_verified": False,
+        })
     report = {
         "season": "2026-27",
         "player_game_rows": len(rows),
         "active_defending_teams": len(active),
         "defending_team_games": dict(sorted(active.items())),
-        "unique_player_ids": len({str(row[0]) for row in rows}),
+        "unique_player_ids": len(frequency),
+        "top_25_verification_candidates": top,
         "total_defending_team_games": sum(active.values()),
         "opponent_player_rows_by_team": dict(sorted(all_rows.items())),
         "unknown_opponent_ids": [],
