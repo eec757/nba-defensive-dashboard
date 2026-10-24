@@ -59,33 +59,21 @@ def number(value):
 def summarize(raw_rows, season):
     rows = [normalized(row) for row in raw_rows]
     if not rows:
-        # Empty new-season files are legitimate before games are completed.
         return {"games": 0, "teams": []}
 
     totals = defaultdict(lambda: {"team": "", "gp": 0, "pts": 0.0, "allowed": 0.0})
-    games = defaultdict(list)
     for row in rows:
-        game_id = pick(row, "game_id", "gameid", "id")
-        team = pick(row, "team", "team_abbreviation", "team_abbr", "team_code", "team_id")
-        pts = pick(row, "pts", "points", "team_pts", "team_points")
-        if game_id is None or team is None or pts is None:
-            raise ValueError(f"{season}: required game/team/points fields missing. Available: {list(row)}")
-        games[str(game_id)].append((str(team), number(pts)))
+        team = pick(row, "team", "team_abbreviation", "team_abbr")
+        pts = pick(row, "points", "pts", "team_points")
+        allowed = pick(row, "opponent_points", "opp_pts", "points_allowed")
+        if team is None or pts is None or allowed is None:
+            raise ValueError(f"{season}: missing team/points/opponent_points. Fields: {list(row)}")
+        item = totals[str(team)]
+        item["team"] = str(team)
+        item["gp"] += 1
+        item["pts"] += number(pts)
+        item["allowed"] += number(allowed)
 
-    completed = 0
-    for sides in games.values():
-        if len(sides) != 2 or sides[0][0] == sides[1][0]:
-            continue
-        completed += 1
-        for (team, pts), (_, allowed) in ((sides[0], sides[1]), (sides[1], sides[0])):
-            item = totals[team]
-            item["team"] = team
-            item["gp"] += 1
-            item["pts"] += pts
-            item["allowed"] += allowed
-
-    if rows and not completed:
-        raise ValueError(f"{season}: downloaded {len(rows)} rows but could not pair any completed games")
     teams = []
     for item in totals.values():
         gp = item["gp"]
@@ -103,8 +91,7 @@ def summarize(raw_rows, season):
         ordered = sorted(teams, key=lambda t: (-t[metric] if reverse else t[metric], t["team"]))
         for rank, item in enumerate(ordered, 1):
             item[field] = rank
-    return {"games": completed, "teams": sorted(teams, key=lambda t: t["team"])}
-
+    return {"games": len(rows) // 2, "teams": sorted(teams, key=lambda t: t["team"])}
 
 def main():
     seasons = {season: summarize(download(season), season) for season in SEASONS}
