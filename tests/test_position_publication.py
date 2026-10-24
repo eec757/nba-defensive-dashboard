@@ -12,6 +12,20 @@ publisher = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(publisher)
 
 class PublicationSafetyTests(unittest.TestCase):
+    def test_verified_position_requires_season_source(self):
+        row = {
+            "nba_player_id": "1631096", "bref_id": "holmgch01",
+            "nba_profile_url": "https://www.nba.com/player/1631096/chet-holmgren",
+            "bref_profile_url": "https://www.basketball-reference.com/players/h/holmgch01.html",
+            "reviewed_by": "reviewer", "reviewed_on": "2026-10-24",
+            "position_source": ""
+        }
+        with self.assertRaisesRegex(ValueError, "season position source"):
+            publisher.validate_independent_evidence(row)
+        row["position_source"] = "https://www.basketball-reference.com/teams/OKC/2026.html"
+        with self.assertRaisesRegex(ValueError, "season position source"):
+            publisher.validate_independent_evidence(row)
+
     def test_self_referential_identity_source_is_rejected(self):
         for url in (
             "https://github.com/eec757/nba-defensive-dashboard/blob/main/docs/identity-evidence-2027.md",
@@ -33,6 +47,7 @@ class PublicationSafetyTests(unittest.TestCase):
             publisher.validate_independent_evidence(row)
         row["reviewed_by"] = "human-reviewer"
         row["reviewed_on"] = "2026-10-24"
+        row["position_source"] = "https://www.basketball-reference.com/teams/OKC/2027.html"
         self.assertTrue(publisher.validate_independent_evidence(row))
 
     def test_invalid_or_future_review_dates_rejected(self):
@@ -53,7 +68,8 @@ class PublicationSafetyTests(unittest.TestCase):
             "nba_player_id": "1631096", "bref_id": "holmgch01",
             "nba_profile_url": "https://www.nba.com/player/1631114/jalen-williams",
             "bref_profile_url": "https://www.basketball-reference.com/players/h/holmgch01.html",
-            "reviewed_by": "human-reviewer", "reviewed_on": "2026-10-24"
+            "reviewed_by": "human-reviewer", "reviewed_on": "2026-10-24",
+            "position_source": "https://www.basketball-reference.com/teams/OKC/2027.html"
         }
         with self.assertRaisesRegex(ValueError, "NBA player profile"):
             publisher.validate_independent_evidence(row)
