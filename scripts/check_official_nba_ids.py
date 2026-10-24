@@ -11,6 +11,7 @@ from nba_api.stats.static import players
 
 SOURCE = Path("reports/verification_priority_2027.csv")
 OUT = Path("reports/nba_official_id_name_check_2027.csv")
+MISMATCHES = Path("reports/nba_id_mismatch_review_2027.csv")
 SUMMARY = Path("reports/nba_official_id_name_summary_2027.json")
 
 def normalize(value):
@@ -52,6 +53,17 @@ def main():
         writer = csv.DictWriter(f, fieldnames=list(result[0]))
         writer.writeheader()
         writer.writerows(result)
+    mismatches = [row for row in result if row["nba_id_name_status"] != "nba_id_name_match"]
+    for row in mismatches:
+        row["possible_name_variant"] = str(normalize(row["candidate_name"]) in normalize(row["nba_directory_name"]) or normalize(row["nba_directory_name"]) in normalize(row["candidate_name"])).lower()
+        row["review_decision"] = "needs_human_review"
+        row["independent_evidence_url"] = ""
+    if mismatches:
+        with MISMATCHES.open("w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=list(mismatches[0]))
+            writer.writeheader()
+            writer.writerows(mismatches)
+    print("NBA NAME MISMATCH REVIEW", json.dumps(mismatches), flush=True)
     summary = {"candidates": len(result), "status_counts": counts,
                "independent_bref_to_nba_link_verified": 0,
                "publication_ready": False,
