@@ -28,6 +28,12 @@ jobs:
       - name: Update NBA statistics
         run: python scripts/collect.py
 
+      - name: Probe player-level position data (non-blocking)
+        continue-on-error: true
+        timeout-minutes: 3
+        run: |
+          pip install "duckdb>=1.3,<2"
+          python scripts/probe_position.py
       - name: Commit updated statistics
         run: |
           git config user.name "github-actions[bot]"
