@@ -64,6 +64,17 @@ def summarize_position_rows(rows, verified, team_ids):
             totals[key][i] += float(value or 0)
     return totals, all_team_games, verified_team_rows, all_team_rows
 
+def validate_crosswalk_source(source):
+    """Reject self-authored or single-provider links as independent linkage evidence."""
+    domain = (urlparse(source).hostname or "").lower()
+    if domain in {"nba.com", "www.nba.com", "basketball-reference.com",
+                  "www.basketball-reference.com", "github.com", "www.github.com",
+                  "raw.githubusercontent.com", "gist.github.com"}:
+        raise ValueError("Verification source must independently link NBA and BRef identities")
+    if urlparse(source).scheme != "https" or not domain:
+        raise ValueError("Verification source must be a valid HTTPS URL")
+    return True
+
 def validate_independent_evidence(record):
     """Fail closed: both exact primary profile URLs and explicit human approval."""
     pid = record["nba_player_id"].strip()
@@ -110,10 +121,7 @@ def main():
             raise ValueError("Verified entries require numeric NBA ID, BRef ID, valid position and evidence URL")
         # A standalone player profile identifies one player but does not establish
         # the link between a Basketball-Reference ID and an NBA numeric ID.
-        domain = (urlparse(source).hostname or "").lower()
-        if domain in {"nba.com", "www.nba.com", "basketball-reference.com",
-                      "www.basketball-reference.com"}:
-            raise ValueError("Single-provider player profile cannot verify cross-source identity")
+        validate_crosswalk_source(source)
         validate_independent_evidence(r)
         if pid in verified or bref in bref_seen:
             raise ValueError("Duplicate verified NBA or BRef identity")
