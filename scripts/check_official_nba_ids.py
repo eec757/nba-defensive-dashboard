@@ -31,8 +31,8 @@ def main():
     result = []
     counts = {}
     for r in records:
-        pid = (r.get("nba_id") or r.get("nba_player_id") or "").strip()
-        name = (r.get("name") or r.get("player_name") or "").strip()
+        pid = (r.get("nba_player_id") or r.get("nba_id") or "").strip()
+        name = (r.get("roster_name") or r.get("name") or r.get("player_name") or "").strip()
         entry = nba_by_id.get(pid)
         official_name = entry["full_name"] if entry else ""
         status = ("id_not_in_nba_directory" if not entry else
