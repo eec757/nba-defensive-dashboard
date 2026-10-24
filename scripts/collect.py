@@ -111,6 +111,11 @@ def summarize(raw_rows, season):
             "opp_three_pct": round(100*d["tpm"]/d["tpa"],1) if d["tpa"] else None,
             "opp_fg_pct": round(100*d["fgm"]/d["fga"],1) if d["fga"] else None,
             "defensive_shooting_games": d["gp"],
+            # These require opponent player-game stats joined to verified player positions.
+            # Team-level box scores cannot provide legitimate position defense.
+            "position_defense": {p: None for p in ("PG", "SG", "SF", "PF", "C")},
+            "paint_defense": None,
+            "rim_defense": None,
             "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
         })
     for field, metric, reverse in (
