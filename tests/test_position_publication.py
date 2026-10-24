@@ -36,8 +36,8 @@ class PublicationSafetyTests(unittest.TestCase):
                 os.chdir(directory)
                 Path("data").mkdir()
                 Path("data/verified_player_ids_2027.csv").write_text(
-                    "bref_id,nba_player_id,position,verification_source,verified\\n"
-                    "wilsoca01,1643410,PF,https://www.nba.com/player/1643410,true\\n",
+                    "bref_id,nba_player_id,position,verification_source,verified\n"
+                    "wilsoca01,1643410,PF,https://www.nba.com/player/1643410,true\n",
                     encoding="utf-8")
                 publisher.CROSSWALK = Path("data/verified_player_ids_2027.csv")
                 publisher.OUTPUT = Path("data/position_defense_2027.json")
