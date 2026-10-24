@@ -5,6 +5,7 @@ All five positions must have adequate game-log coverage before publication.
 """
 import csv
 import json
+from urllib.parse import urlparse
 from collections import defaultdict
 from pathlib import Path
 import duckdb
@@ -35,6 +36,12 @@ def main():
         pos=r["position"].strip()
         if not pid.isdigit() or not bref or pos not in POSITIONS or not source.startswith("https://"):
             raise ValueError("Verified entries require numeric NBA ID, BRef ID, valid position and evidence URL")
+        # A standalone player profile identifies one player but does not establish
+        # the link between a Basketball-Reference ID and an NBA numeric ID.
+        domain = (urlparse(source).hostname or "").lower()
+        if domain in {"nba.com", "www.nba.com", "basketball-reference.com",
+                      "www.basketball-reference.com"}:
+            raise ValueError("Single-provider player profile cannot verify cross-source identity")
         if pid in verified or bref in bref_seen:
             raise ValueError("Duplicate verified NBA or BRef identity")
         verified[pid]=pos
