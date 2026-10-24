@@ -65,11 +65,19 @@ def main():
     names={v:k for k,v in team_ids.items()}
     totals=defaultdict(lambda: [0.0]*8)
     games=defaultdict(set)
+    all_team_games=defaultdict(set)
+    verified_team_rows=defaultdict(int)
+    all_team_rows=defaultdict(int)
     for pid,opp,game_id,pts,reb,ast,fgm,fga,fg3m,fg3a in rows:
         pos=verified.get(str(pid))
         team=names.get(str(opp))
-        if not pos or not team:
+        if not team:
             continue
+        all_team_games[team].add(game_id)
+        all_team_rows[team]+=1
+        if not pos:
+            continue
+        verified_team_rows[team]+=1
         key=(team,pos)
         games[key].add(game_id)
         values=(pts,reb,ast,fgm,fga,fg3m,fg3a)
@@ -81,8 +89,9 @@ def main():
         output["teams"][team]={}
         for pos in POSITIONS:
             t=totals.get((team,pos))
-            n=len(games.get((team,pos),set()))
-            if not t or n==0:
+            n=len(all_team_games.get(team,set()))
+            team_coverage=verified_team_rows[team]/all_team_rows[team] if all_team_rows[team] else 0
+            if not t or n==0 or team_coverage < MIN_COVERAGE:
                 output["teams"][team][pos]=None
                 continue
             output["teams"][team][pos]={
@@ -91,9 +100,12 @@ def main():
                 "assists_allowed":round(t[3]/n,2),
                 "fg_pct":round(100*t[4]/t[5],1) if t[5] else None,
                 "three_pct":round(100*t[6]/t[7],1) if t[7] else None,
-                "coverage":f"{n} games (verified players)",
+                "coverage":f"{n} defending-team games; {team_coverage:.1%} verified opponent player-game rows",
                 "matched_player_games":int(t[0])
             }
+    if any(output["teams"][team][pos] is None for team in team_ids for pos in POSITIONS):
+        print("Incomplete team/position coverage; no publication.")
+        return
     OUTPUT.parent.mkdir(exist_ok=True)
     OUTPUT.write_text(json.dumps(output,indent=2)+"\n",encoding="utf-8")
     print("Wrote independently verified position-defense output:",OUTPUT)
