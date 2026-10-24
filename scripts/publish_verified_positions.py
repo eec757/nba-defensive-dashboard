@@ -20,6 +20,25 @@ TEAM_IDS=dict(zip("ATL BOS BRK CHI CHO CLE DAL DEN DET GSW HOU IND LAC LAL MEM M
 if len(TEAM_IDS) != 30 or len(set(TEAM_IDS.values())) != 30:
     raise ValueError("NBA team ID mapping must contain 30 unique teams")
 
+def position_metrics(totals, defending_games):
+    """Calculate per-defending-game position totals and shot percentages."""
+    if defending_games <= 0:
+        raise ValueError("Defending games must be positive")
+    if len(totals) != 8:
+        raise ValueError("Expected player rows, points, rebounds, assists, FGM, FGA, 3PM, 3PA")
+    count, pts, reb, ast, fgm, fga, fg3m, fg3a = totals
+    if min(count, pts, reb, ast, fgm, fga, fg3m, fg3a) < 0:
+        raise ValueError("Negative counting statistic")
+    if fgm > fga or fg3m > fg3a or fg3m > fgm or fg3a > fga:
+        raise ValueError("Inconsistent shooting totals")
+    return {
+        "points_allowed": round(pts / defending_games, 2),
+        "rebounds_allowed": round(reb / defending_games, 2),
+        "assists_allowed": round(ast / defending_games, 2),
+        "fg_pct": round(100 * fgm / fga, 1) if fga else None,
+        "three_pct": round(100 * fg3m / fg3a, 1) if fg3a else None,
+    }
+
 def main():
     if not CROSSWALK.exists():
         print("No verified crosswalk provided; position defense remains unavailable.")
@@ -108,11 +127,7 @@ def main():
                 output["teams"][team][pos]=None
                 continue
             output["teams"][team][pos]={
-                "points_allowed":round(t[1]/n,2),
-                "rebounds_allowed":round(t[2]/n,2),
-                "assists_allowed":round(t[3]/n,2),
-                "fg_pct":round(100*t[4]/t[5],1) if t[5] else None,
-                "three_pct":round(100*t[6]/t[7],1) if t[7] else None,
+                **position_metrics(t,n),
                 "coverage":f"{n} defending-team games; {team_coverage:.1%} verified opponent player-game rows",
                 "matched_player_games":int(t[0])
             }
