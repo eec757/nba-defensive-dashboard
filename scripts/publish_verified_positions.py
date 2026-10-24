@@ -39,6 +39,30 @@ def position_metrics(totals, defending_games):
         "three_pct": round(100 * fg3m / fg3a, 1) if fg3a else None,
     }
 
+def summarize_position_rows(rows, verified, team_ids):
+    """Aggregate opponent player logs by defending team and verified position."""
+    names = {str(v): k for k, v in team_ids.items()}
+    unknown = {str(row[1]) for row in rows if str(row[1]) not in names}
+    if unknown:
+        raise ValueError(f"Unknown opponent team IDs in game logs: {sorted(unknown)}")
+    totals = defaultdict(lambda: [0.0] * 8)
+    all_team_games = defaultdict(set)
+    verified_team_rows = defaultdict(int)
+    all_team_rows = defaultdict(int)
+    for pid, opp, game_id, pts, reb, ast, fgm, fga, fg3m, fg3a in rows:
+        team = names[str(opp)]
+        all_team_games[team].add(game_id)
+        all_team_rows[team] += 1
+        pos = verified.get(str(pid))
+        if not pos:
+            continue
+        verified_team_rows[team] += 1
+        key = (team, pos)
+        totals[key][0] += 1
+        for i, value in enumerate((pts, reb, ast, fgm, fga, fg3m, fg3a), 1):
+            totals[key][i] += float(value or 0)
+    return totals, all_team_games, verified_team_rows, all_team_rows
+
 def main():
     if not CROSSWALK.exists():
         print("No verified crosswalk provided; position defense remains unavailable.")
@@ -91,31 +115,7 @@ def main():
         return
     # NBA team ID -> abbreviation; keyed by opponent team, not player team.
     team_ids=TEAM_IDS
-    names={v:k for k,v in team_ids.items()}
-    unknown_opponents={str(row[1]) for row in rows if str(row[1]) not in names}
-    if unknown_opponents:
-        raise ValueError(f"Unknown opponent team IDs in game logs: {sorted(unknown_opponents)}")
-    totals=defaultdict(lambda: [0.0]*8)
-    games=defaultdict(set)
-    all_team_games=defaultdict(set)
-    verified_team_rows=defaultdict(int)
-    all_team_rows=defaultdict(int)
-    for pid,opp,game_id,pts,reb,ast,fgm,fga,fg3m,fg3a in rows:
-        pos=verified.get(str(pid))
-        team=names.get(str(opp))
-        if not team:
-            continue
-        all_team_games[team].add(game_id)
-        all_team_rows[team]+=1
-        if not pos:
-            continue
-        verified_team_rows[team]+=1
-        key=(team,pos)
-        games[key].add(game_id)
-        values=(pts,reb,ast,fgm,fga,fg3m,fg3a)
-        totals[key][0]+=1
-        for i,value in enumerate(values,1):
-            totals[key][i]+=float(value or 0)
+    totals, all_team_games, verified_team_rows, all_team_rows = summarize_position_rows(rows, verified, team_ids)
     output={"season":"2026-27","verified_game_row_coverage":round(coverage,4),"teams":{}}
     for team in team_ids:
         output["teams"][team]={}
