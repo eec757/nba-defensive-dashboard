@@ -63,6 +63,24 @@ def summarize_position_rows(rows, verified, team_ids):
             totals[key][i] += float(value or 0)
     return totals, all_team_games, verified_team_rows, all_team_rows
 
+def validate_independent_evidence(record):
+    """Fail closed: both exact primary profile URLs and explicit human approval."""
+    pid = record["nba_player_id"].strip()
+    bref = record["bref_id"].strip()
+    nba_url = record.get("nba_profile_url", "").strip()
+    bref_url = record.get("bref_profile_url", "").strip()
+    reviewer = record.get("reviewed_by", "").strip()
+    reviewed_on = record.get("reviewed_on", "").strip()
+    if not (nba_url.startswith("https://www.nba.com/player/" + pid + "/") or
+            nba_url == "https://www.nba.com/player/" + pid):
+        raise ValueError("Verified entry needs exact NBA player profile URL")
+    if bref_url != f"https://www.basketball-reference.com/players/{bref[0]}/{bref}.html":
+        raise ValueError("Verified entry needs exact Basketball-Reference profile URL")
+    if not reviewer or not reviewed_on:
+        raise ValueError("Verified entry requires explicit reviewer and review date")
+    # URL structure alone is not proof of identity; human review is mandatory.
+    return True
+
 def main():
     if not CROSSWALK.exists():
         print("No verified crosswalk provided; position defense remains unavailable.")
@@ -89,6 +107,7 @@ def main():
         if domain in {"nba.com", "www.nba.com", "basketball-reference.com",
                       "www.basketball-reference.com"}:
             raise ValueError("Single-provider player profile cannot verify cross-source identity")
+        validate_independent_evidence(r)
         if pid in verified or bref in bref_seen:
             raise ValueError("Duplicate verified NBA or BRef identity")
         verified[pid]=pos
