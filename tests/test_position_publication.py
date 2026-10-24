@@ -12,6 +12,27 @@ publisher = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(publisher)
 
 class PublicationSafetyTests(unittest.TestCase):
+    def test_position_metrics_use_all_defending_games(self):
+        # Two games, with three verified opponent player appearances.
+        # Totals: rows, PTS, REB, AST, FGM, FGA, 3PM, 3PA.
+        result = publisher.position_metrics([3, 50, 20, 12, 18, 40, 6, 15], 2)
+        self.assertEqual(result, {
+            "points_allowed": 25.0,
+            "rebounds_allowed": 10.0,
+            "assists_allowed": 6.0,
+            "fg_pct": 45.0,
+            "three_pct": 40.0,
+        })
+
+    def test_position_metrics_handle_no_shot_attempts(self):
+        result = publisher.position_metrics([1, 0, 3, 2, 0, 0, 0, 0], 1)
+        self.assertIsNone(result["fg_pct"])
+        self.assertIsNone(result["three_pct"])
+
+    def test_position_metrics_reject_impossible_shooting(self):
+        with self.assertRaisesRegex(ValueError, "Inconsistent shooting"):
+            publisher.position_metrics([1, 20, 2, 1, 11, 10, 2, 4], 1)
+
     def test_canonical_team_id_mapping(self):
         self.assertEqual(len(publisher.TEAM_IDS), 30)
         self.assertEqual(len(set(publisher.TEAM_IDS.values())), 30)
