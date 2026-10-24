@@ -40,6 +40,8 @@ def main():
                 if pid and candidate.get("status") == "single_name_candidate":
                     candidates[pid] = candidate
     candidate_report_available = candidate_file.exists()
+    if candidate_report_available and not candidates:
+        raise ValueError("Roster audit produced no single-name player candidates")
     top = []
     for player_id, game_rows in frequency.most_common(25):
         candidate = candidates.get(player_id, {})
@@ -61,6 +63,7 @@ def main():
         "top_25_verification_candidates": top,
         "candidate_report_available": candidate_report_available,
         "matched_top_25_candidates": sum(bool(entry["candidate_bref_id"]) for entry in top),
+        "candidate_rows_loaded": len(candidates),
         "total_defending_team_games": sum(active.values()),
         "opponent_player_rows_by_team": dict(sorted(all_rows.items())),
         "unknown_opponent_ids": [],
