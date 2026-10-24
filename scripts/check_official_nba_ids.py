@@ -18,8 +18,8 @@ SUMMARY = Path("reports/nba_official_id_name_summary_2027.json")
 def normalize(value):
     value = unicodedata.normalize("NFKD", value or "")
     value = "".join(c for c in value if not unicodedata.combining(c))
-    value = re.sub(r"\\(TW\\)", "", value, flags=re.I)
-    value = re.sub(r"\\b(jr|sr|ii|iii|iv)\\b", "", value, flags=re.I)
+    value = re.sub(r"\(TW\)", "", value, flags=re.I)
+    value = re.sub(r"\b(jr|sr|ii|iii|iv)\b", "", value, flags=re.I)
     return re.sub(r"[^a-z0-9]", "", value.lower())
 
 def main():
