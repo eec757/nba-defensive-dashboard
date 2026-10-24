@@ -1,102 +1,125 @@
-"""Collect NBA team scoring metrics from official NBA game logs.
+"""Build season-separated team scoring summaries from downloadable NBA-derived CSVs.
 
-A failed or incomplete fetch never overwrites the last successful snapshot.
+Source: BoxScore Lab (CC BY 4.0), https://boxscorelab.com/downloads/
+No guessed values: unexpected schemas fail safely without changing existing data.
 """
+import csv
+import io
 import json
-import random
 import sys
 import time
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
-from nba_api.stats.endpoints import leaguegamelog
-from requests.exceptions import RequestException
+import requests
 
 SEASONS = ("2025-26", "2026-27")
 OUTPUT = Path("data/summary.json")
-ATTEMPTS = 3
-TIMEOUT_SECONDS = 35
+BASE_URL = "https://boxscorelab.com/downloads"
+SESSION = requests.Session()
+SESSION.headers.update({"User-Agent": "nba-defensive-dashboard/1.0 (CSV data update)"})
 
 
-def fetch_rows(season):
-    for attempt in range(1, ATTEMPTS + 1):
+def download(season):
+    url = f"{BASE_URL}/{season}-team-game-results.csv"
+    for attempt in range(1, 4):
         try:
-            print(f"Fetching {season} team game logs (attempt {attempt}/{ATTEMPTS})", flush=True)
-            response = leaguegamelog.LeagueGameLog(
-                season=season,
-                season_type_all_star="Regular Season",
-                player_or_team_abbreviation="T",
-                timeout=TIMEOUT_SECONDS,
-            )
-            rows = response.get_normalized_dict().get("LeagueGameLog")
-            if not isinstance(rows, list):
-                raise ValueError(f"Unexpected NBA API response for {season}")
+            response = SESSION.get(url, timeout=25)
+            response.raise_for_status()
+            reader = csv.DictReader(io.StringIO(response.text.lstrip("\ufeff")))
+            if not reader.fieldnames:
+                raise ValueError("CSV missing headers")
+            rows = list(reader)
+            print(f"{season}: downloaded {len(rows)} rows; fields: {reader.fieldnames}", flush=True)
             return rows
-        except (RequestException, ValueError, KeyError) as exc:
-            print(f"NBA API request failed for {season}: {type(exc).__name__}: {exc}", file=sys.stderr, flush=True)
-            if attempt == ATTEMPTS:
-                raise RuntimeError(
-                    f"NBA.com could not provide {season} game logs after {ATTEMPTS} attempts. "
-                    "This may be an NBA.com timeout or GitHub-hosted runner access restriction. "
-                    "Existing data has not been modified."
-                ) from exc
-            time.sleep(3 * attempt + random.uniform(0, 2))
+        except (requests.RequestException, ValueError) as exc:
+            print(f"{season}: CSV attempt {attempt}/3 failed: {exc}", file=sys.stderr, flush=True)
+            if attempt == 3:
+                raise RuntimeError(f"Unable to download {season} from {url}; existing data preserved") from exc
+            time.sleep(attempt * 3)
 
 
-def summarize(rows):
+def normalized(row):
+    return {str(k).strip().lower().replace("-", "_").replace(" ", "_"): v for k, v in row.items() if k is not None}
+
+
+def pick(row, *names):
+    for name in names:
+        value = row.get(name)
+        if value is not None and str(value).strip() != "":
+            return value
+    return None
+
+
+def number(value):
+    return float(str(value).replace(",", ""))
+
+
+def summarize(raw_rows, season):
+    rows = [normalized(row) for row in raw_rows]
+    if not rows:
+        # Empty new-season files are legitimate before games are completed.
+        return {"games": 0, "teams": []}
+
+    totals = defaultdict(lambda: {"team": "", "gp": 0, "pts": 0.0, "allowed": 0.0})
     games = defaultdict(list)
     for row in rows:
-        if row.get("GAME_ID") and row.get("TEAM_ID"):
-            games[str(row["GAME_ID"])].append(row)
+        game_id = pick(row, "game_id", "gameid", "id")
+        team = pick(row, "team", "team_abbreviation", "team_abbr", "team_code", "team_id")
+        pts = pick(row, "pts", "points", "team_pts", "team_points")
+        if game_id is None or team is None or pts is None:
+            raise ValueError(f"{season}: required game/team/points fields missing. Available: {list(row)}")
+        games[str(game_id)].append((str(team), number(pts)))
 
-    totals = defaultdict(lambda: {"team": "", "gp": 0, "pts": 0, "allowed": 0})
     completed = 0
     for sides in games.values():
-        if len(sides) != 2 or sides[0]["TEAM_ID"] == sides[1]["TEAM_ID"]:
-            continue
-        if any(side.get("PTS") is None for side in sides):
+        if len(sides) != 2 or sides[0][0] == sides[1][0]:
             continue
         completed += 1
-        a, b = sides
-        for team, opponent in ((a, b), (b, a)):
-            t = totals[str(team["TEAM_ID"])]
-            t["team"] = team["TEAM_ABBREVIATION"]
-            t["gp"] += 1
-            t["pts"] += int(team["PTS"])
-            t["allowed"] += int(opponent["PTS"])
+        for (team, pts), (_, allowed) in ((sides[0], sides[1]), (sides[1], sides[0])):
+            item = totals[team]
+            item["team"] = team
+            item["gp"] += 1
+            item["pts"] += pts
+            item["allowed"] += allowed
 
+    if rows and not completed:
+        raise ValueError(f"{season}: downloaded {len(rows)} rows but could not pair any completed games")
     teams = []
-    for t in totals.values():
-        if t["gp"]:
-            teams.append({
-                "team": t["team"],
-                "gp": t["gp"],
-                "ppg": round(t["pts"] / t["gp"], 2),
-                "opp_ppg": round(t["allowed"] / t["gp"], 2),
-                "quality": "Derived from NBA official game logs",
-            })
-    for field, metric, descending in (
+    for item in totals.values():
+        gp = item["gp"]
+        teams.append({
+            "team": item["team"],
+            "gp": gp,
+            "ppg": round(item["pts"] / gp, 2),
+            "opp_ppg": round(item["allowed"] / gp, 2),
+            "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+        })
+    for field, metric, reverse in (
         ("scoring_rank", "ppg", True),
         ("defense_rank", "opp_ppg", False),
     ):
-        ordered = sorted(teams, key=lambda t: (-t[metric] if descending else t[metric], t["team"]))
-        for rank, team in enumerate(ordered, 1):
-            team[field] = rank
+        ordered = sorted(teams, key=lambda t: (-t[metric] if reverse else t[metric], t["team"]))
+        for rank, item in enumerate(ordered, 1):
+            item[field] = rank
     return {"games": completed, "teams": sorted(teams, key=lambda t: t["team"])}
 
 
 def main():
-    # Fetch both seasons before writing anything: no partial snapshots.
-    seasons = {season: summarize(fetch_rows(season)) for season in SEASONS}
+    seasons = {season: summarize(download(season), season) for season in SEASONS}
     if not seasons["2025-26"]["teams"]:
-        raise RuntimeError("NBA.com returned no completed 2025-26 games; refusing to overwrite existing data.")
-    result = {"updated_at": datetime.now(timezone.utc).isoformat(), "seasons": seasons}
+        raise RuntimeError("Historical season has no teams; refusing to replace existing snapshot")
+    result = {
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "source": "BoxScore Lab, https://boxscorelab.com/downloads/ (CC BY 4.0; NBA-derived)",
+        "seasons": seasons,
+    }
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    temporary = OUTPUT.with_suffix(".tmp")
-    temporary.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
-    temporary.replace(OUTPUT)
-    print(f"Updated {OUTPUT} successfully", flush=True)
+    tmp = OUTPUT.with_suffix(".tmp")
+    tmp.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    tmp.replace(OUTPUT)
+    print(f"Wrote {OUTPUT}", flush=True)
 
 
 if __name__ == "__main__":
