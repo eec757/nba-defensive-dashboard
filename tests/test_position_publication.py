@@ -25,6 +25,19 @@ class PublicationSafetyTests(unittest.TestCase):
         row["reviewed_on"] = "2026-10-24"
         self.assertTrue(publisher.validate_independent_evidence(row))
 
+    def test_invalid_or_future_review_dates_rejected(self):
+        row = {
+            "nba_player_id": "1631096", "bref_id": "holmgch01",
+            "nba_profile_url": "https://www.nba.com/player/1631096/chet-holmgren",
+            "bref_profile_url": "https://www.basketball-reference.com/players/h/holmgch01.html",
+            "reviewed_by": "human-reviewer", "reviewed_on": "not-a-date"
+        }
+        with self.assertRaisesRegex(ValueError, "valid ISO"):
+            publisher.validate_independent_evidence(row)
+        row["reviewed_on"] = "2099-01-01"
+        with self.assertRaisesRegex(ValueError, "future"):
+            publisher.validate_independent_evidence(row)
+
     def test_mismatched_primary_profile_ids_rejected(self):
         row = {
             "nba_player_id": "1631096", "bref_id": "holmgch01",
