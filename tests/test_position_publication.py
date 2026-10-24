@@ -156,7 +156,7 @@ class PublicationSafetyTests(unittest.TestCase):
                     encoding="utf-8")
                 publisher.CROSSWALK = Path("data/verified_player_ids_2027.csv")
                 publisher.OUTPUT = Path("data/position_defense_2027.json")
-                with self.assertRaisesRegex(ValueError, "Single-provider"):
+                with self.assertRaisesRegex(ValueError, "independently link"):
                     publisher.main()
                 self.assertFalse(publisher.OUTPUT.exists())
             finally:
