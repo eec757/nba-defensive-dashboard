@@ -16,6 +16,8 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install "duckdb>=1.3,<2"
+      - name: Remove stale position output before validation
+        run: rm -f data/position_defense_2027.json
       - name: Publish only with verified ID evidence and 95 percent coverage
         run: python scripts/publish_verified_positions.py
       - name: Commit verified output if created
