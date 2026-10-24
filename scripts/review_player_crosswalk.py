@@ -72,7 +72,7 @@ def main():
                    "regular_season_games","crosswalk_status","basketball_reference_player_url",
                    "nba_player_profile_url","independent_evidence_url","identity_reviewed","review_notes"]
     with (OUT/"verification_priority_2027.csv").open("w",encoding="utf-8",newline="") as f:
-        writer=csv.DictWriter(f,fieldnames=review_fields)
+        writer=csv.DictWriter(f,fieldnames=review_fields,extrasaction="ignore")
         writer.writeheader()
         for index,r in enumerate(review,1):
             bref=r["bref_id"]
