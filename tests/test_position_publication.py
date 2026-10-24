@@ -12,6 +12,29 @@ publisher = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(publisher)
 
 class PublicationSafetyTests(unittest.TestCase):
+    def test_two_primary_urls_still_require_human_review(self):
+        row = {
+            "nba_player_id": "1631096", "bref_id": "holmgch01",
+            "nba_profile_url": "https://www.nba.com/player/1631096/chet-holmgren",
+            "bref_profile_url": "https://www.basketball-reference.com/players/h/holmgch01.html",
+            "reviewed_by": "", "reviewed_on": ""
+        }
+        with self.assertRaisesRegex(ValueError, "reviewer"):
+            publisher.validate_independent_evidence(row)
+        row["reviewed_by"] = "human-reviewer"
+        row["reviewed_on"] = "2026-10-24"
+        self.assertTrue(publisher.validate_independent_evidence(row))
+
+    def test_mismatched_primary_profile_ids_rejected(self):
+        row = {
+            "nba_player_id": "1631096", "bref_id": "holmgch01",
+            "nba_profile_url": "https://www.nba.com/player/1631114/jalen-williams",
+            "bref_profile_url": "https://www.basketball-reference.com/players/h/holmgch01.html",
+            "reviewed_by": "human-reviewer", "reviewed_on": "2026-10-24"
+        }
+        with self.assertRaisesRegex(ValueError, "NBA player profile"):
+            publisher.validate_independent_evidence(row)
+
     def test_opponent_aggregation_uses_defending_team_and_game_count(self):
         okc = publisher.TEAM_IDS["OKC"]
         bos = publisher.TEAM_IDS["BOS"]
