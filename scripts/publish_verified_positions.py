@@ -96,6 +96,13 @@ def validate_independent_evidence(record):
         raise ValueError("Review date must be valid ISO YYYY-MM-DD") from exc
     if reviewed_date > date.today():
         raise ValueError("Review date cannot be in the future")
+    position_source = record.get("position_source", "").strip()
+    parsed_position = urlparse(position_source)
+    if (parsed_position.scheme != "https" or
+            (parsed_position.hostname or "").lower() not in {
+                "basketball-reference.com", "www.basketball-reference.com"
+            } or not parsed_position.path.endswith("/2027.html")):
+        raise ValueError("Verified entry requires 2026-27 Basketball-Reference season position source")
     # URL structure alone is not proof of identity; human review is mandatory.
     return True
 
