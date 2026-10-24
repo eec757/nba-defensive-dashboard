@@ -1,0 +1,28 @@
+name: Audit NBA Player Matching
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install audit dependencies
+        run: pip install requests "duckdb>=1.3,<2"
+      - name: Audit 30 teams and regular-season game-log coverage
+        run: python scripts/audit_league_matching.py
+      - name: Upload matching audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nba-player-matching-audit-2027
+          path: reports/
+          if-no-files-found: warn
