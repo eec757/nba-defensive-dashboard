@@ -4,6 +4,7 @@ Crosswalk CSV columns: bref_id,nba_player_id,position,verification_source,verifi
 All five positions must have adequate game-log coverage before publication.
 """
 import csv
+from datetime import date
 import json
 from urllib.parse import urlparse
 from collections import defaultdict
@@ -78,6 +79,12 @@ def validate_independent_evidence(record):
         raise ValueError("Verified entry needs exact Basketball-Reference profile URL")
     if not reviewer or not reviewed_on:
         raise ValueError("Verified entry requires explicit reviewer and review date")
+    try:
+        reviewed_date = date.fromisoformat(reviewed_on)
+    except ValueError as exc:
+        raise ValueError("Review date must be valid ISO YYYY-MM-DD") from exc
+    if reviewed_date > date.today():
+        raise ValueError("Review date cannot be in the future")
     # URL structure alone is not proof of identity; human review is mandatory.
     return True
 
