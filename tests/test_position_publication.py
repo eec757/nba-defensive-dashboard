@@ -12,6 +12,31 @@ publisher = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(publisher)
 
 class PublicationSafetyTests(unittest.TestCase):
+    def test_opponent_aggregation_uses_defending_team_and_game_count(self):
+        okc = publisher.TEAM_IDS["OKC"]
+        bos = publisher.TEAM_IDS["BOS"]
+        rows = [
+            ("100", okc, "g1", 20, 5, 4, 8, 16, 2, 6),
+            ("101", okc, "g1", 10, 3, 2, 4, 8, 1, 3),
+            ("100", okc, "g2", 16, 7, 6, 6, 12, 2, 4),
+            ("100", bos, "g3", 22, 8, 3, 9, 18, 3, 8),
+        ]
+        totals, games, covered, all_rows = publisher.summarize_position_rows(
+            rows, {"100": "PG", "101": "SG"}, publisher.TEAM_IDS
+        )
+        self.assertEqual(len(games["OKC"]), 2)
+        self.assertEqual(len(games["BOS"]), 1)
+        self.assertEqual((covered["OKC"], all_rows["OKC"]), (3, 3))
+        self.assertEqual(totals["OKC", "PG"][1], 36)
+        self.assertEqual(totals["OKC", "SG"][1], 10)
+        self.assertEqual(publisher.position_metrics(totals["OKC", "PG"], 2)["points_allowed"], 18.0)
+        self.assertEqual(publisher.position_metrics(totals["BOS", "PG"], 1)["points_allowed"], 22.0)
+
+    def test_opponent_aggregation_rejects_unknown_team(self):
+        rows = [("100", "999", "g1", 2, 1, 0, 1, 2, 0, 0)]
+        with self.assertRaisesRegex(ValueError, "Unknown opponent team"):
+            publisher.summarize_position_rows(rows, {"100": "PG"}, publisher.TEAM_IDS)
+
     def test_position_metrics_use_all_defending_games(self):
         # Two games, with three verified opponent player appearances.
         # Totals: rows, PTS, REB, AST, FGM, FGA, 3PM, 3PA.
