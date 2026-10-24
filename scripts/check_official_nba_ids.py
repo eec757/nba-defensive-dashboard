@@ -1,7 +1,7 @@
 """Independently check candidate NBA numeric IDs against nba_api's NBA player directory.
 This validates NBA-side ID/name only, NOT the Basketball-Reference-to-NBA identity link.
 Never changes verified flags or publishes dashboard statistics.
-Name mismatches are exported for manual review, not automatically resolved.
+Name mismatches are exported for manual review, not automatically resolved.\nTwo-way roster suffixes are removed for name comparison only.
 """
 import csv
 import json
@@ -59,11 +59,10 @@ def main():
         row["possible_name_variant"] = str(normalize(row["candidate_name"]) in normalize(row["nba_directory_name"]) or normalize(row["nba_directory_name"]) in normalize(row["candidate_name"])).lower()
         row["review_decision"] = "needs_human_review"
         row["independent_evidence_url"] = ""
-    if mismatches:
-        with MISMATCHES.open("w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=list(mismatches[0]))
-            writer.writeheader()
-            writer.writerows(mismatches)
+    with MISMATCHES.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=list(result[0]) + ["possible_name_variant", "review_decision", "independent_evidence_url"])
+        writer.writeheader()
+        writer.writerows(mismatches)
     print("NBA NAME MISMATCH REVIEW", json.dumps(mismatches), flush=True)
     summary = {"candidates": len(result), "status_counts": counts,
                "independent_bref_to_nba_link_verified": 0,
