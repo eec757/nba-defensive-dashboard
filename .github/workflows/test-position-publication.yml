@@ -1,0 +1,27 @@
+name: Test Position Publication Safety
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/publish_verified_positions.py'
+      - 'tests/test_position_publication.py'
+      - '.github/workflows/test-position-publication.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install test dependency
+        run: pip install "duckdb>=1.3,<2"
+      - name: Verify publication safeguards
+        run: python -m unittest discover -s tests -p "test_position_publication.py" -v
