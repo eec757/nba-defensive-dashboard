@@ -63,6 +63,32 @@ def main():
                 "nba_player_profile_url":("https://www.nba.com/player/"+pid) if pid else "",
                 "review_status":"needs_independent_id_evidence","review_notes":""})
     print("UNRESOLVED ID REVIEW",json.dumps({"count":len(unresolved),"players":[{"team":r["team"],"name":r["roster_name"],"bref_id":r["bref_id"],"nba_id":r["nba_player_id"]} for r in unresolved]}),flush=True)
+    # Prioritize review by actual regular-season appearances, not roster size.
+    # Every player ID remains unverified until independent evidence is reviewed.
+    review=[r for r in results if r["status"]=="single_name_candidate"]
+    review.sort(key=lambda r:(r["crosswalk_status"]=="corroborated_but_name_derived",
+                              -int(r["regular_season_games"] or 0),r["team"],r["roster_name"]))
+    review_fields=["priority","team","roster_name","position","bref_id","nba_player_id",
+                   "regular_season_games","crosswalk_status","basketball_reference_player_url",
+                   "nba_player_profile_url","independent_evidence_url","identity_reviewed","review_notes"]
+    with (OUT/"verification_priority_2027.csv").open("w",encoding="utf-8",newline="") as f:
+        writer=csv.DictWriter(f,fieldnames=review_fields)
+        writer.writeheader()
+        for index,r in enumerate(review,1):
+            bref=r["bref_id"]
+            pid=r["nba_player_id"]
+            writer.writerow({**r,"priority":index,
+                "basketball_reference_player_url":("https://www.basketball-reference.com/players/"+bref[0]+"/"+bref+".html") if bref else "",
+                "nba_player_profile_url":("https://www.nba.com/player/"+pid) if pid else "",
+                "independent_evidence_url":"","identity_reviewed":"false","review_notes":""})
+    print("VERIFICATION PRIORITY",json.dumps({
+        "total":len(review),
+        "unresolved":sum(r["crosswalk_status"]!="corroborated_but_name_derived" for r in review),
+        "top_10":[{"team":r["team"],"name":r["roster_name"],
+                   "games":int(r["regular_season_games"] or 0),
+                   "status":r["crosswalk_status"]} for r in review[:10]],
+        "publication_ready":False
+    }),flush=True)
     counts=collections.Counter(row["crosswalk_status"] for row in results)
     summary={"roster_entries":len(results),"status_counts":dict(counts),
       "note":"Crosswalk source includes name-derived mappings. Matching numeric IDs is corroboration, not necessarily independent verification. No positions published.",
