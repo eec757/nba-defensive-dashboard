@@ -1,1 +1,556 @@
-{"updated_at":null,"seasons":{"2025-26":{"games":0,"teams":[]},"2026-27":{"games":0,"teams":[]}}}
+{
+  "updated_at": "2026-10-24T07:16:52.032647+00:00",
+  "source": "BoxScore Lab, https://boxscorelab.com/downloads/ (CC BY 4.0; NBA-derived)",
+  "seasons": {
+    "2025-26": {
+      "games": 1230,
+      "teams": [
+        {
+          "team": "ATL",
+          "gp": 82,
+          "ppg": 118.46,
+          "opp_ppg": 116.05,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 6,
+          "defense_rank": 18
+        },
+        {
+          "team": "BKN",
+          "gp": 82,
+          "ppg": 105.93,
+          "opp_ppg": 115.91,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 30,
+          "defense_rank": 17
+        },
+        {
+          "team": "BOS",
+          "gp": 82,
+          "ppg": 114.85,
+          "opp_ppg": 107.16,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 19,
+          "defense_rank": 1
+        },
+        {
+          "team": "CHA",
+          "gp": 82,
+          "ppg": 116.01,
+          "opp_ppg": 111.18,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 13,
+          "defense_rank": 7
+        },
+        {
+          "team": "CHI",
+          "gp": 82,
+          "ppg": 116.3,
+          "opp_ppg": 121.51,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 12,
+          "defense_rank": 28
+        },
+        {
+          "team": "CLE",
+          "gp": 82,
+          "ppg": 119.52,
+          "opp_ppg": 115.41,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 4,
+          "defense_rank": 15
+        },
+        {
+          "team": "DAL",
+          "gp": 82,
+          "ppg": 114.12,
+          "opp_ppg": 119.63,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 23,
+          "defense_rank": 23
+        },
+        {
+          "team": "DEN",
+          "gp": 82,
+          "ppg": 122.07,
+          "opp_ppg": 116.93,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 1,
+          "defense_rank": 21
+        },
+        {
+          "team": "DET",
+          "gp": 82,
+          "ppg": 117.77,
+          "opp_ppg": 109.61,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 8,
+          "defense_rank": 3
+        },
+        {
+          "team": "GSW",
+          "gp": 82,
+          "ppg": 114.61,
+          "opp_ppg": 115.17,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 22,
+          "defense_rank": 14
+        },
+        {
+          "team": "HOU",
+          "gp": 82,
+          "ppg": 115.23,
+          "opp_ppg": 110.01,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 18,
+          "defense_rank": 4
+        },
+        {
+          "team": "IND",
+          "gp": 82,
+          "ppg": 112.43,
+          "opp_ppg": 120.41,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 27,
+          "defense_rank": 25
+        },
+        {
+          "team": "LAC",
+          "gp": 82,
+          "ppg": 113.77,
+          "opp_ppg": 112.63,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 24,
+          "defense_rank": 10
+        },
+        {
+          "team": "LAL",
+          "gp": 82,
+          "ppg": 116.34,
+          "opp_ppg": 114.59,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 11,
+          "defense_rank": 11
+        },
+        {
+          "team": "MEM",
+          "gp": 82,
+          "ppg": 114.67,
+          "opp_ppg": 120.68,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 20,
+          "defense_rank": 26
+        },
+        {
+          "team": "MIA",
+          "gp": 82,
+          "ppg": 120.87,
+          "opp_ppg": 118.54,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 2,
+          "defense_rank": 22
+        },
+        {
+          "team": "MIL",
+          "gp": 82,
+          "ppg": 110.63,
+          "opp_ppg": 116.84,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 29,
+          "defense_rank": 20
+        },
+        {
+          "team": "MIN",
+          "gp": 82,
+          "ppg": 118.0,
+          "opp_ppg": 114.65,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 7,
+          "defense_rank": 12
+        },
+        {
+          "team": "NOP",
+          "gp": 82,
+          "ppg": 115.52,
+          "opp_ppg": 120.02,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 16,
+          "defense_rank": 24
+        },
+        {
+          "team": "NYK",
+          "gp": 82,
+          "ppg": 116.45,
+          "opp_ppg": 110.12,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 10,
+          "defense_rank": 5
+        },
+        {
+          "team": "OKC",
+          "gp": 82,
+          "ppg": 119.02,
+          "opp_ppg": 107.88,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 5,
+          "defense_rank": 2
+        },
+        {
+          "team": "ORL",
+          "gp": 82,
+          "ppg": 115.74,
+          "opp_ppg": 115.11,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 15,
+          "defense_rank": 13
+        },
+        {
+          "team": "PHI",
+          "gp": 82,
+          "ppg": 115.88,
+          "opp_ppg": 116.06,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 14,
+          "defense_rank": 19
+        },
+        {
+          "team": "PHX",
+          "gp": 82,
+          "ppg": 112.59,
+          "opp_ppg": 111.12,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 26,
+          "defense_rank": 6
+        },
+        {
+          "team": "POR",
+          "gp": 82,
+          "ppg": 115.48,
+          "opp_ppg": 115.77,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 17,
+          "defense_rank": 16
+        },
+        {
+          "team": "SAC",
+          "gp": 82,
+          "ppg": 111.0,
+          "opp_ppg": 121.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 28,
+          "defense_rank": 27
+        },
+        {
+          "team": "SAS",
+          "gp": 82,
+          "ppg": 119.83,
+          "opp_ppg": 111.52,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 3,
+          "defense_rank": 8
+        },
+        {
+          "team": "TOR",
+          "gp": 82,
+          "ppg": 114.63,
+          "opp_ppg": 111.8,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 21,
+          "defense_rank": 9
+        },
+        {
+          "team": "UTA",
+          "gp": 82,
+          "ppg": 117.59,
+          "opp_ppg": 126.01,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 9,
+          "defense_rank": 30
+        },
+        {
+          "team": "WAS",
+          "gp": 82,
+          "ppg": 112.9,
+          "opp_ppg": 124.88,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 25,
+          "defense_rank": 29
+        }
+      ]
+    },
+    "2026-27": {
+      "games": 28,
+      "teams": [
+        {
+          "team": "ATL",
+          "gp": 2,
+          "ppg": 130.0,
+          "opp_ppg": 103.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 1,
+          "defense_rank": 6
+        },
+        {
+          "team": "BKN",
+          "gp": 1,
+          "ppg": 103.0,
+          "opp_ppg": 110.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 26,
+          "defense_rank": 10
+        },
+        {
+          "team": "BOS",
+          "gp": 2,
+          "ppg": 110.0,
+          "opp_ppg": 112.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 17,
+          "defense_rank": 14
+        },
+        {
+          "team": "CHA",
+          "gp": 2,
+          "ppg": 95.5,
+          "opp_ppg": 115.5,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 28,
+          "defense_rank": 19
+        },
+        {
+          "team": "CHI",
+          "gp": 2,
+          "ppg": 112.0,
+          "opp_ppg": 130.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 15,
+          "defense_rank": 29
+        },
+        {
+          "team": "CLE",
+          "gp": 1,
+          "ppg": 106.0,
+          "opp_ppg": 114.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 24,
+          "defense_rank": 16
+        },
+        {
+          "team": "DAL",
+          "gp": 2,
+          "ppg": 115.5,
+          "opp_ppg": 116.5,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 12,
+          "defense_rank": 20
+        },
+        {
+          "team": "DEN",
+          "gp": 1,
+          "ppg": 84.0,
+          "opp_ppg": 96.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 29,
+          "defense_rank": 2
+        },
+        {
+          "team": "DET",
+          "gp": 2,
+          "ppg": 124.5,
+          "opp_ppg": 112.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 4,
+          "defense_rank": 15
+        },
+        {
+          "team": "GSW",
+          "gp": 2,
+          "ppg": 106.5,
+          "opp_ppg": 119.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 23,
+          "defense_rank": 21
+        },
+        {
+          "team": "HOU",
+          "gp": 2,
+          "ppg": 121.0,
+          "opp_ppg": 110.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 7,
+          "defense_rank": 11
+        },
+        {
+          "team": "IND",
+          "gp": 2,
+          "ppg": 114.0,
+          "opp_ppg": 120.5,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 14,
+          "defense_rank": 22
+        },
+        {
+          "team": "LAC",
+          "gp": 2,
+          "ppg": 119.0,
+          "opp_ppg": 110.5,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 10,
+          "defense_rank": 12
+        },
+        {
+          "team": "LAL",
+          "gp": 2,
+          "ppg": 126.0,
+          "opp_ppg": 111.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 2,
+          "defense_rank": 13
+        },
+        {
+          "team": "MEM",
+          "gp": 2,
+          "ppg": 117.0,
+          "opp_ppg": 105.5,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 11,
+          "defense_rank": 8
+        },
+        {
+          "team": "MIA",
+          "gp": 2,
+          "ppg": 108.5,
+          "opp_ppg": 129.5,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 20,
+          "defense_rank": 28
+        },
+        {
+          "team": "MIL",
+          "gp": 2,
+          "ppg": 120.5,
+          "opp_ppg": 130.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 8,
+          "defense_rank": 30
+        },
+        {
+          "team": "MIN",
+          "gp": 2,
+          "ppg": 123.0,
+          "opp_ppg": 99.5,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 6,
+          "defense_rank": 4
+        },
+        {
+          "team": "NOP",
+          "gp": 2,
+          "ppg": 119.5,
+          "opp_ppg": 121.5,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 9,
+          "defense_rank": 24
+        },
+        {
+          "team": "NYK",
+          "gp": 2,
+          "ppg": 101.5,
+          "opp_ppg": 106.5,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 27,
+          "defense_rank": 9
+        },
+        {
+          "team": "OKC",
+          "gp": 2,
+          "ppg": 106.0,
+          "opp_ppg": 94.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 25,
+          "defense_rank": 1
+        },
+        {
+          "team": "ORL",
+          "gp": 2,
+          "ppg": 109.0,
+          "opp_ppg": 123.5,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 19,
+          "defense_rank": 25
+        },
+        {
+          "team": "PHI",
+          "gp": 2,
+          "ppg": 110.0,
+          "opp_ppg": 103.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 18,
+          "defense_rank": 7
+        },
+        {
+          "team": "PHX",
+          "gp": 1,
+          "ppg": 83.0,
+          "opp_ppg": 124.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 30,
+          "defense_rank": 26
+        },
+        {
+          "team": "POR",
+          "gp": 2,
+          "ppg": 126.0,
+          "opp_ppg": 101.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 3,
+          "defense_rank": 5
+        },
+        {
+          "team": "SAC",
+          "gp": 2,
+          "ppg": 107.5,
+          "opp_ppg": 124.5,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 21,
+          "defense_rank": 27
+        },
+        {
+          "team": "SAS",
+          "gp": 2,
+          "ppg": 107.0,
+          "opp_ppg": 115.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 22,
+          "defense_rank": 18
+        },
+        {
+          "team": "TOR",
+          "gp": 2,
+          "ppg": 123.5,
+          "opp_ppg": 97.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 5,
+          "defense_rank": 3
+        },
+        {
+          "team": "UTA",
+          "gp": 2,
+          "ppg": 111.5,
+          "opp_ppg": 121.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 16,
+          "defense_rank": 23
+        },
+        {
+          "team": "WAS",
+          "gp": 2,
+          "ppg": 115.0,
+          "opp_ppg": 114.0,
+          "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
+          "scoring_rank": 13,
+          "defense_rank": 17
+        }
+      ]
+    }
+  }
+}
