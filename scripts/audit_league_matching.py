@@ -24,7 +24,7 @@ TEAM_IDS = dict(zip(TEAMS, [
 
 def normalize(value):
     value = html.unescape(str(value or "")).replace("\u00a0", " ")
-    value = re.sub(r"\\(TW\\)", "", value, flags=re.I)
+    value = re.sub(r"\(TW\)", "", value, flags=re.I)
     value = unicodedata.normalize("NFKD", value)
     value = "".join(c for c in value if not unicodedata.combining(c))
     return re.sub(r"[^a-z0-9]", "", value.casefold())
