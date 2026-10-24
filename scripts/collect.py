@@ -40,6 +40,34 @@ def download(season):
             time.sleep(attempt * 3)
 
 
+def download_player_logs(season):
+    """Optional enrichment: never interrupt working team updates."""
+    url = f"{BASE_URL}/{season}-player-game-results.csv"
+    try:
+        response = SESSION.get(url, timeout=20)
+        response.raise_for_status()
+        reader = csv.DictReader(io.StringIO(response.text.lstrip("\\ufeff")))
+        records = [normalized(row) for row in reader]
+        print(f"{season}: player log probe: {len(records)} rows, fields={reader.fieldnames}", flush=True)
+        return records
+    except (requests.RequestException, ValueError) as exc:
+        print(f"{season}: optional player logs unavailable: {exc}", flush=True)
+        return []
+
+
+def enrich_positions(season_data, player_rows, season):
+    """Populate only when team, opponent, position and game keys are verified."""
+    required = {"team", "opponent", "game_date", "position", "points", "field_goals_made",
+                "field_goal_attempts", "three_point_makes", "three_point_attempts"}
+    if not player_rows or not required.issubset(player_rows[0]):
+        print(f"{season}: position stats unavailable: missing validated player-game fields", flush=True)
+        return
+    # Do not infer player positions or opponent from player names or matchup text.
+    # Match each player record against a unique team-game row to prevent double counting.
+    # Until this validation is implemented, position splits remain explicitly unavailable.
+    print(f"{season}: player logs found; matchup validation pending, position stats withheld", flush=True)
+
+
 def normalized(row):
     return {str(k).strip().lower().replace("-", "_").replace(" ", "_"): v for k, v in row.items() if k is not None}
 
@@ -129,6 +157,8 @@ def summarize(raw_rows, season):
 
 def main():
     seasons = {season: summarize(download(season), season) for season in SEASONS}
+    for season in SEASONS:
+        enrich_positions(seasons[season], download_player_logs(season), season)
     if not seasons["2025-26"]["teams"]:
         raise RuntimeError("Historical season has no teams; refusing to replace existing snapshot")
     result = {
