@@ -25,6 +25,27 @@ This document records manually checked independent identity evidence. It does no
 - Position caution: NBA lists Guard-Forward; Basketball-Reference career profile lists Shooting Guard and Power Forward. Use independently evidenced **2026–27 season-specific** position, not a generic career position.
 - Publication status: **NOT PUBLISHED**. Manual evidence only; the gated verified crosswalk and all leaguewide/per-team coverage thresholds remain unchanged.
 
+
+## Cason Wallace — reviewed 2026-10-24
+
+- NBA player ID: `1641717`; Basketball-Reference ID: `wallaca01`.
+- NBA source: https://www.nba.com/player/1641717/cason-wallace
+- Basketball-Reference source: https://www.basketball-reference.com/players/w/wallaca01.html
+- Independent identifying details: Oklahoma City Thunder, born November 7 2003, Kentucky, tenth overall in 2023 NBA draft.
+- Basketball-Reference position: Shooting Guard (SG); NBA profile uses broader Guard.
+- Identity assessment: **independently corroborated by two primary profiles**.
+- Publication status: **NOT PUBLISHED**; season-specific position and leaguewide coverage gates still apply.
+
+## Ajay Mitchell — reviewed 2026-10-24
+
+- NBA player ID: `1642349`; Basketball-Reference ID: `mitchaj01`.
+- NBA source: https://www.nba.com/player/1642349/ajay-mitchell
+- Basketball-Reference source: https://www.basketball-reference.com/players/m/mitchaj01.html
+- Independent identifying details: Oklahoma City Thunder, born June 25 2002, UC Santa Barbara, 38th overall in 2024 NBA draft.
+- Basketball-Reference position: Shooting Guard (SG); NBA profile uses broader Guard.
+- Identity assessment: **independently corroborated by two primary profiles**.
+- Publication status: **NOT PUBLISHED**; season-specific position and leaguewide coverage gates still apply.
+
 ## Remaining work
 
 1. Review additional NBA/Basketball-Reference ID pairs using both primary profiles and matching biographical identifiers.
