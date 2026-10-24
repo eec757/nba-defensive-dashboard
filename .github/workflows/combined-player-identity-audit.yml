@@ -7,6 +7,8 @@ on:
     paths:
       - '.github/workflows/combined-player-identity-audit.yml'
       - 'scripts/diagnose_real_game_logs.py'
+      - 'scripts/audit_identity_approval_readiness.py'
+      - 'data/verified_player_ids_2027.csv'
 
 permissions:
   contents: read
@@ -28,6 +30,9 @@ jobs:
         run: test -s reports/player_matching_2027.csv
       - name: Compare roster candidates to real game logs
         run: python scripts/diagnose_real_game_logs.py
+      - name: Generate identity approval readiness report
+        if: always()
+        run: python scripts/audit_identity_approval_readiness.py
       - name: Upload audit evidence
         if: always()
         uses: actions/upload-artifact@v4
