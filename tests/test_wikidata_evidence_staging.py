@@ -24,6 +24,11 @@ class EvidenceStagingTests(unittest.TestCase):
         self.assertEqual(matches[0]["verified"],"false")
         self.assertEqual(matches[0]["verification_source"],"https://www.wikidata.org/entity/Q123")
 
+    def test_wikidata_slash_prefixed_bref_id(self):
+        matches,exceptions=classify([candidate()],[binding(bref="s/smithjo01")])
+        self.assertEqual(len(matches),1)
+        self.assertEqual(exceptions,[])
+
     def test_mismatch_remains_exception(self):
         matches,exceptions=classify([candidate()],[binding(bref="wrong01")])
         self.assertEqual(matches,[])
