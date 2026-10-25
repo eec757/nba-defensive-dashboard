@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/combined-player-identity-audit.yml'
       - 'scripts/diagnose_real_game_logs.py'
+      - 'scripts/build_identity_review_queue.py'
       - 'scripts/audit_identity_approval_readiness.py'
       - 'scripts/audit_wikidata_identity_statements.py'
       - 'data/verified_player_ids_2027.csv'
@@ -29,6 +30,8 @@ jobs:
         run: python scripts/audit_league_matching.py
       - name: Require generated roster report
         run: test -s reports/player_matching_2027.csv
+      - name: Build leaguewide unapproved identity review queue
+        run: python scripts/build_identity_review_queue.py
       - name: Compare roster candidates to real game logs
         run: python scripts/diagnose_real_game_logs.py
       - name: Generate identity approval readiness report
