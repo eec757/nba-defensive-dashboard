@@ -11,8 +11,9 @@ EXCEPTIONS = Path("reports/human_attested_crosswalk_exceptions_2027.csv")
 REVIEWER = "eec757"
 REVIEW_DATE = "2026-10-25"
 EXPECTED_NEW = 362
+REVIEWED_IDS = Path("data/reviewed_player_ids_2027.txt")
 
-def stage(proposal, evidence):
+def stage(proposal, evidence, reviewed_ids):
     supported = {(r["nba_player_id"], r["bref_id"]) for r in evidence if r["status"] == "supported"}
     rows, exceptions = [], []
     seen_nba, seen_bref = set(), set()
@@ -21,7 +22,7 @@ def stage(proposal, evidence):
         row = dict(original)
         pid, bref = row["nba_player_id"], row["bref_id"]
         was_approved = row.get("verified", "").strip().lower() == "true"
-        if not was_approved:
+        if not was_approved and pid in reviewed_ids:
             row["reviewed_by"] = REVIEWER
             row["reviewed_on"] = REVIEW_DATE
             row["verified"] = "true"
@@ -51,7 +52,15 @@ def main():
         proposal = list(reader)
     with SEASON_EVIDENCE.open(newline="", encoding="utf-8") as f:
         evidence = list(csv.DictReader(f))
-    rows, exceptions, new = stage(proposal, evidence)
+    if not REVIEWED_IDS.exists():
+        raise ValueError("Immutable list of the 362 reviewed NBA IDs is required; current roster candidates must not be assumed reviewed")
+    reviewed_ids = {line.strip() for line in REVIEWED_IDS.read_text(encoding="utf-8").splitlines() if line.strip() and not line.startswith("#")}
+    if len(reviewed_ids) != EXPECTED_NEW:
+        raise ValueError(f"Expected {EXPECTED_NEW} distinct reviewed NBA IDs; got {len(reviewed_ids)}")
+    rows, exceptions, new = stage(proposal, evidence, reviewed_ids)
+    proposed_ids = {r["nba_player_id"] for r in proposal}
+    for missing in sorted(reviewed_ids - proposed_ids):
+        exceptions.append({"nba_player_id":missing,"bref_id":"","reason":"Previously reviewed ID absent from current proposal"})
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     with EXCEPTIONS.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=["nba_player_id","bref_id","reason"])
