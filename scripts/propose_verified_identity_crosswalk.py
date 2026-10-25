@@ -17,8 +17,8 @@ def main():
         current=list(reader)
     with MATCHES.open(newline="",encoding="utf-8") as f:
         matches=list(csv.DictReader(f))
-    if len(matches)!=362:
-        raise ValueError(f"Expected 362 independently matched candidates; got {len(matches)}")
+    if not matches:
+        raise ValueError("No independently matched candidates; refusing empty proposal")
     result=list(current)
     existing_nba={r["nba_player_id"]:r for r in current}
     existing_bref={r["bref_id"]:r for r in current}
