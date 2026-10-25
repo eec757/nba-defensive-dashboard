@@ -35,6 +35,10 @@ def classify(rows, bindings):
         nba = b["nba"]["value"]
         item = b["item"]["value"]
         bref = b.get("bref",{}).get("value")
+        # Wikidata P2685 normally stores "h/holmgch01", not "holmgch01".
+        if bref and "/" in bref:
+            prefix, suffix = bref.split("/",1)
+            bref = suffix if len(prefix)==1 and suffix.startswith(prefix) else bref
         if bref:
             by_nba[nba][item].add(bref)
         else:
