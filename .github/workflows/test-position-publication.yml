@@ -37,6 +37,12 @@ jobs:
           assert staged == expected, f"Missing staged players: {expected - staged}"
           verified = [r for r in rows if r["verified"].strip().lower() == "true"]
           print(f"Crosswalk entries: {len(rows)}; verified flags: {len(verified)}; staged OKC players: {len(staged)}")
-          assert not verified, "Unexpected verified flag requires review"
+          approved_ids = {r["nba_player_id"] for r in verified}
+          assert approved_ids == expected, f"Unexpected approval set: {approved_ids ^ expected}"
+          for row in verified:
+              assert row["reviewed_by"] == "eec757", "Unexpected reviewer"
+              assert row["reviewed_on"] == "2026-10-24", "Unexpected review date"
+              assert row["position_source"], "Approved row missing season position evidence"
+          assert all(r["verified"].strip().lower() != "true" for r in rows if r["nba_player_id"] not in expected), "Other players must remain unapproved"
           assert not Path("data/position_defense_2027.json").exists(), "Unverified output must not be committed"
           PY
