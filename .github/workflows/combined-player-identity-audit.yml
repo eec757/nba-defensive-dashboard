@@ -34,6 +34,7 @@ on:
       - 'scripts/audit_wikidata_identity_statements.py'
       - 'reports/2027_targeted_identity_evidence_reconstruction.csv'
       - 'reports/2027_three_player_independent_corroboration.csv'
+      - 'reports/2027_official_nba_identity_evidence.csv'
       - 'data/verified_player_ids_2027.csv'
       - 'data/reviewed_player_ids_2027.txt'
       - 'docs/leaguewide-identity-review-attestation-2027.md'
