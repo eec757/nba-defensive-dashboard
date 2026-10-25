@@ -33,11 +33,28 @@ def main():
         r["game_rows"]+=1
         r["defending_teams"][team]+=1
         r["game_ids"].append(str(gid))
+    queue_path=Path("reports/identity_review_queue_2027.csv")
+    with queue_path.open(newline="",encoding="utf-8") as f:
+        queue=list(csv.DictReader(f))
+    by_id=defaultdict(list)
+    for candidate in queue:
+        by_id[candidate["nba_player_id"]].append(candidate)
+    for pid in unmatched:
+        matches=by_id.get(pid,[])
+        unmatched[pid]["queue_matches"]=[{
+            "roster_name":m.get("roster_name",""),
+            "bref_id":m.get("bref_id",""),
+            "team":m.get("team",""),
+            "position":m.get("position",""),
+            "position_source":m.get("season_position_source","")
+        } for m in matches]
     report={"total_game_rows":len(rows),"unmatched_game_rows":sum(r["game_rows"] for r in unmatched.values()),
             "unmatched_player_ids":len(unmatched),
             "players":[{"nba_player_id":pid,"game_rows":r["game_rows"],
                         "defending_teams":dict(r["defending_teams"]),
-                        "game_ids":sorted(set(r["game_ids"]))}
+                        "game_ids":sorted(set(r["game_ids"])),
+                        "review_queue_matches":r["queue_matches"],
+                        "in_existing_review_queue":bool(r["queue_matches"])}
                        for pid,r in sorted(unmatched.items(),key=lambda item:(-item[1]["game_rows"],item[0]))],
             "publication_ready":False,
             "note":"Unmatched players are investigation candidates only. No identity or position is inferred."}
