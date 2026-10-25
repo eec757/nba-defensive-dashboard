@@ -9,8 +9,6 @@ CURRENT=Path("data/verified_player_ids_2027.csv")
 MATCHES=Path("reports/wikidata_exact_matches_2027.csv")
 PROPOSAL=Path("reports/proposed_verified_player_ids_2027.csv")
 EXCEPTIONS=Path("reports/identity_promotion_exceptions_2027.csv")
-REVIEWER="eec757"
-REVIEW_DATE="2026-10-24"
 
 def main():
     with CURRENT.open(newline="",encoding="utf-8") as f:
@@ -31,10 +29,10 @@ def main():
         source=row["verification_source"].replace("http://www.wikidata.org/entity/","https://www.wikidata.org/wiki/").replace("https://www.wikidata.org/entity/","https://www.wikidata.org/wiki/")
         proposed={
             "bref_id":bref,"nba_player_id":pid,"position":row["position"],
-            "verification_source":source,"verified":"true",
+            "verification_source":source,"verified":"false",
             "nba_profile_url":row["nba_profile_url"],
             "bref_profile_url":row["bref_profile_url"],
-            "reviewed_by":REVIEWER,"reviewed_on":REVIEW_DATE,
+            "reviewed_by":"","reviewed_on":"",
             "position_source":row["position_source"]
         }
         reason=""
@@ -46,7 +44,8 @@ def main():
             if urlparse(source).hostname!="www.wikidata.org" or not urlparse(source).path.startswith("/wiki/Q"):
                 raise ValueError("Evidence must be exact Wikidata entity")
             validate_crosswalk_source(source)
-            validate_independent_evidence(proposed)
+            # Candidate URL fields are staged for review, not human-approved.
+            # Human attestation is required only when promoting to the live crosswalk.
             if pid in existing_nba and existing_nba[pid]["bref_id"]!=bref:
                 raise ValueError("Conflicting existing NBA ID")
             if bref in existing_bref and existing_bref[bref]["nba_player_id"]!=pid:
@@ -76,9 +75,9 @@ def main():
     print("PROMOTION_EXCEPTION_SAMPLE",json.dumps(exceptions[:5]))
     print("IDENTITY_PROMOTION_PROPOSAL",json.dumps({
         "existing":len(current),"candidate_exact_matches":len(matches),
-        "new_or_updated_approvals_in_proposal":promoted,"exceptions":len(exceptions),
+        "new_or_updated_unapproved_candidates":promoted,"exceptions":len(exceptions),
         "proposed_total":len(result),"published":False,
-        "warning":"Proposal only; live crosswalk and dashboard remain unchanged."}))
+        "warning":"Unapproved candidates only; no synthetic reviewer attestation. Live crosswalk unchanged."}))
     if exceptions:
         raise ValueError("Promotion proposal has conflicts; review exception artifact")
 
