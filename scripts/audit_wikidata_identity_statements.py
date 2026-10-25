@@ -50,7 +50,9 @@ def check(row, session):
         nba = statement_values(entity, "P3647")
         bref = statement_values(entity, "P2685")
         nba_match = row["nba_player_id"].strip() in nba
-        bref_match = row["bref_id"].strip() in bref
+        bref_id = row["bref_id"].strip()
+        # Wikidata P2685 stores the directory prefix, e.g. h/holmgch01.
+        bref_match = f"{bref_id[0]}/{bref_id}" in bref
         result.update(nba_statement_match=str(nba_match).lower(),
                       bref_statement_match=str(bref_match).lower(),
                       result="both_ids_match" if nba_match and bref_match else "id_mismatch",
