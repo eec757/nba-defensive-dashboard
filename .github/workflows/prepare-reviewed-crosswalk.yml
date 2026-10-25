@@ -52,6 +52,8 @@ jobs:
               if pid in reviewed:
                   assert (row['reviewed_by'],row['reviewed_on'])==('eec757','2026-10-25'),pid
           import shutil
+          Path('reports').mkdir(exist_ok=True)
+          shutil.copyfile('/tmp/attested/human_attested_crosswalk_2027.csv','reports/human_attested_crosswalk_2027.csv')
           shutil.copyfile('/tmp/attested/human_attested_crosswalk_2027.csv','data/verified_player_ids_2027.csv')
           print('Validated 362 reviewed + 4 existing identities; PR-only crosswalk prepared; position statistics untouched.')
           PY
@@ -59,7 +61,7 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add data/verified_player_ids_2027.csv
+          git add data/verified_player_ids_2027.csv reports/human_attested_crosswalk_2027.csv
           git diff --cached --quiet && exit 0
           git commit -m "Prepare verified 366-player crosswalk for human review"
           git push origin HEAD:review/approved-2027-crosswalk
