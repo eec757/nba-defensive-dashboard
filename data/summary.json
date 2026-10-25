@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-24T13:26:38.531511+00:00",
+  "updated_at": "2026-10-25T13:26:38.950152+00:00",
   "source": "BoxScore Lab, https://boxscorelab.com/downloads/ (CC BY 4.0; NBA-derived)",
   "seasons": {
     "2025-26": {
@@ -987,10 +987,10 @@
           "gp": 2,
           "ppg": 115.5,
           "opp_ppg": 116.5,
-          "fg_pct": 50.9,
+          "fg_pct": 50.6,
           "three_pm": 12.5,
-          "three_pa": 35.5,
-          "three_pct": 35.2,
+          "three_pa": 36.0,
+          "three_pct": 34.7,
           "opp_three_pm": 11.5,
           "opp_three_pa": 34.0,
           "opp_three_pct": 33.8,
@@ -1100,9 +1100,9 @@
           "three_pa": 30.5,
           "three_pct": 42.6,
           "opp_three_pm": 11.5,
-          "opp_three_pa": 37.0,
-          "opp_three_pct": 31.1,
-          "opp_fg_pct": 48.8,
+          "opp_three_pa": 37.5,
+          "opp_three_pct": 30.7,
+          "opp_fg_pct": 48.5,
           "defensive_shooting_games": 2,
           "position_defense": {
             "PG": null,
@@ -1472,7 +1472,7 @@
           "team": "POR",
           "gp": 2,
           "ppg": 126.0,
-          "opp_ppg": 101.0,
+          "opp_ppg": 101.5,
           "fg_pct": 47.9,
           "three_pm": 16.5,
           "three_pa": 47.5,
@@ -1498,7 +1498,7 @@
         {
           "team": "SAC",
           "gp": 2,
-          "ppg": 107.5,
+          "ppg": 108.0,
           "opp_ppg": 124.5,
           "fg_pct": 44.3,
           "three_pm": 8.0,
