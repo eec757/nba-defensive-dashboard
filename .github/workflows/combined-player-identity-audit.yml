@@ -31,6 +31,8 @@ on:
       - 'scripts/stage_human_attested_crosswalk.py'
       - 'docs/leaguewide-review-confirmation-2027.md'
       - 'scripts/audit_wikidata_identity_statements.py'
+      - 'reports/2027_targeted_identity_evidence_reconstruction.csv'
+      - 'reports/2027_three_player_independent_corroboration.csv'
       - 'data/verified_player_ids_2027.csv'
       - 'data/reviewed_player_ids_2027.txt'
       - 'docs/leaguewide-identity-review-attestation-2027.md'
@@ -92,6 +94,23 @@ jobs:
       - name: Test review packet never grants approval
         if: always()
         run: python -m unittest discover -s tests -p 'test_human_identity_review_packet.py' -v
+      - name: Check manually reviewed exception candidates remain pending
+        run: |
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+          p=Path('reports/2027_targeted_identity_evidence_reconstruction.csv')
+          rows=list(csv.DictReader(p.open()))
+          assert len(rows)==11 and len({r['nba_player_id'] for r in rows})==11
+          assert all(r['manual_review_reported']=='yes' and r['approval_status']=='pending' for r in rows)
+          assert all(r['candidate_bref_id'] and r['candidate_position'] in ('PG','SG','SF','PF','C') for r in rows)
+          by_id={r['nba_player_id']:r for r in rows}
+          assert by_id['1643633']['candidate_position']=='PF'
+          assert by_id['1643568']['candidate_position']=='SF'
+          assert by_id['1643813']['candidate_position']=='SG'
+          assert by_id['1643813']['candidate_bref_id']=='alpha-diallo-1'
+          print('11 candidates structurally complete; 0 approved. Independent evidence validation still required.')
+          PY
       - name: Test targeted identity review safety
         if: always()
         run: python -m unittest discover -s tests -p 'test_targeted_identity_review.py' -v
