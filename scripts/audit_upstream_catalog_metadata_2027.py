@@ -18,9 +18,19 @@ def main():
     tables=con.execute("""SELECT schema_name,table_name FROM duckdb_tables()
         WHERE database_name = 'nba' ORDER BY schema_name,table_name""").fetchall()
     candidates=[{"schema":s,"table":t} for s,t in tables if any(k in t.lower() for k in ("metadata","refresh","update","ingest","source","sync"))]
+    metadata_columns=[]
+    metadata_rows=[]
+    if ("main","metadata") in tables:
+        metadata_columns=[{"name":name,"type":typ} for name,typ in
+            con.execute("SELECT column_name,data_type FROM duckdb_columns() WHERE database_name='nba' AND schema_name='main' AND table_name='metadata' ORDER BY column_index").fetchall()]
+        # Bound the sample; metadata can contain opaque internal values.
+        sample=con.execute('SELECT * FROM nba.main.metadata LIMIT 10')
+        names=[d[0] for d in sample.description]
+        metadata_rows=[{k:str(v)[:300] if v is not None else None for k,v in zip(names,row)} for row in sample.fetchall()]
     report={"checked_at_utc":datetime.now(timezone.utc).isoformat(),
             "catalog":CATALOG,"metadata_table_candidates":candidates,
             "catalog_table_count":len(tables),
+            "metadata_columns":metadata_columns,"metadata_sample_rows":metadata_rows,
             "refresh_cadence_verified":False,
             "note":"Table names are hints only. No upstream refresh cadence inferred from absence or presence of metadata tables.",
             "publication_ready":False}
