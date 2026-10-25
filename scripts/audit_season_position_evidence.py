@@ -85,6 +85,10 @@ def main():
         results.append({"nba_player_id":row["nba_player_id"],"bref_id":row["bref_id"],
                         "proposed_position":row["position"],"position_source":url,
                         "observed_position":positions,"status":status,"reason":reason})
+    roster_cache={url:{pid:sorted(values) for pid,values in observed.items()}
+                  for url,observed in cache.items() if not isinstance(observed,str)}
+    Path("reports/season_roster_position_cache_2027.json").write_text(
+        json.dumps(roster_cache,indent=2)+"\\n",encoding="utf-8")
     OUT.parent.mkdir(parents=True,exist_ok=True)
     with OUT.open("w",newline="",encoding="utf-8") as f:
         writer=csv.DictWriter(f,fieldnames=FIELDS)
