@@ -10,6 +10,7 @@ on:
       - 'scripts/build_identity_review_queue.py'
       - 'scripts/stage_wikidata_exact_evidence.py'
       - 'scripts/propose_verified_identity_crosswalk.py'
+      - 'scripts/audit_season_position_evidence.py'
       - 'tests/test_wikidata_evidence_staging.py'
       - 'scripts/audit_identity_approval_readiness.py'
       - 'scripts/audit_wikidata_identity_statements.py'
@@ -29,7 +30,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install requests "duckdb>=1.3,<2"
+        run: pip install requests beautifulsoup4 "duckdb>=1.3,<2"
       - name: Generate roster-matching candidates
         run: python scripts/audit_league_matching.py
       - name: Require generated roster report
@@ -40,6 +41,8 @@ jobs:
         run: python scripts/stage_wikidata_exact_evidence.py
       - name: Prepare human-reviewed crosswalk promotion proposal
         run: python scripts/propose_verified_identity_crosswalk.py
+      - name: Audit season-specific player positions from roster pages
+        run: python scripts/audit_season_position_evidence.py
       - name: Test evidence matching safety
         if: always()
         run: python -m unittest discover -s tests -p 'test_wikidata_evidence_staging.py' -v
