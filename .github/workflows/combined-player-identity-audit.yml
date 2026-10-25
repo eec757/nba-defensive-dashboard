@@ -29,6 +29,7 @@ on:
       - 'docs/leaguewide-review-confirmation-2027.md'
       - 'scripts/audit_wikidata_identity_statements.py'
       - 'data/verified_player_ids_2027.csv'
+      - 'data/reviewed_player_ids_2027.txt'
       - 'docs/leaguewide-identity-review-attestation-2027.md'
 
 permissions:
@@ -58,7 +59,6 @@ jobs:
       - name: Audit season-specific player positions from roster pages
         run: python scripts/audit_season_position_evidence.py
       - name: Stage human-attested crosswalk for validation only
-        continue-on-error: true
         run: python scripts/stage_human_attested_crosswalk.py
       - name: Generate unapproved human identity review packet
         run: python scripts/build_human_identity_review_packet.py
