@@ -12,27 +12,15 @@ def main():
     report=json.loads(source.read_text(encoding="utf-8"))
     candidates={x["identity_candidates"][0]["bref_id"] for x in report["players"]
                 if x["candidate_status"]=="single_wikidata_id_pair"}
+    cache=json.loads(Path("reports/season_roster_position_cache_2027.json").read_text(encoding="utf-8"))
     positions={key:[] for key in candidates}
-    errors={}
-    session=requests.Session()
-    for team in TEAM_IDS:
-        url=f"https://www.basketball-reference.com/teams/{team}/2027.html"
-        try:
-            response=session.get(url,headers={"User-Agent":"Mozilla/5.0"},timeout=25)
-            response.raise_for_status()
-            soup=BeautifulSoup(response.text,"html.parser")
-            for tr in soup.select("tr"):
-                a=tr.find("a",href=re.compile(r"^/players/[a-z]/[a-z0-9]+\\.html$"))
-                if not a:continue
-                bref=a["href"].rsplit("/",1)[-1].replace(".html","")
-                if bref not in candidates:continue
-                cell=tr.find(["td","th"],attrs={"data-stat":"pos"})
-                pos=cell.get_text(" ",strip=True) if cell else ""
+    for url,players in cache.items():
+        team=url.split("/teams/")[1].split("/")[0]
+        for bref in candidates:
+            for pos in players.get(bref,[]):
                 if pos in POSITIONS:
                     positions[bref].append({"team":team,"position":pos,"url":url})
-            time.sleep(1)
-        except requests.RequestException as exc:
-            errors[team]=str(exc)[:150]
+    errors={}
     for player in report["players"]:
         matches=player["identity_candidates"]
         bref=matches[0]["bref_id"] if player["candidate_status"]=="single_wikidata_id_pair" else ""
