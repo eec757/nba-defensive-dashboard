@@ -52,6 +52,8 @@ def main():
     session.headers.update({"User-Agent":"Mozilla/5.0 (compatible; NBA research position audit)"})
     cache={}
     results=[]
+    # Recheck Phoenix first so a temporary rate limit does not leave it last.
+    records.sort(key=lambda row: (0 if "/teams/PHO/" in row["position_source"] else 1, row["position_source"], row["bref_id"]))
     for row in records:
         url=row["position_source"]
         if url not in cache:
