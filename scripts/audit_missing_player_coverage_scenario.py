@@ -1,5 +1,6 @@
 """Read-only what-if coverage for seven evidence-supported, unapproved players."""
 import json
+import csv
 from pathlib import Path
 from publish_verified_positions import POSITIONS,MIN_COVERAGE
 
@@ -10,7 +11,17 @@ def main():
     additions={t:{p:0 for p in POSITIONS} for t in teams}
     by_id={p["nba_player_id"]:p for p in missing["players"]}
     unmatched=json.loads(Path("reports/unmatched_player_games_2027.json").read_text())
+    # Baseline already includes supported proposal identities; never count them twice.
+    with Path("reports/proposed_verified_player_ids_2027.csv").open(newline="",encoding="utf-8") as handle:
+        proposed=list(csv.DictReader(handle))
+    with Path("reports/season_position_evidence_2027.csv").open(newline="",encoding="utf-8") as handle:
+        season_evidence=list(csv.DictReader(handle))
+    supported={(r["nba_player_id"],r["bref_id"]) for r in season_evidence if r["status"]=="supported"}
+    already_in_baseline={r["nba_player_id"] for r in proposed
+                         if (r["nba_player_id"],r["bref_id"]) in supported}
     for player in unmatched["players"]:
+        if player["nba_player_id"] in already_in_baseline:
+            continue
         candidate=by_id[player["nba_player_id"]]
         if not candidate["season_position_verified"]:continue
         evidence=candidate["season_position_evidence"]
@@ -36,7 +47,7 @@ def main():
             if not verified or not denom or verified/denom<MIN_COVERAGE:
                 failures_position.append([team,pos])
     total=base["total_game_rows"]
-    result={"scenario":"Seven season-supported game-log identities added hypothetically; no approvals",
+    result={"scenario":"Additional supported identities absent from baseline added hypothetically; no approvals",
             "total_game_rows":total,"hypothetical_covered_rows":total-remaining,
             "hypothetical_leaguewide_coverage_pct":round(100*(total-remaining)/total,2),
             "remaining_unknown_rows":remaining,"team_gate_failures":failures_team,
