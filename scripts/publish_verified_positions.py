@@ -64,6 +64,11 @@ def summarize_position_rows(rows, verified, team_ids):
             totals[key][i] += float(value or 0)
     return totals, all_team_games, verified_team_rows, all_team_rows
 
+def conservative_position_coverage(verified_position_rows, unknown_rows):
+    """Lower-bound coverage: any unknown player-game could belong to this position."""
+    denominator=verified_position_rows+unknown_rows
+    return verified_position_rows/denominator if denominator else 0.0
+
 def validate_crosswalk_source(source):
     """Reject self-authored or single-provider links as independent linkage evidence."""
     domain = (urlparse(source).hostname or "").lower()
@@ -164,12 +169,15 @@ def main():
             t=totals.get((team,pos))
             n=len(all_team_games.get(team,set()))
             team_coverage=verified_team_rows[team]/all_team_rows[team] if all_team_rows[team] else 0
-            if not t or n==0 or team_coverage < MIN_COVERAGE:
+            unknown_rows=all_team_rows[team]-verified_team_rows[team]
+            known_position_rows=int(t[0]) if t else 0
+            position_coverage=conservative_position_coverage(known_position_rows,unknown_rows)
+            if not t or n==0 or team_coverage < MIN_COVERAGE or position_coverage < MIN_COVERAGE:
                 output["teams"][team][pos]=None
                 continue
             output["teams"][team][pos]={
                 **position_metrics(t,n),
-                "coverage":f"{n} defending-team games; {team_coverage:.1%} verified opponent player-game rows",
+                "coverage":f"{n} defending-team games; {team_coverage:.1%} verified opponent player-game rows; {position_coverage:.1%} conservative position coverage",
                 "matched_player_games":int(t[0])
             }
     if any(output["teams"][team][pos] is None for team in team_ids for pos in POSITIONS):
