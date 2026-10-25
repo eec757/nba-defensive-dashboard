@@ -23,6 +23,7 @@ on:
       - 'tests/test_identity_proposal_safety.py'
       - 'scripts/propose_verified_identity_crosswalk.py'
       - 'scripts/audit_identity_approval_readiness.py'
+      - 'scripts/build_human_identity_review_packet.py'
       - 'scripts/audit_wikidata_identity_statements.py'
       - 'data/verified_player_ids_2027.csv'
       - 'docs/leaguewide-identity-review-attestation-2027.md'
@@ -49,10 +50,12 @@ jobs:
         run: python scripts/build_identity_review_queue.py
       - name: Stage exact Wikidata identity evidence and exceptions
         run: python scripts/stage_wikidata_exact_evidence.py
-      - name: Prepare human-reviewed crosswalk promotion proposal
+      - name: Prepare unapproved identity crosswalk candidates
         run: python scripts/propose_verified_identity_crosswalk.py
       - name: Audit season-specific player positions from roster pages
         run: python scripts/audit_season_position_evidence.py
+      - name: Generate unapproved human identity review packet
+        run: python scripts/build_human_identity_review_packet.py
       - name: Report position game coverage readiness without assuming verification
         run: python scripts/audit_position_game_coverage.py
       - name: Measure actual proposed player-game coverage by defending team and position
