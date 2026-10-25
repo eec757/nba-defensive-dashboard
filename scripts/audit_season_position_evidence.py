@@ -52,8 +52,8 @@ def main():
     session.headers.update({"User-Agent":"Mozilla/5.0 (compatible; NBA research position audit)"})
     cache={}
     results=[]
-    # Recheck Phoenix first so a temporary rate limit does not leave it last.
-    records.sort(key=lambda row: (0 if "/teams/PHO/" in row["position_source"] else 1, row["position_source"], row["bref_id"]))
+    # Recheck the previously rate-limited Washington roster first.
+    records.sort(key=lambda row: (0 if "/teams/WAS/" in row["position_source"] else 1, row["position_source"], row["bref_id"]))
     for row in records:
         url=row["position_source"]
         if url not in cache:
@@ -61,10 +61,14 @@ def main():
                 parsed=urlparse(url)
                 if parsed.scheme!="https" or parsed.hostname not in ("www.basketball-reference.com","basketball-reference.com") or not re.fullmatch(r"/teams/[A-Z]{3}/2027\.html",parsed.path):
                     raise ValueError("invalid_2027_team_roster_url")
-                response=session.get(url,timeout=25)
+                for attempt in range(3):
+                    response=session.get(url,timeout=25)
+                    if response.status_code != 429:
+                        break
+                    time.sleep(5 * (attempt + 1))
                 response.raise_for_status()
                 cache[url]=roster_positions(response.text)
-                time.sleep(1)
+                time.sleep(2)
             except (requests.RequestException,ValueError) as exc:
                 cache[url]=str(exc)
         observed=cache[url]
