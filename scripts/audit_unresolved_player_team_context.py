@@ -29,6 +29,13 @@ def main():
         result["players"].append({"nba_player_id":pid,"game_teams":games,
             "season_position_verified":False,"human_approved":False,
             "note":"Game-log team membership is not evidence of position."})
+    result["review_targets"]=[]
+    for player in result["players"]:
+        teams=sorted({g["player_team"] for g in player["game_teams"] if g["player_team"]!="unknown"})
+        result["review_targets"].append({
+            "nba_player_id":player["nba_player_id"],
+            "player_team_roster_urls":[f"https://www.basketball-reference.com/teams/{t}/2027.html" for t in teams],
+            "needs_independent_identity_and_position_review":True})
     Path("reports/unresolved_player_team_context_2027.json").write_text(json.dumps(result,indent=2)+"\n")
     print("UNRESOLVED_PLAYER_TEAM_CONTEXT",json.dumps(result))
 
