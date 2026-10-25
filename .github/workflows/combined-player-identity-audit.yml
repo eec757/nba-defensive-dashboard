@@ -15,6 +15,7 @@ on:
       - 'scripts/audit_proposed_game_coverage.py'
       - 'scripts/audit_unmatched_player_games.py'
       - 'scripts/stage_missing_game_log_identity_evidence.py'
+      - 'scripts/audit_missing_player_positions.py'
       - 'tests/test_wikidata_evidence_staging.py'
       - 'scripts/audit_identity_approval_readiness.py'
       - 'scripts/audit_wikidata_identity_statements.py'
@@ -55,6 +56,8 @@ jobs:
         run: python scripts/audit_unmatched_player_games.py
       - name: Stage independent identity candidates for game-log-only players
         run: python scripts/stage_missing_game_log_identity_evidence.py
+      - name: Audit season positions for unmatched identity candidates
+        run: python scripts/audit_missing_player_positions.py
       - name: Test evidence matching safety
         if: always()
         run: python -m unittest discover -s tests -p 'test_wikidata_evidence_staging.py' -v
