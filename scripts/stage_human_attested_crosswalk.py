@@ -22,6 +22,8 @@ def stage(proposal, evidence, reviewed_ids):
         row = dict(original)
         pid, bref = row["nba_player_id"], row["bref_id"]
         was_approved = row.get("verified", "").strip().lower() == "true"
+        if not was_approved and pid not in reviewed_ids:
+            continue  # Newly discovered candidates are not part of the attestation.
         if not was_approved and pid in reviewed_ids:
             row["reviewed_by"] = REVIEWER
             row["reviewed_on"] = REVIEW_DATE
