@@ -20,6 +20,8 @@ on:
       - 'scripts/audit_remaining_game_log_exceptions.py'
       - 'scripts/audit_unresolved_player_team_context.py'
       - 'tests/test_wikidata_evidence_staging.py'
+      - 'tests/test_identity_proposal_safety.py'
+      - 'scripts/propose_verified_identity_crosswalk.py'
       - 'scripts/audit_identity_approval_readiness.py'
       - 'scripts/audit_wikidata_identity_statements.py'
       - 'data/verified_player_ids_2027.csv'
@@ -70,6 +72,9 @@ jobs:
       - name: Test evidence matching safety
         if: always()
         run: python -m unittest discover -s tests -p 'test_wikidata_evidence_staging.py' -v
+      - name: Test proposal cannot synthesize human approval
+        if: always()
+        run: python -m unittest discover -s tests -p 'test_identity_proposal_safety.py' -v
       - name: Compare roster candidates to real game logs
         run: python scripts/diagnose_real_game_logs.py
       - name: Generate identity approval readiness report
