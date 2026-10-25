@@ -16,6 +16,7 @@ on:
       - 'scripts/audit_unmatched_player_games.py'
       - 'scripts/trace_phoenix_opponent_positions.py'
       - 'scripts/audit_source_freshness_2027.py'
+      - 'scripts/audit_source_readiness_2027.py'
       - 'scripts/build_targeted_coverage_exceptions.py'
       - 'scripts/validate_targeted_identity_review.py'
       - 'tests/test_targeted_identity_review.py'
@@ -80,6 +81,8 @@ jobs:
         run: python scripts/audit_proposed_game_coverage.py
       - name: Check 2027 game-log source freshness against completed Phoenix reference game
         run: python scripts/audit_source_freshness_2027.py
+      - name: Evaluate source freshness readiness without publishing
+        run: python scripts/audit_source_readiness_2027.py
       - name: Trace Phoenix opposing player-game positions to source game IDs
         run: python scripts/trace_phoenix_opponent_positions.py
       - name: Identify unmatched player-game identities for independent review
