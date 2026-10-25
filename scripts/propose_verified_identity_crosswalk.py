@@ -3,7 +3,7 @@ import csv
 import json
 from pathlib import Path
 from urllib.parse import urlparse
-from scripts.publish_verified_positions import validate_crosswalk_source, validate_independent_evidence, POSITIONS
+from publish_verified_positions import validate_crosswalk_source, validate_independent_evidence, POSITIONS
 
 CURRENT=Path("data/verified_player_ids_2027.csv")
 MATCHES=Path("reports/wikidata_exact_matches_2027.csv")
