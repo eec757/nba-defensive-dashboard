@@ -14,6 +14,7 @@ on:
       - 'scripts/audit_position_game_coverage.py'
       - 'scripts/audit_proposed_game_coverage.py'
       - 'scripts/audit_unmatched_player_games.py'
+      - 'scripts/trace_phoenix_opponent_positions.py'
       - 'scripts/build_targeted_coverage_exceptions.py'
       - 'scripts/validate_targeted_identity_review.py'
       - 'tests/test_targeted_identity_review.py'
@@ -76,6 +77,8 @@ jobs:
         run: python scripts/audit_position_game_coverage.py
       - name: Measure actual proposed player-game coverage by defending team and position
         run: python scripts/audit_proposed_game_coverage.py
+      - name: Trace Phoenix opposing player-game positions to source game IDs
+        run: python scripts/trace_phoenix_opponent_positions.py
       - name: Identify unmatched player-game identities for independent review
         run: python scripts/audit_unmatched_player_games.py
       - name: Generate targeted coverage exceptions for review
