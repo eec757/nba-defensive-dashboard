@@ -21,6 +21,7 @@ on:
       - 'scripts/audit_unresolved_player_team_context.py'
       - 'tests/test_wikidata_evidence_staging.py'
       - 'tests/test_identity_proposal_safety.py'
+      - 'tests/test_human_identity_review_packet.py'
       - 'scripts/propose_verified_identity_crosswalk.py'
       - 'scripts/audit_identity_approval_readiness.py'
       - 'scripts/build_human_identity_review_packet.py'
@@ -78,6 +79,9 @@ jobs:
       - name: Test proposal cannot synthesize human approval
         if: always()
         run: python -m unittest discover -s tests -p 'test_identity_proposal_safety.py' -v
+      - name: Test review packet never grants approval
+        if: always()
+        run: python -m unittest discover -s tests -p 'test_human_identity_review_packet.py' -v
       - name: Compare roster candidates to real game logs
         run: python scripts/diagnose_real_game_logs.py
       - name: Generate identity approval readiness report
