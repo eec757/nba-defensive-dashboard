@@ -5,8 +5,8 @@ nba_player_id,affected_team_rows,candidate_bref_id,wikidata_item,candidate_posit
 1641713,2,jacksgg01,http://www.wikidata.org/entity/Q115492105,PF,https://www.basketball-reference.com/teams/MEM/2027.html,candidate_id_and_position,yes,pending
 1641842,2,hollaro01,http://www.wikidata.org/entity/Q116407941,SF,https://www.basketball-reference.com/teams/DET/2027.html,candidate_id_and_position,yes,pending
 1642383,2,claytwa01,http://www.wikidata.org/entity/Q117262884,PG,https://www.basketball-reference.com/teams/DAL/2027.html,candidate_id_and_position,yes,pending
-1643633,2,ikegr01,http://www.wikidata.org/entity/Q106818239,PF,,user_confirmed_position_external_evidence_pending,yes,pending
+1643633,2,ikegr01,http://www.wikidata.org/entity/Q106818239,PF,https://en.wikipedia.org/wiki/Graham_Ike,independent_PF_C_position_evidence,yes,pending
 1641724,1,howarje01,http://www.wikidata.org/entity/Q116687537,SF,https://www.basketball-reference.com/teams/DAL/2027.html,candidate_id_and_position,yes,pending
 1641747,1,holmeda01,http://www.wikidata.org/entity/Q115492041,PF,https://www.basketball-reference.com/teams/DEN/2027.html,candidate_id_and_position,yes,pending
-1643568,1,martini01,http://www.wikidata.org/entity/Q131863928,SF,,user_accepted_SF_CBS_external_evidence_identified_validator_pending,yes,pending
-1643813,1,alpha-diallo-1,http://www.wikidata.org/entity/Q88518316,SG,,user_confirmed_bref_id_and_position_external_evidence_pending,yes,pending
+1643568,1,martini01,http://www.wikidata.org/entity/Q131863928,SF,https://www.cbssports.com/nba/players/28952429/nick-martinelli/,independent_CBS_LAC_SF_evidence,yes,pending
+1643813,1,diallal01,http://www.wikidata.org/entity/Q88518316,SG,https://en.wikipedia.org/wiki/Alpha_Diallo_(basketball%2C_born_1997),independent_SG_evidence_bref_link_pending,yes,pending
