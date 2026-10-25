@@ -28,3 +28,9 @@ No publication, automatic human approval, crosswalk modification, or relaxation 
 - The conservative gate checks `verified/(verified+remaining_unknown)`, with an explicit nonzero-verified requirement. Thus even if all unknown PHO rows were resolved, PHO SG would still fail until a valid SG observation exists. Never fabricate one.
 
 Next: trace the 13 PHO opponent-game rows through source game logs and position mapping to determine whether SG absence reflects actual observed games or a pipeline omission. Do not conflate the Phoenix team's own SG roster with opponent positions defended by Phoenix.
+
+## User-provided source references for Phoenix review
+
+- Robert Williams III: https://www.basketball-reference.com/players/w/williro04.html (user reports Portland center; direct source verification pending).
+- Phoenix 2026–27 roster: https://www.basketball-reference.com/teams/PHO/2027.html (guard listings; Phoenix's own roster is not an opposing-player SG observation).
+- Trace each Phoenix opponent game log back to its source game ID, opponent, NBA player ID, and original position; distinguish absent observations from dropped mappings. Do not assign an SG based on Phoenix's own roster.
