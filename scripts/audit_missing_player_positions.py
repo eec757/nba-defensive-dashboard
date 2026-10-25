@@ -29,6 +29,9 @@ def main():
         player["season_position_verified"]=bool(evidence and len({x["position"] for x in evidence})==1 and not errors)
     report["roster_fetch_errors"]=errors
     report["season_positions_supported"]=sum(p["season_position_verified"] for p in report["players"])
+    report["supported_game_rows"]=sum(p["game_rows"] for p in report["players"] if p["season_position_verified"])
+    report["remaining_unmatched_game_rows"]=sum(p["game_rows"] for p in report["players"] if not p["season_position_verified"])
+    report["remaining_player_ids"]=[p["nba_player_id"] for p in report["players"] if not p["season_position_verified"]]
     report["published"]=False
     out=Path("reports/missing_player_position_evidence_2027.json")
     out.write_text(json.dumps(report,indent=2)+"\n",encoding="utf-8")
