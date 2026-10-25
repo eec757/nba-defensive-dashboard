@@ -1,0 +1,12 @@
+nba_player_id,affected_team_rows,candidate_bref_id,wikidata_item,candidate_position,position_roster_url,evidence_status,manual_review_reported,approval_status
+1626171,3,portibo01,http://www.wikidata.org/entity/Q19667582,PF,https://www.basketball-reference.com/teams/MIA/2027.html,candidate_id_and_position,yes,pending
+1643515,3,anderch02,http://www.wikidata.org/entity/Q133691210,PG,https://www.basketball-reference.com/teams/CHO/2027.html,candidate_id_and_position,yes,pending
+1629057,2,williro04,http://www.wikidata.org/entity/Q28151848,C,https://www.basketball-reference.com/teams/POR/2027.html,candidate_id_and_position,yes,pending
+1641713,2,jacksgg01,http://www.wikidata.org/entity/Q115492105,PF,https://www.basketball-reference.com/teams/MEM/2027.html,candidate_id_and_position,yes,pending
+1641842,2,hollaro01,http://www.wikidata.org/entity/Q116407941,SF,https://www.basketball-reference.com/teams/DET/2027.html,candidate_id_and_position,yes,pending
+1642383,2,claytwa01,http://www.wikidata.org/entity/Q117262884,PG,https://www.basketball-reference.com/teams/DAL/2027.html,candidate_id_and_position,yes,pending
+1643633,2,ikegr01,http://www.wikidata.org/entity/Q106818239,,,incomplete,yes,pending
+1641724,1,howarje01,http://www.wikidata.org/entity/Q116687537,SF,https://www.basketball-reference.com/teams/DAL/2027.html,candidate_id_and_position,yes,pending
+1641747,1,holmeda01,http://www.wikidata.org/entity/Q115492041,PF,https://www.basketball-reference.com/teams/DEN/2027.html,candidate_id_and_position,yes,pending
+1643568,1,martini01,http://www.wikidata.org/entity/Q131863928,,,incomplete,yes,pending
+1643813,1,,http://www.wikidata.org/entity/Q88518316,,,incomplete,yes,pending
