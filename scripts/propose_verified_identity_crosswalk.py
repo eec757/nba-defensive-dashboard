@@ -28,7 +28,7 @@ def main():
     promoted=0
     for row in matches:
         pid,bref=row["nba_player_id"],row["bref_id"]
-        source=row["verification_source"].replace("https://www.wikidata.org/entity/","https://www.wikidata.org/wiki/")
+        source=row["verification_source"].replace("http://www.wikidata.org/entity/","https://www.wikidata.org/wiki/").replace("https://www.wikidata.org/entity/","https://www.wikidata.org/wiki/")
         proposed={
             "bref_id":bref,"nba_player_id":pid,"position":row["position"],
             "verification_source":source,"verified":"true",
