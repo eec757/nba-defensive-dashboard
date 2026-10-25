@@ -1,0 +1,65 @@
+name: Prepare reviewed crosswalk PR
+
+on:
+  push:
+    branches: [review/approved-2027-crosswalk]
+    paths:
+      - '.github/workflows/prepare-reviewed-crosswalk.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: review/approved-2027-crosswalk
+          persist-credentials: true
+      - name: Download immutable original review packet and successful attestation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/original /tmp/attested
+          gh run download 40163961057 -n combined-player-identity-audit-2027 -D /tmp/original
+          gh run download 40167109077 -n combined-player-identity-audit-2027 -D /tmp/attested
+      - name: Validate exact reviewed identity triples and approval metadata
+        run: |
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+          def read(path):
+              with open(path, newline='', encoding='utf-8') as f:
+                  return list(csv.DictReader(f))
+          original = read('/tmp/original/human_identity_review_packet_2027.csv')
+          approved = read('/tmp/attested/human_attested_crosswalk_2027.csv')
+          reviewed = {r['nba_player_id']:r for r in original if r['review_decision']=='pending_human_review'}
+          existing = {r['nba_player_id']:r for r in original if r['review_decision']=='existing_approval'}
+          snapshot = {line.strip() for line in Path('data/reviewed_player_ids_2027.txt').read_text().splitlines() if line.strip() and not line.startswith('#')}
+          assert len(original)==366 and len(reviewed)==362 and len(existing)==4
+          assert len(snapshot)==362 and snapshot==set(reviewed)
+          assert len(approved)==366 and len({r['nba_player_id'] for r in approved})==366
+          assert {r['nba_player_id'] for r in approved}==set(reviewed)|set(existing)
+          assert len({r['bref_id'] for r in approved})==366
+          for row in approved:
+              pid=row['nba_player_id']
+              old=(reviewed|existing)[pid]
+              assert (row['bref_id'],row['position'])==(old['bref_id'],old['proposed_position']),pid
+              assert row['verified'].lower()=='true',pid
+              assert row['verification_source'] and row['position_source'],pid
+              if pid in reviewed:
+                  assert (row['reviewed_by'],row['reviewed_on'])==('eec757','2026-10-25'),pid
+          import shutil
+          shutil.copyfile('/tmp/attested/human_attested_crosswalk_2027.csv','data/verified_player_ids_2027.csv')
+          print('Validated 362 reviewed + 4 existing identities; PR-only crosswalk prepared; position statistics untouched.')
+          PY
+      - name: Commit proposed crosswalk only to review branch
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/verified_player_ids_2027.csv
+          git diff --cached --quiet && exit 0
+          git commit -m "Prepare verified 366-player crosswalk for human review"
+          git push origin HEAD:review/approved-2027-crosswalk
