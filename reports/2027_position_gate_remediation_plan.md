@@ -34,3 +34,10 @@ Next: trace the 13 PHO opponent-game rows through source game logs and position 
 - Robert Williams III: https://www.basketball-reference.com/players/w/williro04.html (user reports Portland center; direct source verification pending).
 - Phoenix 2026–27 roster: https://www.basketball-reference.com/teams/PHO/2027.html (guard listings; Phoenix's own roster is not an opposing-player SG observation).
 - Trace each Phoenix opponent game log back to its source game ID, opponent, NBA player ID, and original position; distinguish absent observations from dropped mappings. Do not assign an SG based on Phoenix's own roster.
+
+## Source-game trace result (successful run 40180082160)
+
+- All 13 PHO-defended opponent rows in the 2026–27 regular-season catalog belong to **game `0022600092`**.
+- Exact verified opponent-position counts: PG 5, SG 0, SF 3, PF 1, C 3; NBA ID `1629057` remains unmatched in baseline.
+- This isolates the PHO SG zero-observation gate to one opponent-game sample; it does **not** prove an SG row was dropped. Compare the official game box score and ingested source player IDs before changing the pipeline.
+- Hypothetical scenario still has 4 unknown player-game rows and 21 failing team-position pairs. No publication.
