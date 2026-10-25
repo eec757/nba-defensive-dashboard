@@ -120,6 +120,21 @@ class PublicationSafetyTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Inconsistent shooting"):
             publisher.position_metrics([1, 20, 2, 1, 11, 10, 2, 4], 1)
 
+    def test_conservative_position_coverage_blocks_95_percent_team_only(self):
+        # Team overall is 96% verified, but a small position can be under 95%.
+        self.assertGreaterEqual(96 / 100, publisher.MIN_COVERAGE)
+        self.assertLess(publisher.conservative_position_coverage(4, 4), publisher.MIN_COVERAGE)
+        self.assertEqual(publisher.conservative_position_coverage(4, 4), 0.5)
+
+    def test_conservative_position_coverage_boundary(self):
+        self.assertAlmostEqual(publisher.conservative_position_coverage(19, 1), 0.95)
+        self.assertGreaterEqual(publisher.conservative_position_coverage(19, 1), publisher.MIN_COVERAGE)
+        self.assertLess(publisher.conservative_position_coverage(18, 1), publisher.MIN_COVERAGE)
+
+    def test_conservative_position_coverage_no_known_rows(self):
+        self.assertEqual(publisher.conservative_position_coverage(0, 0), 0)
+        self.assertEqual(publisher.conservative_position_coverage(0, 3), 0)
+
     def test_canonical_team_id_mapping(self):
         self.assertEqual(len(publisher.TEAM_IDS), 30)
         self.assertEqual(len(set(publisher.TEAM_IDS.values())), 30)
