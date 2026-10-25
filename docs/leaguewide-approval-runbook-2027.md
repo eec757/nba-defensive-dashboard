@@ -4,11 +4,11 @@
 
 ## Scope and baseline
 
-The latest successful combined audit (run 40162116684) observed **642 actual player-game rows**. Only **8/642 (1.25%)** rows have approved identities in the existing crosswalk. A separate hypothetical scenario reaches **638/642 (99.38%)**, but **25 defending-team/position coverage gates fail**. Proposed identity links and cached roster positions are *not* approvals.
+The latest successful [combined audit (run 40163429051)](https://github.com/eec757/nba-defensive-dashboard/actions/runs/40163429051) observed **642 actual player-game rows**. Only **8/642 (1.25%)** rows have approved identities in the existing crosswalk. The unapproved proposal baseline covers **626/642 (97.51%)** rows. A separate hypothetical scenario adds **12** rows to reach **638/642 (99.38%)**, but **25 defending-team/position coverage gates fail**. All automated proposal safety tests passed. Proposed identity links and cached roster positions are *not* approvals.
 
 ## Review sequence
 
-1. Download the `combined-player-identity-audit-2027` artifact from [the successful audit](https://github.com/eec757/nba-defensive-dashboard/actions/runs/40162116684). Keep the source artifact unchanged for traceability.
+1. Download the `combined-player-identity-audit-2027` artifact from [the successful audit](https://github.com/eec757/nba-defensive-dashboard/actions/runs/40163429051). Keep the source artifact unchanged for traceability.
 2. For **every proposed identity**, compare the exact numeric NBA player ID against the official NBA player profile, the exact Basketball-Reference player ID against the corresponding player profile, and a genuinely independent source explicitly linking both IDs. A matching name alone is insufficient.
 3. Check the player's **2026–27** team roster for one unambiguous `PG`, `SG`, `SF`, `PF`, or `C` assignment. Broad `G`/`F`, multiple conflicting positions, and depth-chart guesses are not sufficient. Record source URLs, review date, and the human reviewer's identifier.
 4. **Do not batch-approve** the 366 proposed rows from a count or a script result. Each record requires human sign-off. Preserve rejected/ambiguous records as unverified.
