@@ -43,7 +43,7 @@ def main():
             "team_position_gate_failures":failures_position,
             "all_coverage_gates_pass":not failures_team and not failures_position and (total-remaining)/total>=MIN_COVERAGE,
             "publication_ready":False,"crosswalk_modified":False}
-    Path("reports/missing_player_coverage_scenario_2027.json").write_text(json.dumps(result,indent=2)+"\\n")
+    Path("reports/missing_player_coverage_scenario_2027.json").write_text(json.dumps(result,indent=2)+"\n")
     print("MISSING_PLAYER_COVERAGE_SCENARIO",json.dumps(result))
 
 if __name__=="__main__":main()
