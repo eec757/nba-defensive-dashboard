@@ -11,6 +11,7 @@ on:
       - 'scripts/stage_wikidata_exact_evidence.py'
       - 'scripts/propose_verified_identity_crosswalk.py'
       - 'scripts/audit_season_position_evidence.py'
+      - 'scripts/audit_position_game_coverage.py'
       - 'tests/test_wikidata_evidence_staging.py'
       - 'scripts/audit_identity_approval_readiness.py'
       - 'scripts/audit_wikidata_identity_statements.py'
@@ -43,6 +44,8 @@ jobs:
         run: python scripts/propose_verified_identity_crosswalk.py
       - name: Audit season-specific player positions from roster pages
         run: python scripts/audit_season_position_evidence.py
+      - name: Report position game coverage readiness without assuming verification
+        run: python scripts/audit_position_game_coverage.py
       - name: Test evidence matching safety
         if: always()
         run: python -m unittest discover -s tests -p 'test_wikidata_evidence_staging.py' -v
