@@ -15,9 +15,8 @@ def main():
     con.execute("INSTALL httpfs; LOAD httpfs;")
     con.execute(f"ATTACH '{CATALOG}' AS nba (READ_ONLY)")
     # Query only source catalog metadata, not inferred update schedules.
-    tables=con.execute("""SELECT table_schema,table_name FROM nba.information_schema.tables
-        WHERE table_schema NOT IN ('information_schema','pg_catalog')
-        ORDER BY table_schema,table_name""").fetchall()
+    tables=con.execute("""SELECT schema_name,table_name FROM duckdb_tables()
+        WHERE database_name = 'nba' ORDER BY schema_name,table_name""").fetchall()
     candidates=[{"schema":s,"table":t} for s,t in tables if any(k in t.lower() for k in ("metadata","refresh","update","ingest","source","sync"))]
     report={"checked_at_utc":datetime.now(timezone.utc).isoformat(),
             "catalog":CATALOG,"metadata_table_candidates":candidates,
