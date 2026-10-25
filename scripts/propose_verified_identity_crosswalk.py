@@ -28,7 +28,7 @@ def main():
     promoted=0
     for row in matches:
         pid,bref=row["nba_player_id"],row["bref_id"]
-        source=row["verification_source"]
+        source=row["verification_source"].replace("https://www.wikidata.org/entity/","https://www.wikidata.org/wiki/")
         proposed={
             "bref_id":bref,"nba_player_id":pid,"position":row["position"],
             "verification_source":source,"verified":"true",
@@ -43,7 +43,7 @@ def main():
                 raise ValueError("Expected unapproved evidence staging row")
             if row["position"] not in POSITIONS:
                 raise ValueError("Invalid position")
-            if urlparse(source).hostname!="www.wikidata.org" or not urlparse(source).path.startswith("/entity/Q"):
+            if urlparse(source).hostname!="www.wikidata.org" or not urlparse(source).path.startswith("/wiki/Q"):
                 raise ValueError("Evidence must be exact Wikidata entity")
             validate_crosswalk_source(source)
             validate_independent_evidence(proposed)
