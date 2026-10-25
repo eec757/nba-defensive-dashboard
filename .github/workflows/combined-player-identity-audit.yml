@@ -8,6 +8,8 @@ on:
       - '.github/workflows/combined-player-identity-audit.yml'
       - 'scripts/diagnose_real_game_logs.py'
       - 'scripts/build_identity_review_queue.py'
+      - 'scripts/stage_wikidata_exact_evidence.py'
+      - 'tests/test_wikidata_evidence_staging.py'
       - 'scripts/audit_identity_approval_readiness.py'
       - 'scripts/audit_wikidata_identity_statements.py'
       - 'data/verified_player_ids_2027.csv'
@@ -33,6 +35,11 @@ jobs:
         run: test -s reports/player_matching_2027.csv
       - name: Build leaguewide unapproved identity review queue
         run: python scripts/build_identity_review_queue.py
+      - name: Stage exact Wikidata identity evidence and exceptions
+        run: python scripts/stage_wikidata_exact_evidence.py
+      - name: Test evidence matching safety
+        if: always()
+        run: python -m unittest discover -s tests -p 'test_wikidata_evidence_staging.py' -v
       - name: Compare roster candidates to real game logs
         run: python scripts/diagnose_real_game_logs.py
       - name: Generate identity approval readiness report
