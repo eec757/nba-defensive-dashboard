@@ -7,6 +7,7 @@ from pathlib import Path
 CANDIDATES = Path("reports/player_matching_2027.csv")
 APPROVALS = Path("data/verified_player_ids_2027.csv")
 OUTPUT = Path("reports/identity_review_queue_2027.csv")
+BATCH = Path("reports/identity_review_batch_top20_2027.csv")
 FIELDS = ["priority", "team", "roster_name", "nba_player_id", "bref_id", "position",
           "regular_season_games", "review_status", "identity_evidence_status",
           "nba_profile_url", "bref_profile_url", "season_position_source"]
@@ -53,11 +54,15 @@ def main():
         writer = csv.DictWriter(handle, fieldnames=FIELDS)
         writer.writeheader()
         writer.writerows(queue)
+    with BATCH.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=FIELDS)
+        writer.writeheader()
+        writer.writerows(queue[:20])
     print("IDENTITY_REVIEW_QUEUE", json.dumps({
         "unapproved_candidates": len(queue),
         "candidate_player_game_rows": sum(r["regular_season_games"] for r in queue),
         "top_10": [{"name": r["roster_name"], "team": r["team"], "games": r["regular_season_games"]} for r in queue[:10]],
-        "output": str(OUTPUT), "auto_approved": 0,
+        "output": str(OUTPUT), "review_batch": str(BATCH), "review_batch_size": min(20, len(queue)), "auto_approved": 0,
         "warning": "Name/team matching is NOT independent identity verification; profile URLs are review aids, not evidence of exact ID matching."
     }))
 
