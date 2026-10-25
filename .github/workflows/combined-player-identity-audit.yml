@@ -17,6 +17,7 @@ on:
       - 'scripts/trace_phoenix_opponent_positions.py'
       - 'scripts/audit_source_freshness_2027.py'
       - 'scripts/audit_source_readiness_2027.py'
+      - 'scripts/audit_upstream_catalog_metadata_2027.py'
       - 'tests/test_source_readiness_2027.py'
       - 'scripts/build_targeted_coverage_exceptions.py'
       - 'scripts/validate_targeted_identity_review.py'
@@ -86,6 +87,8 @@ jobs:
         run: python scripts/audit_source_readiness_2027.py
       - name: Test source freshness readiness fails closed
         run: python -m unittest discover -s tests -p 'test_source_readiness_2027.py' -v
+      - name: Inspect upstream catalog metadata for refresh provenance (read-only)
+        run: python scripts/audit_upstream_catalog_metadata_2027.py
       - name: Rehearse publication freshness prerequisite (read-only)
         run: |
           python - <<'PY'
