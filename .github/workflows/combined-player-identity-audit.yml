@@ -19,6 +19,7 @@ on:
       - 'tests/test_targeted_identity_review.py'
       - 'scripts/stage_missing_game_log_identity_evidence.py'
       - 'scripts/audit_targeted_candidate_propagation.py'
+      - 'scripts/audit_official_nba_evidence_propagation.py'
       - 'scripts/audit_missing_player_positions.py'
       - 'scripts/audit_missing_player_coverage_scenario.py'
       - 'scripts/audit_remaining_game_log_exceptions.py'
@@ -79,6 +80,8 @@ jobs:
         run: python scripts/build_targeted_coverage_exceptions.py
       - name: Stage independent identity candidates for game-log-only players
         run: python scripts/stage_missing_game_log_identity_evidence.py
+      - name: Verify official NBA evidence reached generated game-log staging
+        run: python scripts/audit_official_nba_evidence_propagation.py
       - name: Compare reviewed candidate IDs against generated game-log staging
         run: python scripts/audit_targeted_candidate_propagation.py
       - name: Audit season positions for unmatched identity candidates
