@@ -38,7 +38,14 @@ def main():
         bref_ids={c["bref_id"] for c in candidate["identity_candidates"] if c.get("bref_id")}
         cached_matches=[{"roster_url":url,"bref_id":bref,"positions":roster_cache.get(url,{}).get(bref,[])}
                         for url in urls for bref in bref_ids if bref in roster_cache.get(url,{})]
+        labels=sorted({pos for match in cached_matches for pos in match["positions"]})
+        precise=sorted(set(labels).intersection({"PG","SG","SF","PF","C"}))
+        ambiguous=sorted(set(labels)-set(precise))
         result["review_targets"].append({
+            "source_position_labels":labels,
+            "precise_position_evidence":precise,
+            "ambiguous_position_evidence":ambiguous,
+            "position_disambiguation_required":bool(ambiguous) or len(precise)!=1,
             "nba_player_id":player["nba_player_id"],
             "player_team_roster_urls":urls,
             "cached_exact_roster_matches":cached_matches,
