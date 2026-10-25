@@ -25,7 +25,13 @@ def main():
             "needs_season_roster_position":not match["season_position_verified"],
             "human_approved":False
         })
+    unresolved.sort(key=lambda p:(-p["game_rows"],p["nba_player_id"]))
     result={"unresolved_players":unresolved,
+            "investigation_priority":[{"nba_player_id":p["nba_player_id"],
+                "affected_games":p["game_rows"],
+                "missing_evidence":"identity_and_position" if p["needs_exact_bref_id"]
+                                   else "season_position_only"}
+                for p in unresolved],
             "unresolved_game_rows":sum(p["game_rows"] for p in unresolved),
             "remaining_team_position_failures":scenario["team_position_gate_failures"],
             "publication_ready":False,
