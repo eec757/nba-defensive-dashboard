@@ -50,3 +50,11 @@ Next: trace the 13 PHO opponent-game rows through source game logs and position 
 - A separate game-specific position labeling source https://www.hoopsstats.com/basketball/fantasy/nba/boxscores/phoenix-suns-at-portland-trail-blazers/2026-10-21/27/25 labels Lillard, Holiday and Krejčí **SG**. This is a **source-definition conflict**, not proof of a broken join. The strict roster-position model yields zero SG rows for this game; game-role position and roster primary position should remain separate until a policy is defined.
 - Also inspect source freshness: NBA records PHO hosting GSW Oct 24, game `0022600111`; this was not in the artifact's Phoenix trace. A fresh source snapshot and a clear data-as-of timestamp are needed before calling the current one-game coverage representative of the full season.
 - Do **not** automatically relabel these PG records or weaken the conservative publication gate.
+
+## Source freshness audit result (run 40180770559, 2026-10-25 09:33 UTC)
+
+- Read-only source catalog has **791** 2026–27 regular-season opponent player-game rows across **35** distinct game IDs; latest lexicographic game ID `0022600110`.
+- PHO defending-game set contains only `0022600092` (Oct 21 POR game).
+- Confirmed Oct 24 PHO–GSW reference game `0022600111` is **absent** from the catalog, including PHO-defended opponent rows. `source_snapshot_incomplete_against_reference=true`.
+- The absence is a **source freshness blocker**, not evidence that a season-roster SG exists or that a position join dropped one. Do not backfill invented rows or relax 95% coverage.
+- Next: determine the upstream DuckDB catalog update cadence and whether the missing game can be ingested through a verified official source, retaining data-as-of timestamps and read-only preview status.
