@@ -17,8 +17,9 @@ def main():
     with Path("reports/season_position_evidence_2027.csv").open(newline="",encoding="utf-8") as f:
         evidence=list(csv.DictReader(f))
     supported={(r["nba_player_id"],r["bref_id"]) for r in evidence if r["status"]=="supported"}
+    # Hypothetical coverage includes unapproved candidates; never an approval signal.
     verified={r["nba_player_id"]:r["position"] for r in proposal
-              if (r["nba_player_id"],r["bref_id"]) in supported and r["verified"].lower()=="true"}
+              if (r["nba_player_id"],r["bref_id"]) in supported}
     db=duckdb.connect()
     db.execute("INSTALL httpfs; LOAD httpfs;")
     db.execute(f"ATTACH '{CATALOG}' AS nba (READ_ONLY)")
