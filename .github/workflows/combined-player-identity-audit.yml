@@ -60,7 +60,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install requests beautifulsoup4 "duckdb>=1.3,<2"
+        run: pip install requests beautifulsoup4 pytz "duckdb>=1.3,<2"
       - name: Generate roster-matching candidates
         run: python scripts/audit_league_matching.py
       - name: Require generated roster report
