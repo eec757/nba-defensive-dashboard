@@ -44,7 +44,12 @@ def stage(proposal, evidence, reviewed_ids):
             exceptions.append({"nba_player_id":pid, "bref_id":bref, "reason":str(error)})
         rows.append(row)
     if newly_attested != EXPECTED_NEW:
-        exceptions.append({"nba_player_id":"", "bref_id":"", "reason":f"Expected {EXPECTED_NEW} newly attested candidates, got {newly_attested}"})
+        # A review branch may already contain the exact reviewed approvals.
+        # Accept this idempotent case only when all 362 reviewed IDs are
+        # present and marked verified; all evidence checks above still apply.
+        already_approved = {r["nba_player_id"] for r in proposal if r["nba_player_id"] in reviewed_ids and r.get("verified", "").strip().lower() == "true"}
+        if not (newly_attested == 0 and already_approved == reviewed_ids):
+            exceptions.append({"nba_player_id":"", "bref_id":"", "reason":f"Expected {EXPECTED_NEW} newly attested candidates or all reviewed IDs already approved; got {newly_attested}"})
     return rows, exceptions, newly_attested
 
 def main():
