@@ -108,7 +108,7 @@ jobs:
           assert by_id['1643633']['candidate_position']=='PF'
           assert by_id['1643568']['candidate_position']=='SF'
           assert by_id['1643813']['candidate_position']=='SG'
-          assert by_id['1643813']['candidate_bref_id']=='alpha-diallo-1'
+          assert by_id['1643813']['candidate_bref_id']=='diallal01'
           print('11 candidates structurally complete; 0 approved. Independent evidence validation still required.')
           PY
       - name: Test targeted identity review safety
