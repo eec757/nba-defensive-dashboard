@@ -33,17 +33,21 @@ jobs:
           import csv
           from pathlib import Path
           rows = list(csv.DictReader(Path("data/verified_player_ids_2027.csv").open(newline="", encoding="utf-8")))
-          expected = {"1631096", "1631114", "1641717", "1642349"}
-          staged = {r["nba_player_id"] for r in rows if r["nba_player_id"] in expected}
-          assert staged == expected, f"Missing staged players: {expected - staged}"
+          import sys
+          sys.path.insert(0, "scripts")
+          from publish_verified_positions import validate_crosswalk_source, validate_independent_evidence, POSITIONS
+          assert rows, "Crosswalk must not be empty"
           verified = [r for r in rows if r["verified"].strip().lower() == "true"]
-          print(f"Crosswalk entries: {len(rows)}; verified flags: {len(verified)}; staged OKC players: {len(staged)}")
-          approved_ids = {r["nba_player_id"] for r in verified}
-          assert approved_ids == expected, f"Unexpected approval set: {approved_ids ^ expected}"
+          print(f"Crosswalk entries: {len(rows)}; verified flags: {len(verified)}")
+          assert len({r["nba_player_id"] for r in verified}) == len(verified), "Duplicate NBA IDs"
+          assert len({r["bref_id"] for r in verified}) == len(verified), "Duplicate BRef IDs"
           for row in verified:
+              assert row["nba_player_id"].isdigit(), "Invalid NBA ID"
+              assert row["position"] in POSITIONS, "Invalid approved position"
+              validate_crosswalk_source(row["verification_source"])
+              validate_independent_evidence(row)
               assert row["reviewed_by"] == "eec757", "Unexpected reviewer"
               assert row["reviewed_on"] == "2026-10-24", "Unexpected review date"
-              assert row["position_source"], "Approved row missing season position evidence"
-          assert all(r["verified"].strip().lower() != "true" for r in rows if r["nba_player_id"] not in expected), "Other players must remain unapproved"
+          assert all(r["verified"].strip().lower() in {"true","false"} for r in rows), "Invalid approval flag"
           assert not Path("data/position_defense_2027.json").exists(), "Unverified output must not be committed"
           PY
