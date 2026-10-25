@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'data/verified_player_ids_2027.csv'
+      - 'docs/leaguewide-identity-review-attestation-2027.md'
       - 'scripts/publish_verified_positions.py'
       - 'tests/test_position_publication.py'
       - '.github/workflows/test-position-publication.yml'
