@@ -1,4 +1,4 @@
-"""Read-only what-if coverage for seven evidence-supported, unapproved players."""
+"""Read-only what-if coverage for season-supported, unapproved players not already in the baseline."""
 import json
 import csv
 from pathlib import Path
@@ -33,8 +33,10 @@ def main():
     failures_team=[]
     failures_position=[]
     remaining=0
+    added_rows=0
     for team,c in teams.items():
         gained=sum(additions[team].values())
+        added_rows+=gained
         unknown=c["unknown_rows"]-gained
         if unknown<0:raise ValueError("Scenario exceeds unknown game rows")
         remaining+=unknown
@@ -48,7 +50,8 @@ def main():
                 failures_position.append([team,pos])
     total=base["total_game_rows"]
     result={"scenario":"Additional supported identities absent from baseline added hypothetically; no approvals",
-            "total_game_rows":total,"hypothetical_covered_rows":total-remaining,
+            "total_game_rows":total,"additional_hypothetical_rows":added_rows,
+            "hypothetical_covered_rows":total-remaining,
             "hypothetical_leaguewide_coverage_pct":round(100*(total-remaining)/total,2),
             "remaining_unknown_rows":remaining,"team_gate_failures":failures_team,
             "team_position_gate_failures":failures_position,
