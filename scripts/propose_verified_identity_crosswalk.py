@@ -73,6 +73,7 @@ def main():
         writer=csv.DictWriter(f,fieldnames=["nba_player_id","bref_id","reason"])
         writer.writeheader()
         writer.writerows(exceptions)
+    print("PROMOTION_EXCEPTION_SAMPLE",json.dumps(exceptions[:5]))
     print("IDENTITY_PROMOTION_PROPOSAL",json.dumps({
         "existing":len(current),"candidate_exact_matches":len(matches),
         "new_or_updated_approvals_in_proposal":promoted,"exceptions":len(exceptions),
