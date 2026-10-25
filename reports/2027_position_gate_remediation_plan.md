@@ -41,3 +41,12 @@ Next: trace the 13 PHO opponent-game rows through source game logs and position 
 - Exact verified opponent-position counts: PG 5, SG 0, SF 3, PF 1, C 3; NBA ID `1629057` remains unmatched in baseline.
 - This isolates the PHO SG zero-observation gate to one opponent-game sample; it does **not** prove an SG row was dropped. Compare the official game box score and ingested source player IDs before changing the pipeline.
 - Hypothetical scenario still has 4 unknown player-game rows and 21 failing team-position pairs. No publication.
+
+## Independent Phoenix game-box-score comparison (2026-10-25)
+
+- Game `0022600092` is PHX @ POR, Oct 21: https://www.nba.com/game/por-vs-phx-0022600092 and https://www.basketball-reference.com/boxscores/202610210POR.html.
+- CI artifact run `40180082160` traces **13** Portland player-game rows, including Lillard `203081`, Holiday `201950`, Krejčí `1630249`, all mapped to **PG** by the 2026–27 Basketball-Reference Portland roster source.
+- The independently indexed 2026–27 Portland roster https://www.basketball-reference.com/teams/POR/2027.html lists all three as **PG** and has SG-listed roster players who did not appear in this game. The Portland depth chart https://www.basketball-reference.com/teams/POR/2027_depth.html currently has no SG entries.
+- A separate game-specific position labeling source https://www.hoopsstats.com/basketball/fantasy/nba/boxscores/phoenix-suns-at-portland-trail-blazers/2026-10-21/27/25 labels Lillard, Holiday and Krejčí **SG**. This is a **source-definition conflict**, not proof of a broken join. The strict roster-position model yields zero SG rows for this game; game-role position and roster primary position should remain separate until a policy is defined.
+- Also inspect source freshness: NBA records PHO hosting GSW Oct 24, game `0022600111`; this was not in the artifact's Phoenix trace. A fresh source snapshot and a clear data-as-of timestamp are needed before calling the current one-game coverage representative of the full season.
+- Do **not** automatically relabel these PG records or weaken the conservative publication gate.
