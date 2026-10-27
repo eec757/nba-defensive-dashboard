@@ -41,3 +41,10 @@ Direct Basketball Reference 2026–27 roster pages independently corroborate the
 Christian Anderson's Wikidata item https://www.wikidata.org/wiki/Q133691210 independently exposes both NBA ID `1643515` and Basketball Reference ID `a/anderch02`; this is an exact identity match, not human approval. Other identity mappings remain candidates until their respective evidence is checked explicitly. The older claim that GG Jackson's position was only found via a mirror is superseded by the canonical MEM roster check above.
 
 **Review status remains pending for all seven.** No approvals, publication, source-row deletions, or gate changes. Live sources may evolve; retain source URL and audit date for subsequent human signoff.
+
+## Additional independent identity cross-check — 2026-10-27
+
+- **Bobby Portis (NBA 1626171):** NBA player profile https://www.nba.com/player/1626171 names Bobby Portis Jr. and Miami Heat. Basketball Reference player profile https://www.basketball-reference.com/players/p/portibo01.html names Bobby Portis and Miami Heat. These are corroborating player/team references, **not a machine-verifiable exact NBA-ID-to-BRef-ID assertion** on their own; preserve pending exact-link review.
+- **Walter Clayton Jr. (NBA 1642383):** NBA G League player profile https://gleague.nba.com/player/1642383 names Walter Clayton Jr.; Basketball Reference player page https://www.basketball-reference.com/players/c/claytwa01.html names Walter Clayton and displays 2026–27 DAL PG. Dallas's Oct 21, 2026 signing release https://gleague.nba.com/news/mavericks-sign-walter-clayton-jr-to-two-way-contract confirms team affiliation, but labels him only as a guard. These independently corroborate identity context and the specific Basketball Reference position, **not the exact NBA↔BRef ID linkage by themselves**.
+
+Both cases remain **pending human evidence approval**. Do not infer exact identity links from similar names and teams; do not alter verified crosswalk or 95% coverage gates.
