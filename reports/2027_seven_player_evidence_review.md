@@ -15,3 +15,13 @@ Source: combined audit [#40458682249](https://github.com/eec757/nba-defensive-da
 **Review status: pending for all seven.** These are evidence references extracted from the audit, not newly independently revalidated live pages. Confirm exact identity and the precise season-specific position against the cited sources and record the established independent approval evidence before any crosswalk promotion. The audit reported no official NBA identity evidence for these seven in this source report. The 17 game rows are hypothetical additions only.
 
 **Explicit exclusions:** NBA IDs 1643633, 1643568, 1643813 remain outside this queue; their five raw rows stay in coverage denominators. No auto-approval, gate waiver, publication, or main-branch change is authorized.
+
+## Live source spot-check (2026-10-27)
+
+Independent web lookup corroborated precise 2026–27 roster positions for **Bobby Portis (MIA PF)** and **Ron Holland (DET SF)** from Basketball Reference roster pages. A Memphis roster result lists **GG Jackson II (PF)** but came from an unofficial mirror; recheck the canonical Basketball Reference page before signoff. Other candidates' precise positions and all exact NBA↔BRef identity pairs still require individually documented live validation. Generic G/F labels do not suffice.
+
+- Bobby Portis: https://www.basketball-reference.com/teams/MIA/2027.html and https://www.basketball-reference.com/players/p/portibo01.html
+- Ron Holland: https://www.basketball-reference.com/teams/DET/2027.html
+- GG Jackson II: https://www.basketball-reference.com/teams/MEM/2027.html (canonical source not confirmed in this spot-check)
+
+**No approvals granted.** Partial corroboration only; strict publication gates remain.
