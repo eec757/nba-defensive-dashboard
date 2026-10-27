@@ -1,0 +1,19 @@
+season,game_date,team,opponent,points_scored,points_allowed,game_status,quality,score_source,final_status_source,nba_game_id
+2026-27,2026-10-26,WAS,CHA,103,110,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600119
+2026-27,2026-10-26,CHA,WAS,110,103,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600119
+2026-27,2026-10-26,MIN,CLE,125,127,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600120
+2026-27,2026-10-26,CLE,MIN,127,125,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600120
+2026-27,2026-10-26,CHI,BOS,99,134,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600121
+2026-27,2026-10-26,BOS,CHI,134,99,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600121
+2026-27,2026-10-26,DAL,MIA,113,109,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600122
+2026-27,2026-10-26,MIA,DAL,109,113,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600122
+2026-27,2026-10-26,IND,MIL,102,110,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600123
+2026-27,2026-10-26,MIL,IND,110,102,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600123
+2026-27,2026-10-26,PHX,OKC,114,125,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600124
+2026-27,2026-10-26,OKC,PHX,125,114,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600124
+2026-27,2026-10-26,ATL,HOU,110,120,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600125
+2026-27,2026-10-26,HOU,ATL,120,110,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600125
+2026-27,2026-10-26,MEM,UTA,110,105,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600126
+2026-27,2026-10-26,UTA,MEM,105,110,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600126
+2026-27,2026-10-26,GSW,DEN,134,114,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600127
+2026-27,2026-10-26,DEN,GSW,114,134,Final,Verified final score; team-game only,https://www.lunosport.com/nba/2026-10-26,https://www.nba.com/games?date=2026-10-26,0022600127
