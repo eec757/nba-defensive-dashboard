@@ -88,8 +88,6 @@ jobs:
         run: python scripts/audit_source_readiness_2027.py
       - name: Test source freshness readiness fails closed
         run: python -m unittest discover -s tests -p 'test_source_readiness_2027.py' -v
-      - name: Prioritize unmatched player IDs for independent review
-        run: python scripts/prioritize_identity_review_2027.py
       - name: Inspect upstream catalog metadata for refresh provenance (read-only)
         run: python scripts/audit_upstream_catalog_metadata_2027.py
       - name: Rehearse publication freshness prerequisite (read-only)
@@ -106,6 +104,8 @@ jobs:
         run: python scripts/trace_phoenix_opponent_positions.py
       - name: Identify unmatched player-game identities for independent review
         run: python scripts/audit_unmatched_player_games.py
+      - name: Prioritize unmatched player IDs for independent review
+        run: python scripts/prioritize_identity_review_2027.py
       - name: Generate targeted coverage exceptions for review
         run: python scripts/build_targeted_coverage_exceptions.py
       - name: Stage independent identity candidates for game-log-only players
