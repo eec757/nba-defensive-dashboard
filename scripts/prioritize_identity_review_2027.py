@@ -27,3 +27,5 @@ with out.open("w", newline="") as f:
     writer.writeheader()
     writer.writerows(rows)
 print("REVIEW_QUEUE", json.dumps({"ids":len(rows),"rows":source["unmatched_game_rows"],"priority_ids":sum(r["priority"]=="team_gate" for r in rows),"publication_ready":False}))
+
+print("PRIORITY_ONE_IDENTITIES", json.dumps([{"nba_player_id":r["nba_player_id"],"unmatched_game_rows":r["unmatched_game_rows"],"failed_teams":r["affected_failed_teams"],"game_ids":r["game_ids"]} for r in rows if r["priority"] == "team_gate"]))
