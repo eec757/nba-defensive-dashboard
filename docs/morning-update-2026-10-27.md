@@ -18,7 +18,7 @@
 | MEM | UTA | 110–105 | MEM: 105; UTA: 110 |
 | GSW | DEN | 134–114 | GSW: 114; DEN: 134 |
 
-**Lowest points allowed:** Boston held Chicago to 99, Utah allowed Memphis 110, Charlotte held Washington to 103, and Dallas allowed Miami 109. Note Boston's 99 was the fewest allowed across all nine games.
+**Lowest points allowed:** Boston held Chicago to 99, Milwaukee held Indiana to 102, Charlotte held Washington to 103, and Memphis held Utah to 105. These are raw points allowed, not pace-adjusted defensive ratings.
 
 ## Two-season scoring and defensive rankings
 
