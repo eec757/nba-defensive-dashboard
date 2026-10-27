@@ -61,3 +61,15 @@ Direct Wikidata item lookups confirmed **both** NBA.com player ID (P3647) and Ba
 | Walter Clayton Jr. | https://www.wikidata.org/wiki/Q117262884 | 1642383 | c/claytwa01 | exact dual-ID match, human approval pending |
 
 These four are corroborated at the exact identifier level. The other three candidates (Ron Holland, Christian Anderson Jr., DaRon Holmes II) are not yet recorded as fully checked in this review. Wikidata assertions are third-party evidence, not human signoff. No approval, crosswalk change, or publication authorized.
+
+## Final three exact dual-identifier checks — 2026-10-27
+
+Direct Wikidata item-page checks show the NBA.com player ID (P3647) and Basketball Reference NBA player ID (P2685) on the **same item** for each remaining candidate:
+
+| Player | Wikidata item | NBA.com ID | Basketball Reference ID | Outcome |
+|---|---|---|---|---|
+| Ron Holland II | https://www.wikidata.org/wiki/Q116407941 | 1641842 | h/hollaro01 | exact match; human approval pending |
+| Christian Anderson Jr. | https://www.wikidata.org/wiki/Q133691210 | 1643515 | a/anderch02 | exact match; human approval pending |
+| DaRon Holmes II | https://www.wikidata.org/wiki/Q115492041 | 1641747 | h/holmeda01 | exact match; human approval pending |
+
+**Evidence checkpoint:** All seven candidates now have documented exact dual-identifier Wikidata matches and previously documented season-specific roster positions. These are third-party assertions (the displayed Wikidata ID claims have zero source references), so they are not official NBA identity evidence or human approval. Human signoff must independently review each claim and the 2026–27 position before changing the verified crosswalk. The seven candidate approvals remain **0/7**, the three exclusions remain excluded, and all 95% publication gates remain enforced.
