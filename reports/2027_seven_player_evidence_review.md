@@ -25,3 +25,19 @@ Independent web lookup corroborated precise 2026–27 roster positions for **Bob
 - GG Jackson II: https://www.basketball-reference.com/teams/MEM/2027.html (canonical source not confirmed in this spot-check)
 
 **No approvals granted.** Partial corroboration only; strict publication gates remain.
+
+## Canonical-source checks — 2026-10-27 (additional)
+
+Direct Basketball Reference 2026–27 roster pages independently corroborate these **candidate season positions**:
+
+| NBA ID | Player | 2026–27 position | Canonical roster |
+|---|---|---|---|
+| 1643515 | Christian Anderson Jr. | PG | https://www.basketball-reference.com/teams/CHO/2027.html |
+| 1642383 | Walter Clayton | PG | https://www.basketball-reference.com/teams/DAL/2027.html |
+| 1641747 | DaRon Holmes | PF | https://www.basketball-reference.com/teams/DEN/2027.html |
+| 1641713 | GG Jackson II | PF | https://www.basketball-reference.com/teams/MEM/2027.html |
+| 1629057 | Robert Williams | C | https://www.basketball-reference.com/teams/POR/2027.html |
+
+Christian Anderson's Wikidata item https://www.wikidata.org/wiki/Q133691210 independently exposes both NBA ID `1643515` and Basketball Reference ID `a/anderch02`; this is an exact identity match, not human approval. Other identity mappings remain candidates until their respective evidence is checked explicitly. The older claim that GG Jackson's position was only found via a mirror is superseded by the canonical MEM roster check above.
+
+**Review status remains pending for all seven.** No approvals, publication, source-row deletions, or gate changes. Live sources may evolve; retain source URL and audit date for subsequent human signoff.
