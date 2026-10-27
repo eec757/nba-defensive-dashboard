@@ -20,6 +20,7 @@ on:
       - 'scripts/audit_upstream_catalog_metadata_2027.py'
       - 'scripts/prioritize_identity_review_2027.py'
       - 'scripts/summarize_team_position_blockers_2027.py'
+      - 'scripts/build_supported_identity_review_queue_2027.py'
       - 'scripts/display_exclusions_2027.py'
       - 'tests/test_display_exclusions_2027.py'
       - 'tests/test_source_readiness_2027.py'
@@ -127,6 +128,8 @@ jobs:
         run: python scripts/audit_missing_player_coverage_scenario.py
       - name: Report exact unresolved game-log identity and position blockers
         run: python scripts/audit_remaining_game_log_exceptions.py
+      - name: Build pending independently supported identity review queue
+        run: python scripts/build_supported_identity_review_queue_2027.py
       - name: Summarize strict team-position publication blockers
         run: python scripts/summarize_team_position_blockers_2027.py
       - name: Identify actual team affiliations for unresolved player-game IDs
