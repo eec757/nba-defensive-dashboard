@@ -4,8 +4,16 @@ from pathlib import Path
 
 scenario=json.loads(Path("reports/missing_player_coverage_scenario_2027.json").read_text())
 unresolved=json.loads(Path("reports/remaining_game_log_exceptions_2027.json").read_text())
+from display_exclusions_2027 import EXCLUDED_PLAYER_IDS
 excluded={"1643633":"Graham Ike","1643568":"Nick Martinelli","1643813":"Alpha Diallo"}
+if set(excluded) != EXCLUDED_PLAYER_IDS:
+    raise ValueError("Blocker report and display exclusion IDs have drifted")
 players=unresolved.get("unresolved_players",[])
+actual_unknown=sum(p["game_rows"] for p in players)
+if actual_unknown != scenario["remaining_unknown_rows"]:
+    raise ValueError("Unresolved rows do not match scenario denominator")
+if {p["nba_player_id"] for p in players} != EXCLUDED_PLAYER_IDS:
+    raise ValueError("Unresolved player set changed; manual review required")
 failures=scenario["team_position_gate_failures"]
 rows=[]
 for team,position in failures:
