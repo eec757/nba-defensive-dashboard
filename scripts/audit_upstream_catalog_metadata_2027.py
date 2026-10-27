@@ -27,10 +27,21 @@ def main():
         sample=con.execute('SELECT * FROM nba.main.metadata LIMIT 10')
         names=[d[0] for d in sample.description]
         metadata_rows=[{k:str(v)[:300] if v is not None else None for k,v in zip(names,row)} for row in sample.fetchall()]
+    # Explicitly query relevant datasets instead of relying on the first ten rows.
+    relevant_updates=[]
+    if ("main","metadata") in tables:
+        for dataset,source,updated in con.execute("""
+            SELECT dataset, source, CAST(updated AS VARCHAR)
+            FROM nba.main.metadata
+            WHERE dataset IN ('games','player_box','game_rotations')
+            ORDER BY dataset
+        """).fetchall():
+            relevant_updates.append({"dataset":dataset,"source":source,"updated_utc":updated})
     report={"checked_at_utc":datetime.now(timezone.utc).isoformat(),
             "catalog":CATALOG,"metadata_table_candidates":candidates,
             "catalog_table_count":len(tables),
             "metadata_columns":metadata_columns,"metadata_sample_rows":metadata_rows,
+            "relevant_dataset_updates":relevant_updates,
             "refresh_cadence_verified":False,
             "note":"Table names are hints only. No upstream refresh cadence inferred from absence or presence of metadata tables.",
             "publication_ready":False}
