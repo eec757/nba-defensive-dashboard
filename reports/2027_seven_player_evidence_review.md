@@ -73,3 +73,9 @@ Direct Wikidata item-page checks show the NBA.com player ID (P3647) and Basketba
 | DaRon Holmes II | https://www.wikidata.org/wiki/Q115492041 | 1641747 | h/holmeda01 | exact match; human approval pending |
 
 **Evidence checkpoint:** All seven candidates now have documented exact dual-identifier Wikidata matches and previously documented season-specific roster positions. These are third-party assertions (the displayed Wikidata ID claims have zero source references), so they are not official NBA identity evidence or human approval. Human signoff must independently review each claim and the 2026–27 position before changing the verified crosswalk. The seven candidate approvals remain **0/7**, the three exclusions remain excluded, and all 95% publication gates remain enforced.
+
+## User review attestation — 2026-10-27
+
+The repository owner stated in the ChatGPT conversation: **“i have reviewed and they are correct”**, in direct response to the seven-player exact-ID and season-position evidence review. Scope: the seven listed NBA↔Basketball Reference mappings and their 2026–27 primary positions. This records the user's own review statement; it is **not** an independently signed GitHub approval, an official NBA source, or a fabricated per-player timestamp or reviewer identity. No evidence was uploaded with this statement.
+
+**Operational disposition:** User-reported review complete for seven candidates; formal machine-readable approval provenance and publication gate audit still pending. Do not silently set `human_approved=true`, edit the approved crosswalk, or publish on the basis of this note alone. Retain the three exclusions and all 95% gates.
