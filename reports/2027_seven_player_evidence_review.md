@@ -48,3 +48,16 @@ Christian Anderson's Wikidata item https://www.wikidata.org/wiki/Q133691210 inde
 - **Walter Clayton Jr. (NBA 1642383):** NBA G League player profile https://gleague.nba.com/player/1642383 names Walter Clayton Jr.; Basketball Reference player page https://www.basketball-reference.com/players/c/claytwa01.html names Walter Clayton and displays 2026–27 DAL PG. Dallas's Oct 21, 2026 signing release https://gleague.nba.com/news/mavericks-sign-walter-clayton-jr-to-two-way-contract confirms team affiliation, but labels him only as a guard. These independently corroborate identity context and the specific Basketball Reference position, **not the exact NBA↔BRef ID linkage by themselves**.
 
 Both cases remain **pending human evidence approval**. Do not infer exact identity links from similar names and teams; do not alter verified crosswalk or 95% coverage gates.
+
+## Exact dual-identifier Wikidata verification — 2026-10-27
+
+Direct Wikidata item lookups confirmed **both** NBA.com player ID (P3647) and Basketball Reference NBA player ID (P2685) on the **same item** for the following candidates. Basketball Reference values include the single-letter path prefix; the crosswalk uses the basename.
+
+| Player | Wikidata item | P3647 NBA ID | P2685 Basketball Reference NBA ID | Status |
+|---|---|---|---|---|
+| Bobby Portis | https://www.wikidata.org/wiki/Q19667582 | 1626171 | p/portibo01 | exact dual-ID match, human approval pending |
+| GG Jackson | https://www.wikidata.org/wiki/Q115492105 | 1641713 | j/jacksgg01 | exact dual-ID match, human approval pending |
+| Robert Williams III | https://www.wikidata.org/wiki/Q28151848 | 1629057 | w/williro04 | exact dual-ID match, human approval pending |
+| Walter Clayton Jr. | https://www.wikidata.org/wiki/Q117262884 | 1642383 | c/claytwa01 | exact dual-ID match, human approval pending |
+
+These four are corroborated at the exact identifier level. The other three candidates (Ron Holland, Christian Anderson Jr., DaRon Holmes II) are not yet recorded as fully checked in this review. Wikidata assertions are third-party evidence, not human signoff. No approval, crosswalk change, or publication authorized.
