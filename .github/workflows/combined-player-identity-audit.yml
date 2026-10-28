@@ -138,6 +138,10 @@ jobs:
         run: python scripts/audit_missing_player_coverage_scenario.py
       - name: Report exact unresolved game-log identity and position blockers
         run: python scripts/audit_remaining_game_log_exceptions.py
+      - name: Test exact-versus-ambiguous roster classifier
+        run: python -m unittest discover -s tests -p 'test_roster_position_classifier_2027.py' -v
+      - name: Report three unresolved season-position ambiguities
+        run: python scripts/report_three_player_position_ambiguity_2027.py
       - name: Build evidence-first worklist for three excluded players
         run: python scripts/build_three_player_evidence_worklist_2027.py
       - name: Build pending independently supported identity review queue
