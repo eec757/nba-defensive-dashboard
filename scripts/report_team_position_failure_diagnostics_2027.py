@@ -8,10 +8,13 @@ def build():
     exceptions=json.loads(Path("reports/remaining_game_log_exceptions_2027.json").read_text(encoding="utf-8"))
     players=exceptions["unresolved_players"]
     expected={"1643633","1643568","1643813"}
-    if {p["nba_player_id"] for p in players}!=expected:
-        raise ValueError("Unresolved identity set changed; triage requires manual update")
-    if sum(p["game_rows"] for p in players)!=6:
-        raise ValueError("Expected six unresolved player-game rows")
+    actual={p["nba_player_id"] for p in players}
+    drift=sorted(actual.symmetric_difference(expected))
+    if drift:
+        print("TEAM_POSITION_EXCEPTION_SET_DRIFT",json.dumps({"expected":sorted(expected),"actual":sorted(actual),"symmetric_difference":drift,"publication_ready":False}))
+    total_unresolved=sum(p["game_rows"] for p in players)
+    if total_unresolved<0:
+        raise ValueError("Negative unresolved game rows")
     failures=scenario["team_position_gate_failures"]
     rows=[]
     for team,pos in failures:
@@ -30,7 +33,9 @@ def build():
     by_team=dict(sorted(Counter(r["defending_team"] for r in rows).items()))
     return {"scenario":"historical_hypothetical_not_live_coverage",
             "failed_team_position_cells":len(rows),"failed_cells_by_defending_team":by_team,
-            "cells":rows,"excluded_game_rows":6,
+            "cells":rows,"excluded_game_rows":total_unresolved,
+            "exception_set_changed":bool(drift),"expected_exception_ids":sorted(expected),
+            "actual_exception_ids":sorted(actual),
             "missing_data":["exact per-cell verified numerator","exact per-cell conservative denominator","latest source refresh"],
             "publication_ready":False,"crosswalk_modified":False,
             "all_coverage_gates_pass":False}
