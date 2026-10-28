@@ -3,7 +3,7 @@ name: Combined Player Identity Audit
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, review/approved-2027-crosswalk]
     paths:
       - '.github/workflows/combined-player-identity-audit.yml'
       - 'scripts/diagnose_real_game_logs.py'
@@ -14,7 +14,34 @@ on:
       - 'scripts/audit_position_game_coverage.py'
       - 'scripts/audit_proposed_game_coverage.py'
       - 'scripts/audit_unmatched_player_games.py'
+      - 'scripts/trace_phoenix_opponent_positions.py'
+      - 'scripts/audit_source_freshness_2027.py'
+      - 'scripts/audit_source_readiness_2027.py'
+      - 'scripts/audit_upstream_catalog_metadata_2027.py'
+      - 'scripts/prioritize_identity_review_2027.py'
+      - 'scripts/summarize_team_position_blockers_2027.py'
+      - 'scripts/build_supported_identity_review_queue_2027.py'
+      - 'scripts/build_seven_player_approval_packet_2027.py'
+      - 'scripts/audit_seven_player_attestation_readiness_2027.py'
+      - 'scripts/stage_seven_player_unapproved_candidates_2027.py'
+      - 'scripts/validate_seven_player_candidates_2027.py'
+      - 'scripts/audit_seven_player_live_wikidata_2027.py'
+      - 'scripts/reconcile_seven_player_provenance_2027.py'
+      - 'scripts/audit_seven_player_live_roster_2027.py'
+      - 'scripts/build_seven_player_approved_promotion_preview_2027.py'
+      - 'docs/seven-player-owner-approval-2027.md'
+      - 'reports/2027_seven_player_user_review_attestation.csv'
+      - 'scripts/display_exclusions_2027.py'
+      - 'tests/test_display_exclusions_2027.py'
+      - 'tests/test_source_readiness_2027.py'
+      - 'scripts/build_targeted_coverage_exceptions.py'
+      - 'scripts/validate_targeted_identity_review.py'
+      - 'tests/test_targeted_identity_review.py'
       - 'scripts/stage_missing_game_log_identity_evidence.py'
+      - 'scripts/audit_targeted_candidate_propagation.py'
+      - 'scripts/audit_official_nba_evidence_propagation.py'
+      - 'scripts/audit_diallo_evidence_readiness.py'
+      - 'reports/2027_diallo_sg_position_evidence.csv'
       - 'scripts/audit_missing_player_positions.py'
       - 'scripts/audit_missing_player_coverage_scenario.py'
       - 'scripts/audit_remaining_game_log_exceptions.py'
@@ -27,7 +54,15 @@ on:
       - 'scripts/build_human_identity_review_packet.py'
       - 'scripts/stage_human_attested_crosswalk.py'
       - 'docs/leaguewide-review-confirmation-2027.md'
+      - 'scripts/report_three_player_independent_verification_readiness_2027.py'
+      - 'scripts/audit_staged_seven_player_full_coverage_2027.py'
+      - 'scripts/prioritize_staged_seven_player_blockers_2027.py'
+      - 'scripts/report_staged_seven_unmatched_rows_2027.py'
+      - 'docs/three-player-independent-verification-queue-2027.md'
       - 'scripts/audit_wikidata_identity_statements.py'
+      - 'reports/2027_targeted_identity_evidence_reconstruction.csv'
+      - 'reports/2027_three_player_independent_corroboration.csv'
+      - 'reports/2027_official_nba_identity_evidence.csv'
       - 'data/verified_player_ids_2027.csv'
       - 'data/reviewed_player_ids_2027.txt'
       - 'docs/leaguewide-identity-review-attestation-2027.md'
@@ -45,7 +80,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install dependencies
-        run: pip install requests beautifulsoup4 "duckdb>=1.3,<2"
+        run: pip install requests beautifulsoup4 pytz "duckdb>=1.3,<2"
       - name: Generate roster-matching candidates
         run: python scripts/audit_league_matching.py
       - name: Require generated roster report
@@ -66,16 +101,100 @@ jobs:
         run: python scripts/audit_position_game_coverage.py
       - name: Measure actual proposed player-game coverage by defending team and position
         run: python scripts/audit_proposed_game_coverage.py
+      - name: Check 2027 game-log source freshness against completed Phoenix reference game
+        run: python scripts/audit_source_freshness_2027.py
+      - name: Evaluate source freshness readiness without publishing
+        run: python scripts/audit_source_readiness_2027.py
+      - name: Test display exclusions preserve coverage denominators
+        run: python -m unittest discover -s tests -p 'test_display_exclusions_2027.py' -v
+      - name: Test source freshness readiness fails closed
+        run: python -m unittest discover -s tests -p 'test_source_readiness_2027.py' -v
+      - name: Inspect upstream catalog metadata for refresh provenance (read-only)
+        run: python scripts/audit_upstream_catalog_metadata_2027.py
+      - name: Rehearse publication freshness prerequisite (read-only)
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path("reports/2027_source_readiness.json").read_text())
+          blocked=report.get("source_reference_freshness_pass") is not True
+          print("PUBLICATION_PREFLIGHT_SOURCE_BLOCKED",blocked)
+          assert report.get("publication_ready") is False
+          PY
+      - name: Trace Phoenix opposing player-game positions to source game IDs
+        run: python scripts/trace_phoenix_opponent_positions.py
       - name: Identify unmatched player-game identities for independent review
         run: python scripts/audit_unmatched_player_games.py
+      - name: Prioritize unmatched player IDs for independent review
+        run: python scripts/prioritize_identity_review_2027.py
+      - name: Generate targeted coverage exceptions for review
+        run: python scripts/build_targeted_coverage_exceptions.py
       - name: Stage independent identity candidates for game-log-only players
         run: python scripts/stage_missing_game_log_identity_evidence.py
+      - name: Verify official NBA evidence reached generated game-log staging
+        run: python scripts/audit_official_nba_evidence_propagation.py
+      - name: Report Diallo exact-link and season-position evidence readiness
+        run: python scripts/audit_diallo_evidence_readiness.py
+      - name: Compare reviewed candidate IDs against generated game-log staging
+        run: python scripts/audit_targeted_candidate_propagation.py
       - name: Audit season positions for unmatched identity candidates
         run: python scripts/audit_missing_player_positions.py
       - name: Calculate strict hypothetical coverage with supported missing-player evidence
         run: python scripts/audit_missing_player_coverage_scenario.py
       - name: Report exact unresolved game-log identity and position blockers
         run: python scripts/audit_remaining_game_log_exceptions.py
+      - name: Test exact-versus-ambiguous roster classifier
+        run: python -m unittest discover -s tests -p 'test_roster_position_classifier_2027.py' -v
+      - name: Reconstruct exact hypothetical team-position counts
+        run: python scripts/report_team_position_exact_hypothetical_counts_2027.py
+      - name: Test verified-only team defense preview
+        run: python -m unittest discover -s tests -p 'test_verified_team_defense_preview_2027.py' -v
+      - name: Build verified-only team defense preview without publication
+        run: python scripts/build_verified_team_defense_preview_2027.py
+      - name: Rank team-position blockers by rows needed for 95 percent
+        run: python scripts/rank_team_position_blockers_2027.py
+      - name: Calculate numerical team-position coverage baseline
+        run: python scripts/report_team_position_numerical_baseline_2027.py
+      - name: Diagnose individual team-position coverage failures
+        run: python scripts/report_team_position_failure_diagnostics_2027.py
+      - name: Report UNKNOWN-position players without changing publication gates
+        run: python scripts/report_unknown_positions_2027.py
+      - name: Record unresolved roster-position source provenance
+        run: python scripts/report_three_player_position_source_provenance_2027.py
+      - name: Report three unresolved season-position ambiguities
+        run: python scripts/report_three_player_position_ambiguity_2027.py
+      - name: Report independent verification readiness for three excluded players
+        run: python scripts/report_three_player_independent_verification_readiness_2027.py
+      - name: Build evidence-first worklist for three excluded players
+        run: python scripts/build_three_player_evidence_worklist_2027.py
+      - name: Build pending independently supported identity review queue
+        run: python scripts/build_supported_identity_review_queue_2027.py
+      - name: Generate seven-player pending evidence approval packet
+        run: python scripts/build_seven_player_approval_packet_2027.py
+      - name: Reconcile seven-player user attestation with formal approval readiness
+        run: python scripts/audit_seven_player_attestation_readiness_2027.py
+      - name: Stage seven reviewed candidates as unapproved crosswalk rows
+        run: python scripts/stage_seven_player_unapproved_candidates_2027.py
+      - name: Validate seven unapproved candidate row structures
+        run: python scripts/validate_seven_player_candidates_2027.py
+      - name: Check live Wikidata dual-identifier claims for seven candidates
+        run: python scripts/audit_seven_player_live_wikidata_2027.py
+      - name: Reconcile user attestation and live evidence without approval
+        run: python scripts/reconcile_seven_player_provenance_2027.py
+      - name: Check seven exact positions against live 2026-27 roster cells
+        run: python scripts/audit_seven_player_live_roster_2027.py
+      - name: Build owner-approved crosswalk promotion preview without publication
+        run: python scripts/build_seven_player_approved_promotion_preview_2027.py
+      - name: Stage seven approved players and audit complete 95 percent coverage
+        run: python scripts/audit_staged_seven_player_full_coverage_2027.py
+      - name: Prioritize actual staged seven-player coverage blockers
+        run: python scripts/prioritize_staged_seven_player_blockers_2027.py
+      - name: Trace unmatched player-game rows in staged seven-player coverage
+        run: python scripts/report_staged_seven_unmatched_rows_2027.py
+      - name: Report seven-player approved coverage projection without publication
+        run: python scripts/report_seven_player_coverage_projection_2027.py
+      - name: Summarize strict team-position publication blockers
+        run: python scripts/summarize_team_position_blockers_2027.py
       - name: Identify actual team affiliations for unresolved player-game IDs
         run: python scripts/audit_unresolved_player_team_context.py
       - name: Test evidence matching safety
@@ -87,6 +206,26 @@ jobs:
       - name: Test review packet never grants approval
         if: always()
         run: python -m unittest discover -s tests -p 'test_human_identity_review_packet.py' -v
+      - name: Check manually reviewed exception candidates remain pending
+        run: |
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+          p=Path('reports/2027_targeted_identity_evidence_reconstruction.csv')
+          rows=list(csv.DictReader(p.open()))
+          assert len(rows)==11 and len({r['nba_player_id'] for r in rows})==11
+          assert all(r['manual_review_reported']=='yes' and r['approval_status']=='pending' for r in rows)
+          assert all(r['candidate_bref_id'] and r['candidate_position'] in ('PG','SG','SF','PF','C') for r in rows)
+          by_id={r['nba_player_id']:r for r in rows}
+          assert by_id['1643633']['candidate_position']=='PF'
+          assert by_id['1643568']['candidate_position']=='SF'
+          assert by_id['1643813']['candidate_position']=='SG'
+          assert by_id['1643813']['candidate_bref_id']=='diallal01'
+          print('11 candidates structurally complete; 0 approved. Independent evidence validation still required.')
+          PY
+      - name: Test targeted identity review safety
+        if: always()
+        run: python -m unittest discover -s tests -p 'test_targeted_identity_review.py' -v
       - name: Compare roster candidates to real game logs
         run: python scripts/diagnose_real_game_logs.py
       - name: Generate identity approval readiness report

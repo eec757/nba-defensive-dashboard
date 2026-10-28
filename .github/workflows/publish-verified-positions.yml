@@ -16,6 +16,18 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install "duckdb>=1.3,<2"
+      - name: Require complete reference game in upstream source before publication
+        run: |
+          python scripts/audit_source_freshness_2027.py
+          python scripts/audit_source_readiness_2027.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          readiness=json.loads(Path("reports/2027_source_readiness.json").read_text())
+          if readiness.get("source_reference_freshness_pass") is not True:
+              raise SystemExit("Publication blocked: upstream game-log snapshot missing completed Phoenix reference game")
+          print("Reference freshness passed; independent identity and 95% coverage gates still apply")
+          PY
       - name: Test publication safety without external data
         run: python -m unittest discover -s tests -p "test_position_publication.py" -v
       - name: Remove stale position output before validation
