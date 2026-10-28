@@ -56,6 +56,7 @@ on:
       - 'docs/leaguewide-review-confirmation-2027.md'
       - 'scripts/report_three_player_independent_verification_readiness_2027.py'
       - 'scripts/audit_staged_seven_player_full_coverage_2027.py'
+      - 'scripts/prioritize_staged_seven_player_blockers_2027.py'
       - 'docs/three-player-independent-verification-queue-2027.md'
       - 'scripts/audit_wikidata_identity_statements.py'
       - 'reports/2027_targeted_identity_evidence_reconstruction.csv'
@@ -185,6 +186,8 @@ jobs:
         run: python scripts/build_seven_player_approved_promotion_preview_2027.py
       - name: Stage seven approved players and audit complete 95 percent coverage
         run: python scripts/audit_staged_seven_player_full_coverage_2027.py
+      - name: Prioritize actual staged seven-player coverage blockers
+        run: python scripts/prioritize_staged_seven_player_blockers_2027.py
       - name: Report seven-player approved coverage projection without publication
         run: python scripts/report_seven_player_coverage_projection_2027.py
       - name: Summarize strict team-position publication blockers
