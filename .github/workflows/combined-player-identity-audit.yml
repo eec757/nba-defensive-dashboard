@@ -156,6 +156,8 @@ jobs:
         run: python scripts/audit_seven_player_live_roster_2027.py
       - name: Build owner-approved crosswalk promotion preview without publication
         run: python scripts/build_seven_player_approved_promotion_preview_2027.py
+      - name: Report seven-player approved coverage projection without publication
+        run: python scripts/report_seven_player_coverage_projection_2027.py
       - name: Summarize strict team-position publication blockers
         run: python scripts/summarize_team_position_blockers_2027.py
       - name: Identify actual team affiliations for unresolved player-game IDs
