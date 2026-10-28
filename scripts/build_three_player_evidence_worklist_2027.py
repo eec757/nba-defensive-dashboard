@@ -35,6 +35,8 @@ def main():
     result={"players":work,"excluded_game_rows":sum(x["affected_game_rows"] for x in work),
             "exception_set_changed":bool(drift or counts_changed),
             "unexpected_player_ids":sorted(set(players)-set(NAMES)),
+            "observed_all_unresolved_game_rows":sum(p["game_rows"] for p in players.values()),
+            "expected_ids_absent":sorted(set(NAMES)-set(players)),
             "publication_ready":False,"coverage_denominator_preserved":True}
     OUTPUT.write_text(json.dumps(result,indent=2)+"\n",encoding="utf-8")
     print("THREE_PLAYER_EVIDENCE_WORKLIST",json.dumps({"players":len(work),"excluded_game_rows":result["excluded_game_rows"],"publication_ready":False}))
