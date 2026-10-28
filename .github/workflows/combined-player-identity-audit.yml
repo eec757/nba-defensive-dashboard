@@ -28,6 +28,8 @@ on:
       - 'scripts/audit_seven_player_live_wikidata_2027.py'
       - 'scripts/reconcile_seven_player_provenance_2027.py'
       - 'scripts/audit_seven_player_live_roster_2027.py'
+      - 'scripts/build_seven_player_approved_promotion_preview_2027.py'
+      - 'docs/seven-player-owner-approval-2027.md'
       - 'reports/2027_seven_player_user_review_attestation.csv'
       - 'scripts/display_exclusions_2027.py'
       - 'tests/test_display_exclusions_2027.py'
@@ -152,6 +154,8 @@ jobs:
         run: python scripts/reconcile_seven_player_provenance_2027.py
       - name: Check seven exact positions against live 2026-27 roster cells
         run: python scripts/audit_seven_player_live_roster_2027.py
+      - name: Build owner-approved crosswalk promotion preview without publication
+        run: python scripts/build_seven_player_approved_promotion_preview_2027.py
       - name: Summarize strict team-position publication blockers
         run: python scripts/summarize_team_position_blockers_2027.py
       - name: Identify actual team affiliations for unresolved player-game IDs
