@@ -26,6 +26,7 @@ on:
       - 'scripts/stage_seven_player_unapproved_candidates_2027.py'
       - 'scripts/validate_seven_player_candidates_2027.py'
       - 'scripts/audit_seven_player_live_wikidata_2027.py'
+      - 'scripts/reconcile_seven_player_provenance_2027.py'
       - 'reports/2027_seven_player_user_review_attestation.csv'
       - 'scripts/display_exclusions_2027.py'
       - 'tests/test_display_exclusions_2027.py'
@@ -146,6 +147,8 @@ jobs:
         run: python scripts/validate_seven_player_candidates_2027.py
       - name: Check live Wikidata dual-identifier claims for seven candidates
         run: python scripts/audit_seven_player_live_wikidata_2027.py
+      - name: Reconcile user attestation and live evidence without approval
+        run: python scripts/reconcile_seven_player_provenance_2027.py
       - name: Summarize strict team-position publication blockers
         run: python scripts/summarize_team_position_blockers_2027.py
       - name: Identify actual team affiliations for unresolved player-game IDs
