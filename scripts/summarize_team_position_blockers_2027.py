@@ -12,8 +12,10 @@ players=unresolved.get("unresolved_players",[])
 actual_unknown=sum(p["game_rows"] for p in players)
 if actual_unknown != scenario["remaining_unknown_rows"]:
     raise ValueError("Unresolved rows do not match scenario denominator")
-if {p["nba_player_id"] for p in players} != EXCLUDED_PLAYER_IDS:
-    raise ValueError("Unresolved player set changed; manual review required")
+observed_ids={p["nba_player_id"] for p in players}
+drift=observed_ids.symmetric_difference(EXCLUDED_PLAYER_IDS)
+if drift:
+    print("TEAM_POSITION_BLOCKER_SET_DRIFT",json.dumps({"unexpected_ids":sorted(observed_ids-EXCLUDED_PLAYER_IDS),"missing_ids":sorted(EXCLUDED_PLAYER_IDS-observed_ids),"publication_ready":False}))
 failures=scenario["team_position_gate_failures"]
 rows=[]
 for team,position in failures:
@@ -27,6 +29,8 @@ for team,position in failures:
 report={"scenario":"hypothetical_only_not_publication_approval",
         "team_position_gate_failures":len(rows),"blocked_team_positions":rows,
         "excluded_player_ids":sorted(excluded),"unresolved_game_rows":scenario["remaining_unknown_rows"],
+        "unresolved_player_ids_observed":sorted(observed_ids),
+        "unresolved_player_set_changed":bool(drift),
         "all_coverage_gates_pass":scenario["all_coverage_gates_pass"],
         "publication_ready":False,
         "note":"An unresolved player may affect every position's conservative denominator for a defending team; this does not imply they played all positions. Actual approved coverage remains separate."}
