@@ -54,6 +54,7 @@ on:
       - 'scripts/build_human_identity_review_packet.py'
       - 'scripts/stage_human_attested_crosswalk.py'
       - 'docs/leaguewide-review-confirmation-2027.md'
+      - 'scripts/report_three_player_independent_verification_readiness_2027.py'
       - 'scripts/audit_wikidata_identity_statements.py'
       - 'reports/2027_targeted_identity_evidence_reconstruction.csv'
       - 'reports/2027_three_player_independent_corroboration.csv'
@@ -158,6 +159,8 @@ jobs:
         run: python scripts/report_three_player_position_source_provenance_2027.py
       - name: Report three unresolved season-position ambiguities
         run: python scripts/report_three_player_position_ambiguity_2027.py
+      - name: Report independent verification readiness for three excluded players
+        run: python scripts/report_three_player_independent_verification_readiness_2027.py
       - name: Build evidence-first worklist for three excluded players
         run: python scripts/build_three_player_evidence_worklist_2027.py
       - name: Build pending independently supported identity review queue
