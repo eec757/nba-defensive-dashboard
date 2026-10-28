@@ -56,6 +56,7 @@ on:
       - 'docs/leaguewide-review-confirmation-2027.md'
       - 'scripts/report_three_player_independent_verification_readiness_2027.py'
       - 'scripts/audit_staged_seven_player_full_coverage_2027.py'
+      - 'docs/three-player-independent-verification-queue-2027.md'
       - 'scripts/audit_wikidata_identity_statements.py'
       - 'reports/2027_targeted_identity_evidence_reconstruction.csv'
       - 'reports/2027_three_player_independent_corroboration.csv'
