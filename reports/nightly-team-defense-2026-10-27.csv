@@ -1,0 +1,9 @@
+season,game_date,team,opponent,points_scored,points_allowed,game_status,quality,score_source,final_status_source,nba_game_id
+2026-27,2026-10-27,BKN,BOS,124,125,Final,Verified final score; team-game only,https://sports.ws/nba/2026-10-27,https://www.nba.com/games?date=2026-10-27,0022600128
+2026-27,2026-10-27,BOS,BKN,125,124,Final,Verified final score; team-game only,https://sports.ws/nba/2026-10-27,https://www.nba.com/games?date=2026-10-27,0022600128
+2026-27,2026-10-27,DET,NYK,97,111,Final,Verified final score; team-game only,https://sports.ws/nba/2026-10-27,https://www.nba.com/games?date=2026-10-27,0022600129
+2026-27,2026-10-27,NYK,DET,111,97,Final,Verified final score; team-game only,https://sports.ws/nba/2026-10-27,https://www.nba.com/games?date=2026-10-27,0022600129
+2026-27,2026-10-27,SAC,SAS,103,130,Final,Verified final score; team-game only,https://sports.ws/nba/2026-10-27,https://www.nba.com/games?date=2026-10-27,0022600130
+2026-27,2026-10-27,SAS,SAC,130,103,Final,Verified final score; team-game only,https://sports.ws/nba/2026-10-27,https://www.nba.com/games?date=2026-10-27,0022600130
+2026-27,2026-10-27,POR,LAL,136,129,Final,Verified final score; team-game only,https://sports.ws/nba/2026-10-27,https://www.nba.com/games?date=2026-10-27,0022600131
+2026-27,2026-10-27,LAL,POR,129,136,Final,Verified final score; team-game only,https://sports.ws/nba/2026-10-27,https://www.nba.com/games?date=2026-10-27,0022600131
