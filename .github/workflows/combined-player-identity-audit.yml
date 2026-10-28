@@ -142,6 +142,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_roster_position_classifier_2027.py' -v
       - name: Reconstruct exact hypothetical team-position counts
         run: python scripts/report_team_position_exact_hypothetical_counts_2027.py
+      - name: Rank team-position blockers by rows needed for 95 percent
+        run: python scripts/rank_team_position_blockers_2027.py
       - name: Calculate numerical team-position coverage baseline
         run: python scripts/report_team_position_numerical_baseline_2027.py
       - name: Diagnose individual team-position coverage failures
