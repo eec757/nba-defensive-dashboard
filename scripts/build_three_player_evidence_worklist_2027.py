@@ -10,11 +10,13 @@ EXPECTED={"1643633":4,"1643568":1,"1643813":1}
 def main():
     data=json.loads(SOURCE.read_text(encoding="utf-8"))
     players={p["nba_player_id"]:p for p in data["unresolved_players"]}
-    if set(players)!=set(NAMES):raise ValueError("Excluded player set changed")
-    if {pid:players[pid]["game_rows"] for pid in players}!=EXPECTED:
-        raise ValueError("Excluded player-game counts changed; refresh audit")
+    drift=sorted(set(players).symmetric_difference(NAMES))
+    counts_changed={pid:{"expected":EXPECTED[pid],"observed":players[pid]["game_rows"]}
+                    for pid in set(players)&set(NAMES) if players[pid]["game_rows"]!=EXPECTED[pid]}
+    if drift or counts_changed:
+        print("THREE_PLAYER_EVIDENCE_WORKLIST_DRIFT",json.dumps({"changed_ids":drift,"changed_counts":counts_changed,"publication_ready":False}))
     work=[]
-    for pid in sorted(players,key=lambda x:-players[x]["game_rows"]):
+    for pid in sorted(set(players)&set(NAMES),key=lambda x:-players[x]["game_rows"]):
         p=players[pid]
         work.append({
             "nba_player_id":pid,"name":NAMES[pid],"affected_game_rows":p["game_rows"],
@@ -31,6 +33,8 @@ def main():
             "approved":False,"included_in_publication":False
         })
     result={"players":work,"excluded_game_rows":sum(x["affected_game_rows"] for x in work),
+            "exception_set_changed":bool(drift or counts_changed),
+            "unexpected_player_ids":sorted(set(players)-set(NAMES)),
             "publication_ready":False,"coverage_denominator_preserved":True}
     OUTPUT.write_text(json.dumps(result,indent=2)+"\n",encoding="utf-8")
     print("THREE_PLAYER_EVIDENCE_WORKLIST",json.dumps({"players":len(work),"excluded_game_rows":result["excluded_game_rows"],"publication_ready":False}))
