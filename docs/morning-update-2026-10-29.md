@@ -45,7 +45,7 @@ The repository's published `data/summary.json` was refreshed on October 28 at 13
 ## Defensive metric quality and source access
 
 - **Team points scored/allowed and league ranks:** 2025–26 full-season repository source; 2026–27 **provisional derived through October 28** using corroborated finals, 68 games. Not a direct official NBA.com Stats season export.
-- **Opponent three-point makes/attempts/percentage and FG%:** Latest available repository BoxScore Lab NBA-derived snapshot **through October 26 only**; excludes October 27–28. Values retained unchanged rather than falsely presented as current.
+- **Opponent three-point makes/attempts/percentage and FG%:** Latest available repository BoxScore Lab NBA-derived snapshot **through October 27 only**; excludes October 28. All 56 baseline games have defensive shooting coverage. Values are refreshed from the October 28 repository `data/summary.json` snapshot, rather than falsely presented as including October 28.
 - **Position defense PG/SG/SF/PF/C and positional three-point defense:** **Unavailable/unverified**, because validated position-specific player-game coverage is not available for publication.
 - **Paint defense and rim defense:** **Unavailable/unverified** at season-team level. No estimates.
 - **NBA.com Stats:** [Traditional team stats](https://www.nba.com/stats/teams/traditional?Season=2026-27) could not be retrieved. The NBA.com schedule was accessible and confirmed final statuses, but numeric scores were corroborated via independent scoreboards.
