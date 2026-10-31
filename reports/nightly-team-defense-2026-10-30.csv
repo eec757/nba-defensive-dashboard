@@ -1,0 +1,21 @@
+season,game_date,team,opponent,points_scored,points_allowed,game_status,quality,score_source,final_status_source,nba_game_id
+2026-27,2026-10-30,CHA,WAS,79,95,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600015
+2026-27,2026-10-30,WAS,CHA,95,79,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600015
+2026-27,2026-10-30,CHI,BOS,111,125,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600016
+2026-27,2026-10-30,BOS,CHI,125,111,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600016
+2026-27,2026-10-30,DET,BKN,110,94,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600017
+2026-27,2026-10-30,BKN,DET,94,110,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600017
+2026-27,2026-10-30,NYK,PHI,93,98,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600018
+2026-27,2026-10-30,PHI,NYK,98,93,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600018
+2026-27,2026-10-30,ORL,TOR,121,114,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600019
+2026-27,2026-10-30,TOR,ORL,114,121,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600019
+2026-27,2026-10-30,IND,MIA,125,145,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600020
+2026-27,2026-10-30,MIA,IND,145,125,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600020
+2026-27,2026-10-30,HOU,DAL,111,116,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600021
+2026-27,2026-10-30,DAL,HOU,116,111,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600021
+2026-27,2026-10-30,LAC,MIN,101,127,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600022
+2026-27,2026-10-30,MIN,LAC,127,101,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600022
+2026-27,2026-10-30,LAL,GSW,95,112,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600023
+2026-27,2026-10-30,GSW,LAL,112,95,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600023
+2026-27,2026-10-30,DEN,PHX,127,120,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600024
+2026-27,2026-10-30,PHX,DEN,120,127,Final,Verified final score; team-game only,https://www.basketball-reference.com/boxscores/?month=10&day=30&year=2026,https://www.nba.com/games?date=2026-10-30,0022600024
