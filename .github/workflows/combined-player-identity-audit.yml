@@ -67,6 +67,7 @@ on:
       - 'scripts/check_top20_bref_profiles_2027.py'
       - 'scripts/consolidate_top20_identity_exceptions_2027.py'
       - 'scripts/discover_top20_espn_cbs_profiles_2027.py'
+      - 'scripts/build_top20_espn_cbs_review_queue_2027.py'
       - 'docs/three-player-independent-verification-queue-2027.md'
       - 'scripts/audit_wikidata_identity_statements.py'
       - 'reports/2027_targeted_identity_evidence_reconstruction.csv'
@@ -220,6 +221,8 @@ jobs:
         run: python scripts/consolidate_top20_identity_exceptions_2027.py
       - name: Discover ESPN and CBS profile sources for top 20 candidates
         run: python scripts/discover_top20_espn_cbs_profiles_2027.py
+      - name: Build ESPN and CBS direct profile review queue
+        run: python scripts/build_top20_espn_cbs_review_queue_2027.py
       - name: Report seven-player approved coverage projection without publication
         run: python scripts/report_seven_player_coverage_projection_2027.py
       - name: Summarize strict team-position publication blockers
