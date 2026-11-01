@@ -64,6 +64,7 @@ on:
       - 'scripts/check_verification_sources_2027.py'
       - 'scripts/validate_top20_nba_ids_2027.py'
       - 'scripts/check_top20_dual_id_wikidata_2027.py'
+      - 'scripts/check_top20_bref_profiles_2027.py'
       - 'docs/three-player-independent-verification-queue-2027.md'
       - 'scripts/audit_wikidata_identity_statements.py'
       - 'reports/2027_targeted_identity_evidence_reconstruction.csv'
@@ -211,6 +212,8 @@ jobs:
           python scripts/validate_top20_nba_ids_2027.py
       - name: Check exact NBA and Basketball Reference IDs on Wikidata
         run: python scripts/check_top20_dual_id_wikidata_2027.py
+      - name: Check top 20 candidate Basketball Reference profiles against NBA names
+        run: python scripts/check_top20_bref_profiles_2027.py
       - name: Report seven-player approved coverage projection without publication
         run: python scripts/report_seven_player_coverage_projection_2027.py
       - name: Summarize strict team-position publication blockers
