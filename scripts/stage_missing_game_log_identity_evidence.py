@@ -11,6 +11,7 @@ from stage_wikidata_exact_evidence import query_wikidata
 
 INPUT=Path("reports/unmatched_player_games_2027.json")
 OUTPUT=Path("reports/missing_game_log_identity_evidence_2027.json")
+OFFICIAL_NBA_EVIDENCE=Path("reports/2027_official_nba_identity_evidence.csv")
 
 def main():
     data=json.loads(INPUT.read_text(encoding="utf-8"))
@@ -36,6 +37,18 @@ def main():
             prefix,suffix=raw.split("/",1)
             if len(prefix)==1 and suffix.startswith(prefix):bref=suffix
         by_id[pid].append({"wikidata_item":b["item"]["value"],"bref_id":bref})
+    # Official NBA evidence corroborates NBA ID, name, and broad roster role.
+    # It must never manufacture a Basketball-Reference ID or exact SG position.
+    import csv
+    official={}
+    if OFFICIAL_NBA_EVIDENCE.exists():
+        with OFFICIAL_NBA_EVIDENCE.open(newline="",encoding="utf-8") as handle:
+            for row in csv.DictReader(handle):
+                pid=row["nba_player_id"].strip()
+                if pid in official:raise ValueError("Duplicate official NBA evidence ID: "+pid)
+                if row["evidence_url"].strip()!=f"https://www.nba.com/player/{pid}":
+                    raise ValueError("Unexpected official NBA evidence URL for "+pid)
+                official[pid]=row
     results=[]
     for p in data["players"]:
         matches=by_id[p["nba_player_id"]]
@@ -43,6 +56,7 @@ def main():
         results.append({"nba_player_id":p["nba_player_id"],"game_rows":p["game_rows"],
             "defending_teams":p["defending_teams"],
             "identity_candidates":matches,
+            "official_nba_identity_evidence":([{"url":official[p["nba_player_id"]]["evidence_url"],"player_name":official[p["nba_player_id"]]["player_name"],"team":official[p["nba_player_id"]]["team"],"listed_position":official[p["nba_player_id"]]["listed_position"],"scope":"nba_id_name_team_broad_position_only"}] if p["nba_player_id"] in official else []),
             "candidate_status":"single_wikidata_id_pair" if exact else "missing_or_ambiguous",
             "season_position_verified":False,"human_approved":False})
     report={"total_unmatched_players":len(ids),

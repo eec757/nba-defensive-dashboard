@@ -1,0 +1,6 @@
+nba_player_id,player_name,proposed_position,source_type,source_url,source_position,temporal_scope,evidence_status,notes
+1643813,Alpha Diallo,SG,official_nba,https://www.nba.com/player/1643813,G,2026-27,corroborates_guard_only,"Official NBA player page lists Guard; does not distinguish SG from PG"
+1643813,Alpha Diallo,SG,recruiting_profile,https://247sports.com/,SG,high_school,source_url_needs_exact_profile,"User reports four-star SG evaluation at Providence recruitment; historical recruiting position is not 2026-27 NBA roster position"
+1643813,Alpha Diallo,SG,biography,https://en.wikipedia.org/wiki/Alpha_Diallo_(basketball%2C_born_1997),SG,biographical,corroborates_SG_not_season_specific,"Biography lists shooting guard; requires season-specific verification"
+1643813,Alpha Diallo,SG,sports_database,https://sports.yahoo.com/,G_or_wing,unspecified,source_url_needs_exact_profile,"User reports broad guard/wing categorization; not exact SG corroboration"
+1643813,Alpha Diallo,SG,sports_database,https://www.foxsports.com/,G_or_wing,unspecified,source_url_needs_exact_profile,"User reports broad guard/wing categorization; not exact SG corroboration"
