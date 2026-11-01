@@ -28,7 +28,11 @@ def validate(r):
 
 def main():
     with SOURCE.open(newline="",encoding="utf-8") as f:rows=list(csv.DictReader(f))
-    if len(rows)!=7 or {r["nba_player_id"] for r in rows}!=EXPECTED:raise ValueError("Expected exactly seven distinct candidate IDs")
+    with Path("data/verified_player_ids_2027.csv").open(newline="",encoding="utf-8") as f:
+        approved={r["nba_player_id"] for r in csv.DictReader(f) if r.get("verified","").strip().lower()=="true"}
+    expected_pending=EXPECTED-approved
+    if len(rows)!=len(expected_pending) or {r["nba_player_id"] for r in rows}!=expected_pending:
+        raise ValueError("Pending candidates must exactly match expected IDs minus approved crosswalk entries")
     results=[]
     for r in rows:
         errors=validate(r)
@@ -36,7 +40,7 @@ def main():
     OUT.parent.mkdir(parents=True,exist_ok=True)
     with OUT.open("w",newline="",encoding="utf-8") as f:
         w=csv.DictWriter(f,fieldnames=list(results[0]));w.writeheader();w.writerows(results)
-    print("SEVEN_PLAYER_CANDIDATE_VALIDATION",json.dumps({"candidates":7,"structurally_valid":sum(x["structure_valid"]=="yes" for x in results),"formally_approved":0,"source_content_verified":False,"published":False}))
+    print("SEVEN_PLAYER_CANDIDATE_VALIDATION",json.dumps({"candidates":len(rows),"already_approved_omitted":len(EXPECTED & approved),"structurally_valid":sum(x["structure_valid"]=="yes" for x in results),"formally_approved":0,"source_content_verified":False,"published":False}))
     if any(r["issues"] for r in results):raise ValueError("Candidate structural validation failed")
 
 if __name__=="__main__":main()
