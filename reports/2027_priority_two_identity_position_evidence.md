@@ -22,3 +22,9 @@ This is a **review packet**, not a crosswalk approval or published dataset. The 
 ## Audit implications
 
 The most recent unmatched-player scenario showed seven and six player-game rows for these two IDs respectively, with each hypothetically capable of adding one team gate **in that scenario's coverage basis**. Those gains are not additive guarantees and do not modify the staged baseline of 8/30 team gates. No verification flags, position labels, or publication gates were changed.
+
+## 2026-11-01 exact cross-provider ID verification
+
+- **Christian Anderson Jr.**: Wikidata https://www.wikidata.org/wiki/Q133691210 explicitly lists NBA.com player ID `1643515` and Basketball Reference NBA player ID `a/anderch02` on the same item. Basketball-Reference https://www.basketball-reference.com/players/a/anderch02.html lists 2026–27 **PG**. NBA https://www.nba.com/player/1643515/christian-anderson identifies the same name and team but uses broad **Guard**. Exact ID linkage **supported**; exact 2026–27 PG source **supported**. Human crosswalk approval still pending.
+- **Bobby Portis Jr.**: Wikidata https://www.wikidata.org/wiki/Q19667582 explicitly lists NBA.com player ID `1626171` and Basketball Reference NBA player ID `p/portibo01` on the same item. Wikidata lists power forward; the existing 2026–27 Basketball-Reference team roster candidate https://www.basketball-reference.com/teams/MIA/2027.html proposes **PF**. NBA https://www.nba.com/player/1626171 identifies the same player as broad **Forward**. Exact ID linkage **supported**; 2026–27 PF is **pending fresh direct season-roster confirmation** (Basketball-Reference player page returned HTTP 403 during this check). Human crosswalk approval still pending.
+- **Action**: No `verified=true` flags changed, no human review was fabricated, and no coverage or publication gate was altered. Do not promote either record automatically.
