@@ -63,8 +63,8 @@ def main():
         entry["hypothetical_team_gates_if_verified"]=projected
         entry["potential_new_team_gates"]=projected-baseline_gates
     
-    report={"total_game_rows":len(rows),"unmatched_game_rows":sum(r["game_rows"] for r in unmatched.values()),
-            "unmatched_player_ids":len(unmatched),"baseline_team_gates":baseline_gates,"hypothetical_only":True,
+    report={"coverage_basis":"proposed_verified_player_ids_2027.csv plus supported season position evidence; not the staged crosswalk", "total_game_rows":len(rows),"unmatched_game_rows":sum(r["game_rows"] for r in unmatched.values()),
+            "unmatched_player_ids":len(unmatched),"baseline_team_gates":baseline_gates,"hypothetical_only":True,"do_not_compare_with_staged_gate_count":True,
             "players":[{"nba_player_id":pid,"game_rows":r["game_rows"],"potential_new_team_gates":r["potential_new_team_gates"],"hypothetical_team_gates_if_verified":r["hypothetical_team_gates_if_verified"],
                         "defending_teams":dict(r["defending_teams"]),
                         "game_ids":sorted(set(r["game_ids"])),
