@@ -12,7 +12,7 @@ from pathlib import Path
 import duckdb
 
 CATALOG="https://basketball-data.billmill.org/nba/nba.duckdb"
-POSITIONS=("PG","SG","SF","PF","C")
+POSITIONS=("PG","SG","SF","PF","C")\nFALLBACK_POSITIONS=("G","F")\nALLOWED_POSITIONS=POSITIONS+FALLBACK_POSITIONS
 CROSSWALK=Path("data/verified_player_ids_2027.csv")
 OUTPUT=Path("data/position_defense_2027.json")
 MIN_COVERAGE=.95
@@ -129,7 +129,7 @@ def main():
         bref=r["bref_id"].strip()
         source=r["verification_source"].strip()
         pos=r["position"].strip()
-        if not pid.isdigit() or not bref or pos not in POSITIONS or not source.startswith("https://"):
+        if not pid.isdigit() or not bref or pos not in ALLOWED_POSITIONS or not source.startswith("https://"):
             raise ValueError("Verified entries require numeric NBA ID, BRef ID, valid position and evidence URL")
         # A standalone player profile identifies one player but does not establish
         # the link between a Basketball-Reference ID and an NBA numeric ID.
