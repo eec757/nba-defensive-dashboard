@@ -14,7 +14,7 @@ def main():
     ids=[x["nba_player_id"] for x in players]
     if len(ids)!=len(set(ids)):raise ValueError("Duplicate NBA IDs in player preview")
     for x in players:
-        if x["verified_position"] not in ("PG","SG","SF","PF","C"):raise ValueError("Unverified position")
+        if x["verified_position"] not in ("PG","SG","SF","PF","C","G","F"):raise ValueError("Unverified position")
         if not isinstance(x["games"],int) or x["games"]<=0:raise ValueError("Invalid game count")
         for key in ("points_per_game","rebounds_per_game","assists_per_game","threes_made_per_game","threes_attempted_per_game"):
             if x[key]<0:raise ValueError("Negative per-game statistic")
