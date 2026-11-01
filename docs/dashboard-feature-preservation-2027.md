@@ -21,9 +21,9 @@ The dashboard's primary features remain:
 
 - **Team Defense** — league rankings, team trends, opponent shooting and paint/rim metrics.
 - **Defense vs Position** — 30×5 matrix, sortable by metric, drill-down by team and position.
-- **Player Matchup Explorer** — player history vs opponent defensive profile, with quality flags.
+- **Matchup Analyzer (core feature)** — select a player, opponent and game; compare the player's recent and season performance with the opponent's team defensive rankings and exact PG/SG/SF/PF/C defense-versus-position statistics. Include points, rebounds, assists, 3PM/3PA, FG%, 3P%, paint and rim measures where supported; show pace, expected minutes when verified, season/date filters, source freshness, data coverage, and matchup strengths/weaknesses. The analyzer works without any Underdog or PrizePicks data.
 - **Player Props** — optional Underdog/PrizePicks comparisons after authorized access is established.
 
 ## Implementation priority
 
-Finish trustworthy team and position defensive tables and coverage audits before integrating platform projections. Add prop comparisons without removing or reducing any existing defensive metric or gate. This document is planning only; it does not change production or claim new data coverage.
+Preserve the Matchup Analyzer alongside trustworthy team and position defensive tables and coverage audits before integrating platform projections. Add prop comparisons without removing or reducing any existing defensive metric or gate. This document is planning only; it does not change production or claim new data coverage.
