@@ -17,11 +17,17 @@ def main():
         reader=csv.DictReader(f); fields=reader.fieldnames; current=list(reader)
     if len(reviews)!=7 or {r["nba_player_id"] for r in reviews}!=set(ROSTERS):
         raise ValueError("Attested seven-player set does not match reviewed identities")
+    approved_nba={r["nba_player_id"] for r in current if r.get("verified","").strip().lower()=="true"}
     existing_nba={r["nba_player_id"] for r in current}
     existing_bref={r["bref_id"] for r in current}
     exceptions=[]; staged=[]
     for a in reviews:
         pid=a["nba_player_id"];bref=a["bref_id"];pos=a["season_primary_position"]
+        if pid in approved_nba:
+            matching=[r for r in current if r["nba_player_id"]==pid]
+            if len(matching)!=1 or matching[0]["bref_id"]!=bref or matching[0]["position"]!=pos:
+                exceptions.append({"nba_player_id":pid,"reason":"approved_crosswalk_identity_or_position_conflict"})
+            continue
         reason=[]
         if pid in existing_nba or bref in existing_bref:reason.append("already_in_crosswalk_review_conflict")
         if pos not in POSITIONS or not bref or not bref.isalnum():reason.append("invalid_position_or_bref_id")
@@ -38,6 +44,6 @@ def main():
     if exceptions:raise ValueError(f"Seven-player staging blocked by {len(exceptions)} exceptions")
     with OUTPUT.open("w",newline="",encoding="utf-8") as f:
         w=csv.DictWriter(f,fieldnames=fields,extrasaction="ignore");w.writeheader();w.writerows(staged)
-    print("SEVEN_PLAYER_UNAPPROVED_STAGING",json.dumps({"candidates":len(staged),"verified_true":0,"exceptions":0,"live_crosswalk_modified":False,"publication_ready":False}))
+    print("SEVEN_PLAYER_UNAPPROVED_STAGING",json.dumps({"candidates":len(staged),"already_approved_omitted":len(approved_nba & set(ROSTERS)),"verified_true":0,"exceptions":0,"live_crosswalk_modified":False,"publication_ready":False}))
 
 if __name__=="__main__":main()
