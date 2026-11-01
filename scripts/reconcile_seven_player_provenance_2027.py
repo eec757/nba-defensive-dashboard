@@ -12,11 +12,16 @@ def main():
     candidates=read("2027_seven_player_unapproved_crosswalk_candidates.csv")
     live=read("2027_seven_player_live_wikidata_checks.csv")
     structural=read("2027_seven_player_candidate_validation.csv")
-    sources=(attest,candidates,live,structural)
-    if any(len(rows)!=7 or len({r["nba_player_id"] for r in rows})!=7 for rows in sources):
-        raise ValueError("Expected seven distinct IDs in each input")
-    maps=[{r["nba_player_id"]:r for r in rows} for rows in sources]
-    if any(set(m)!=set(maps[0]) for m in maps[1:]):raise ValueError("Candidate set drift")
+    with Path("data/verified_player_ids_2027.csv").open(newline="",encoding="utf-8") as f:
+        approved={r["nba_player_id"] for r in csv.DictReader(f) if r.get("verified","").strip().lower()=="true"}
+    original={r["nba_player_id"] for r in attest}
+    pending=original-approved
+    if len(attest)!=7 or len(original)!=7:
+        raise ValueError("Historical seven-player attestation changed")
+    sources=(candidates,live,structural)
+    if any(len(rows)!=len(pending) or {r["nba_player_id"] for r in rows}!=pending for rows in sources):
+        raise ValueError("Pending candidate set drift")
+    maps=[{r["nba_player_id"]:r for r in attest if r["nba_player_id"] in pending}]+[{r["nba_player_id"]:r for r in rows} for rows in sources]
     output=[]
     for pid in sorted(maps[0]):
         a,c,l,s=(m[pid] for m in maps)
@@ -32,7 +37,7 @@ def main():
     with out.open("w",newline="",encoding="utf-8") as f:
         w=csv.DictWriter(f,fieldnames=list(output[0]));w.writeheader();w.writerows(output)
     issues=sum(bool(r["reconciliation_issues"]) for r in output)
-    print("SEVEN_PLAYER_PROVENANCE_RECONCILIATION",json.dumps({"reconciled":7,"issues":issues,"formal_approvals":0,"published":False}))
+    print("SEVEN_PLAYER_PROVENANCE_RECONCILIATION",json.dumps({"reconciled":len(output),"already_approved_omitted":len(original & approved),"issues":issues,"formal_approvals":0,"published":False}))
     if issues:raise ValueError("Review and evidence provenance reconciliation failed")
 
 if __name__=="__main__":main()
