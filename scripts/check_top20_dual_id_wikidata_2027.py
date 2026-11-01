@@ -3,6 +3,7 @@
 Read-only evidence discovery; no player approval or position inference.
 """
 import csv
+import os
 import json
 import urllib.parse
 import urllib.request
@@ -33,6 +34,8 @@ def main():
     grouped={pid:{} for pid in ids}
     error=None
     try:
+        if os.environ.get("ENABLE_WIKIDATA_TOP20_QUERY") != "1":
+            raise RuntimeError("Wikidata top-20 query paused due to observed HTTP 429; enable explicitly after rate limit recovery")
         for entry in query_entities(ids):
             pid=entry["nba"]["value"]
             if pid not in grouped:continue
