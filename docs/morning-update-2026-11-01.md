@@ -16,7 +16,7 @@ Seven of seven October 31 games were final, cross-checked against [Sports.ws](ht
 | MIN | SAS | 111–121 |
 | OKC | HOU | 98–119 |
 
-**Fewest points allowed:** Portland 90, New Orleans 99, Houston 98, Philadelphia 104, Memphis 105. (Sorted numerical order: Portland 90, Houston 98, New Orleans 99, Philadelphia 104, Memphis 105.)
+**Fewest points allowed:** Portland 90, Houston 98, New Orleans 99, Philadelphia 104 and Memphis 105. These are team-game points allowed, not possession-adjusted defensive ratings.
 
 ## Provisional 2026–27 defensive leaders through October 31
 
