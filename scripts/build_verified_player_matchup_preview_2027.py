@@ -16,7 +16,7 @@ def main():
     with CROSSWALK.open(newline="",encoding="utf-8") as f:
         verified={str(r["nba_player_id"]).strip():r["position"].strip()
             for r in csv.DictReader(f) if r.get("verified","").strip().lower()=="true"
-            and r.get("position","").strip() in ("PG","SG","SF","PF","C")}
+            and r.get("position","").strip() in ("PG","SG","SF","PF","C","G","F")}
     if not verified:raise ValueError("No explicitly verified player IDs")
     db=duckdb.connect()
     db.execute("INSTALL httpfs; LOAD httpfs;")
