@@ -61,6 +61,7 @@ on:
       - 'scripts/build_staged_seven_identity_review_queue_2027.py'
       - 'scripts/build_top_unmatched_evidence_packet_2027.py'
       - 'scripts/reconcile_top20_existing_evidence_2027.py'
+      - 'scripts/check_verification_sources_2027.py'
       - 'docs/three-player-independent-verification-queue-2027.md'
       - 'scripts/audit_wikidata_identity_statements.py'
       - 'reports/2027_targeted_identity_evidence_reconstruction.csv'
@@ -200,6 +201,8 @@ jobs:
         run: python scripts/build_top_unmatched_evidence_packet_2027.py
       - name: Reconcile top unmatched IDs against existing season evidence
         run: python scripts/reconcile_top20_existing_evidence_2027.py
+      - name: Probe NBA, Basketball Reference, ESPN and CBS verification sources
+        run: python scripts/check_verification_sources_2027.py
       - name: Report seven-player approved coverage projection without publication
         run: python scripts/report_seven_player_coverage_projection_2027.py
       - name: Summarize strict team-position publication blockers
