@@ -12,7 +12,9 @@ from pathlib import Path
 import duckdb
 
 CATALOG="https://basketball-data.billmill.org/nba/nba.duckdb"
-POSITIONS=("PG","SG","SF","PF","C")\nFALLBACK_POSITIONS=("G","F")\nALLOWED_POSITIONS=POSITIONS+FALLBACK_POSITIONS
+POSITIONS=("PG","SG","SF","PF","C")
+FALLBACK_POSITIONS=("G","F")
+ALLOWED_POSITIONS=POSITIONS+FALLBACK_POSITIONS
 CROSSWALK=Path("data/verified_player_ids_2027.csv")
 OUTPUT=Path("data/position_defense_2027.json")
 MIN_COVERAGE=.95
