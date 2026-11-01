@@ -48,9 +48,24 @@ def main():
             "position":m.get("position",""),
             "position_source":m.get("season_position_source","")
         } for m in matches]
+    # Hypothetical coverage only: these records remain unverified.
+    all_team_rows=Counter()
+    covered_team_rows=Counter()
+    for pid,opp,gid in rows:
+        team=teams[str(opp)]
+        all_team_rows[team]+=1
+        if str(pid) in covered:
+            covered_team_rows[team]+=1
+    baseline_gates=sum(covered_team_rows[t]/all_team_rows[t]>=.95 for t in TEAM_IDS if all_team_rows[t])
+    for pid,entry in unmatched.items():
+        projected=sum((covered_team_rows[t]+entry["defending_teams"][t])/all_team_rows[t]>=.95
+                      for t in TEAM_IDS if all_team_rows[t])
+        entry["hypothetical_team_gates_if_verified"]=projected
+        entry["potential_new_team_gates"]=projected-baseline_gates
+    
     report={"total_game_rows":len(rows),"unmatched_game_rows":sum(r["game_rows"] for r in unmatched.values()),
-            "unmatched_player_ids":len(unmatched),
-            "players":[{"nba_player_id":pid,"game_rows":r["game_rows"],
+            "unmatched_player_ids":len(unmatched),"baseline_team_gates":baseline_gates,"hypothetical_only":True,
+            "players":[{"nba_player_id":pid,"game_rows":r["game_rows"],"potential_new_team_gates":r["potential_new_team_gates"],"hypothetical_team_gates_if_verified":r["hypothetical_team_gates_if_verified"],
                         "defending_teams":dict(r["defending_teams"]),
                         "game_ids":sorted(set(r["game_ids"])),
                         "review_queue_matches":r["queue_matches"],
