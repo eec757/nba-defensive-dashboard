@@ -10,8 +10,12 @@ OUT=Path("reports/2027_seven_player_live_wikidata_checks.csv")
 
 def main():
     with SOURCE.open(newline="",encoding="utf-8") as f:rows=list(csv.DictReader(f))
-    if len(rows)!=7 or len({r["nba_player_id"] for r in rows})!=7:
-        raise ValueError("Expected seven distinct unapproved candidates")
+    expected={"1626171","1641713","1641842","1643515","1629057","1642383","1641747"}
+    with Path("data/verified_player_ids_2027.csv").open(newline="",encoding="utf-8") as f:
+        approved={r["nba_player_id"] for r in csv.DictReader(f) if r.get("verified","").strip().lower()=="true"}
+    pending=expected-approved
+    if len(rows)!=len(pending) or {r["nba_player_id"] for r in rows}!=pending:
+        raise ValueError("Expected exact unapproved candidate IDs after approved exclusions")
     report=[]
     with requests.Session() as session:
         for row in rows:
@@ -23,7 +27,7 @@ def main():
     with OUT.open("w",newline="",encoding="utf-8") as f:
         w=csv.DictWriter(f,fieldnames=list(report[0]));w.writeheader();w.writerows(report)
     passed=sum(r["result"]=="both_ids_match" for r in report)
-    print("SEVEN_PLAYER_LIVE_WIKIDATA",json.dumps({"checked":7,"exact_dual_id_matches":passed,"unresolved":7-passed,"human_approved":0,"published":False}))
-    if passed!=7:raise ValueError("Not all live Wikidata identity statements match; do not approve")
+    print("SEVEN_PLAYER_LIVE_WIKIDATA",json.dumps({"checked":len(rows),"already_approved_omitted":len(expected & approved),"exact_dual_id_matches":passed,"unresolved":len(rows)-passed,"human_approved":0,"published":False}))
+    if passed!=len(rows):raise ValueError("Not all live Wikidata identity statements match; do not approve")
 
 if __name__=="__main__":main()
