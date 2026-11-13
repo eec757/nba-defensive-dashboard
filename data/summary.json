@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-12T14:11:20.502549+00:00",
+  "updated_at": "2026-11-13T14:06:46.877704+00:00",
   "source": "BoxScore Lab, https://boxscorelab.com/downloads/ (CC BY 4.0; NBA-derived)",
   "seasons": {
     "2025-26": {
@@ -818,7 +818,7 @@
       ]
     },
     "2026-27": {
-      "games": 170,
+      "games": 174,
       "teams": [
         {
           "team": "ATL",
@@ -844,8 +844,8 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 5,
-          "defense_rank": 22
+          "scoring_rank": 6,
+          "defense_rank": 23
         },
         {
           "team": "BKN",
@@ -871,8 +871,8 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 23,
-          "defense_rank": 21
+          "scoring_rank": 24,
+          "defense_rank": 20
         },
         {
           "team": "BOS",
@@ -898,23 +898,23 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 15,
+          "scoring_rank": 14,
           "defense_rank": 1
         },
         {
           "team": "CHA",
-          "gp": 11,
-          "ppg": 98.82,
-          "opp_ppg": 110.36,
-          "fg_pct": 40.0,
-          "three_pm": 13.73,
-          "three_pa": 44.64,
-          "three_pct": 30.8,
-          "opp_three_pm": 14.45,
-          "opp_three_pa": 35.45,
-          "opp_three_pct": 40.8,
-          "opp_fg_pct": 47.6,
-          "defensive_shooting_games": 11,
+          "gp": 12,
+          "ppg": 98.58,
+          "opp_ppg": 109.58,
+          "fg_pct": 40.1,
+          "three_pm": 13.75,
+          "three_pa": 44.17,
+          "three_pct": 31.1,
+          "opp_three_pm": 14.33,
+          "opp_three_pa": 36.08,
+          "opp_three_pct": 39.7,
+          "opp_fg_pct": 47.0,
+          "defensive_shooting_games": 12,
           "position_defense": {
             "PG": null,
             "SG": null,
@@ -926,7 +926,7 @@
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
           "scoring_rank": 30,
-          "defense_rank": 10
+          "defense_rank": 9
         },
         {
           "team": "CHI",
@@ -980,22 +980,22 @@
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
           "scoring_rank": 9,
-          "defense_rank": 20
+          "defense_rank": 19
         },
         {
           "team": "DAL",
-          "gp": 11,
-          "ppg": 114.91,
-          "opp_ppg": 110.27,
-          "fg_pct": 47.8,
-          "three_pm": 12.36,
-          "three_pa": 35.91,
-          "three_pct": 34.4,
-          "opp_three_pm": 11.64,
-          "opp_three_pa": 36.73,
-          "opp_three_pct": 31.7,
-          "opp_fg_pct": 45.3,
-          "defensive_shooting_games": 11,
+          "gp": 12,
+          "ppg": 113.17,
+          "opp_ppg": 112.17,
+          "fg_pct": 46.8,
+          "three_pm": 12.42,
+          "three_pa": 36.92,
+          "three_pct": 33.6,
+          "opp_three_pm": 11.92,
+          "opp_three_pa": 36.33,
+          "opp_three_pct": 32.8,
+          "opp_fg_pct": 46.4,
+          "defensive_shooting_games": 12,
           "position_defense": {
             "PG": null,
             "SG": null,
@@ -1006,8 +1006,8 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 12,
-          "defense_rank": 9
+          "scoring_rank": 17,
+          "defense_rank": 12
         },
         {
           "team": "DEN",
@@ -1038,18 +1038,18 @@
         },
         {
           "team": "DET",
-          "gp": 10,
-          "ppg": 112.7,
-          "opp_ppg": 104.6,
-          "fg_pct": 46.6,
-          "three_pm": 13.8,
-          "three_pa": 37.3,
+          "gp": 11,
+          "ppg": 115.55,
+          "opp_ppg": 107.82,
+          "fg_pct": 46.9,
+          "three_pm": 13.73,
+          "three_pa": 37.09,
           "three_pct": 37.0,
-          "opp_three_pm": 11.6,
-          "opp_three_pa": 36.0,
-          "opp_three_pct": 32.2,
-          "opp_fg_pct": 43.0,
-          "defensive_shooting_games": 10,
+          "opp_three_pm": 11.82,
+          "opp_three_pa": 36.09,
+          "opp_three_pct": 32.7,
+          "opp_fg_pct": 43.6,
+          "defensive_shooting_games": 11,
           "position_defense": {
             "PG": null,
             "SG": null,
@@ -1060,8 +1060,8 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 18,
-          "defense_rank": 3
+          "scoring_rank": 11,
+          "defense_rank": 6
         },
         {
           "team": "GSW",
@@ -1088,7 +1088,7 @@
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
           "scoring_rank": 3,
-          "defense_rank": 11
+          "defense_rank": 10
         },
         {
           "team": "HOU",
@@ -1114,7 +1114,7 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 11,
+          "scoring_rank": 12,
           "defense_rank": 4
         },
         {
@@ -1142,7 +1142,7 @@
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
           "scoring_rank": 20,
-          "defense_rank": 17
+          "defense_rank": 16
         },
         {
           "team": "LAC",
@@ -1168,8 +1168,8 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 19,
-          "defense_rank": 24
+          "scoring_rank": 18,
+          "defense_rank": 25
         },
         {
           "team": "LAL",
@@ -1196,7 +1196,7 @@
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
           "scoring_rank": 1,
-          "defense_rank": 19
+          "defense_rank": 18
         },
         {
           "team": "MEM",
@@ -1223,7 +1223,7 @@
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
           "scoring_rank": 7,
-          "defense_rank": 12
+          "defense_rank": 11
         },
         {
           "team": "MIA",
@@ -1281,18 +1281,18 @@
         },
         {
           "team": "MIN",
-          "gp": 11,
-          "ppg": 118.09,
-          "opp_ppg": 107.0,
-          "fg_pct": 47.4,
-          "three_pm": 14.55,
-          "three_pa": 39.0,
-          "three_pct": 37.3,
-          "opp_three_pm": 11.09,
-          "opp_three_pa": 34.64,
-          "opp_three_pct": 32.0,
-          "opp_fg_pct": 43.5,
-          "defensive_shooting_games": 11,
+          "gp": 12,
+          "ppg": 119.33,
+          "opp_ppg": 105.92,
+          "fg_pct": 48.2,
+          "three_pm": 14.58,
+          "three_pa": 38.42,
+          "three_pct": 38.0,
+          "opp_three_pm": 11.25,
+          "opp_three_pa": 35.75,
+          "opp_three_pct": 31.5,
+          "opp_fg_pct": 42.9,
+          "defensive_shooting_games": 12,
           "position_defense": {
             "PG": null,
             "SG": null,
@@ -1303,8 +1303,8 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 6,
-          "defense_rank": 6
+          "scoring_rank": 4,
+          "defense_rank": 3
         },
         {
           "team": "NOP",
@@ -1357,7 +1357,7 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 22,
+          "scoring_rank": 23,
           "defense_rank": 2
         },
         {
@@ -1384,7 +1384,7 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 21,
+          "scoring_rank": 22,
           "defense_rank": 5
         },
         {
@@ -1411,23 +1411,23 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 25,
-          "defense_rank": 18
+          "scoring_rank": 26,
+          "defense_rank": 17
         },
         {
           "team": "PHI",
-          "gp": 12,
-          "ppg": 110.17,
-          "opp_ppg": 109.17,
-          "fg_pct": 44.4,
-          "three_pm": 11.5,
-          "three_pa": 34.17,
-          "three_pct": 33.7,
-          "opp_three_pm": 12.17,
-          "opp_three_pa": 36.75,
-          "opp_three_pct": 33.1,
-          "opp_fg_pct": 45.0,
-          "defensive_shooting_games": 12,
+          "gp": 13,
+          "ppg": 111.15,
+          "opp_ppg": 109.38,
+          "fg_pct": 45.0,
+          "three_pm": 11.62,
+          "three_pa": 33.85,
+          "three_pct": 34.3,
+          "opp_three_pm": 12.31,
+          "opp_three_pa": 36.77,
+          "opp_three_pct": 33.5,
+          "opp_fg_pct": 45.2,
+          "defensive_shooting_games": 13,
           "position_defense": {
             "PG": null,
             "SG": null,
@@ -1438,23 +1438,23 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 24,
+          "scoring_rank": 21,
           "defense_rank": 8
         },
         {
           "team": "PHX",
-          "gp": 10,
-          "ppg": 112.8,
-          "opp_ppg": 118.1,
-          "fg_pct": 47.2,
-          "three_pm": 13.7,
-          "three_pa": 36.4,
-          "three_pct": 37.6,
-          "opp_three_pm": 14.4,
-          "opp_three_pa": 38.3,
-          "opp_three_pct": 37.6,
-          "opp_fg_pct": 47.0,
-          "defensive_shooting_games": 10,
+          "gp": 11,
+          "ppg": 111.73,
+          "opp_ppg": 116.09,
+          "fg_pct": 46.7,
+          "three_pm": 13.64,
+          "three_pa": 37.0,
+          "three_pct": 36.9,
+          "opp_three_pm": 14.36,
+          "opp_three_pa": 38.36,
+          "opp_three_pct": 37.4,
+          "opp_fg_pct": 46.5,
+          "defensive_shooting_games": 11,
           "position_defense": {
             "PG": null,
             "SG": null,
@@ -1465,8 +1465,8 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 17,
-          "defense_rank": 25
+          "scoring_rank": 19,
+          "defense_rank": 22
         },
         {
           "team": "POR",
@@ -1493,7 +1493,7 @@
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
           "scoring_rank": 2,
-          "defense_rank": 14
+          "defense_rank": 13
         },
         {
           "team": "SAC",
@@ -1519,7 +1519,7 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 26,
+          "scoring_rank": 27,
           "defense_rank": 27
         },
         {
@@ -1546,23 +1546,23 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 4,
+          "scoring_rank": 5,
           "defense_rank": 7
         },
         {
           "team": "TOR",
-          "gp": 11,
-          "ppg": 114.45,
-          "opp_ppg": 111.91,
-          "fg_pct": 45.2,
-          "three_pm": 11.64,
-          "three_pa": 35.91,
-          "three_pct": 32.4,
-          "opp_three_pm": 12.64,
-          "opp_three_pa": 34.73,
-          "opp_three_pct": 36.4,
-          "opp_fg_pct": 47.3,
-          "defensive_shooting_games": 11,
+          "gp": 12,
+          "ppg": 114.25,
+          "opp_ppg": 112.83,
+          "fg_pct": 45.4,
+          "three_pm": 11.83,
+          "three_pa": 36.0,
+          "three_pct": 32.9,
+          "opp_three_pm": 12.67,
+          "opp_three_pa": 34.33,
+          "opp_three_pct": 36.9,
+          "opp_fg_pct": 47.7,
+          "defensive_shooting_games": 12,
           "position_defense": {
             "PG": null,
             "SG": null,
@@ -1573,8 +1573,8 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 14,
-          "defense_rank": 13
+          "scoring_rank": 15,
+          "defense_rank": 14
         },
         {
           "team": "UTA",
@@ -1601,22 +1601,22 @@
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
           "scoring_rank": 29,
-          "defense_rank": 23
+          "defense_rank": 24
         },
         {
           "team": "WAS",
-          "gp": 12,
-          "ppg": 107.5,
-          "opp_ppg": 113.42,
-          "fg_pct": 45.4,
-          "three_pm": 9.58,
-          "three_pa": 32.17,
-          "three_pct": 29.8,
-          "opp_three_pm": 12.08,
-          "opp_three_pa": 38.75,
-          "opp_three_pct": 31.2,
-          "opp_fg_pct": 44.8,
-          "defensive_shooting_games": 12,
+          "gp": 13,
+          "ppg": 110.0,
+          "opp_ppg": 115.77,
+          "fg_pct": 45.8,
+          "three_pm": 9.92,
+          "three_pa": 32.54,
+          "three_pct": 30.5,
+          "opp_three_pm": 12.15,
+          "opp_three_pa": 38.46,
+          "opp_three_pct": 31.6,
+          "opp_fg_pct": 45.2,
+          "defensive_shooting_games": 13,
           "position_defense": {
             "PG": null,
             "SG": null,
@@ -1627,8 +1627,8 @@
           "paint_defense": null,
           "rim_defense": null,
           "quality": "Calculated/Derived from BoxScore Lab NBA-derived game results",
-          "scoring_rank": 27,
-          "defense_rank": 16
+          "scoring_rank": 25,
+          "defense_rank": 21
         }
       ]
     }
